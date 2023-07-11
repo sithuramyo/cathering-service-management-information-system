@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Font Awesome -->
+       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-DYj+89rHxRmlJPrV7+u8lL92Z7a9fOq3zJ0/kj+whOy7xoh+e3cHY3bkg8mBrZJ19MzHtmRnA7gW8YtJTrBkxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-lX0iWsLJ7eGcJPMOy7syYYC/qxwcpwih36oShQOk/M7AdPP9L1sZ7wnhBYlyzKj+FVx8Wzg/mwvLaj33YtHjLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-VbryHMF8Wz1gQ0plEYzLcscvWXfW0qap3GpckZzA0ktvO8o/L4e4PJfKhFdY1BQvT8WtnT+T9T0MAdAB6QvHlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.9/css/bootstrap.min.css" integrity="sha384-1lkN7kBs25CdB+BKj3I8+TBzGtv9XwoCYYKmRan5PmkvcBp7m3hHjsiCz6Wdzb6j" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link th:href="@{/css/warningconfirm.css}" rel="stylesheet" />
+</head>
+<style>
+   #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+</style>
+<body>
+
+
+  <!-- SIDEBAR -->
+  <section id="sidebar">
+   <a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover"/>
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+    <ul class="side-menu top">
+        <li>
+            <a th:href="@{/}" style="text-decoration:none;">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/cateringStart}">
+                <i class="bx bx-calendar"></i>
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+         <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+ <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+        <li  class="active">
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a onclick="location.href='/logout'" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+   
+       
+   
+</section>
+<!-- SIDEBAR -->
+
+
+
+    <!-- CONTENT -->
+    <section id="content">
+           <nav>
+
+			<i class='bx bx-menu' ></i>	
+			<input type="checkbox" id="switch-mode" hidden>
+
+		</nav>
+       <main>
+        <div class="container mt-3">
+            
+            <div class="row">
+                <div class="col-md-5 col-xl-4">
+                
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">Profile Settings</h5>
+                        </div>
+        
+                        <div class="list-group list-group-flush" role="tablist">
+                            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+                              Account
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
+                              Password
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#Remind" role="tab">
+                              Remind Setup
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#emailConfigure" role="tab">
+                              Email Configuration
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#notifications" role="tab">
+                              Notifications
+                            </a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#contactUs" role="tab">
+                              Contact Info
+                            </a>
+                           
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-md-7 col-xl-8">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="account" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                   
+                                    <h5 class="card-title mb-0">Private info</h5>
+                                </div>
+                                <div class="card-body">
+                                   <form id="emailForm" th:object="${op}">
+                                       
+                                            <div class="form-group">
+                                                <label for="inputFirstName">Name</label>
+                                                <input type="text" class="form-control" id="accountName" name="name" th:field="*{employeeName}">
+                                                <span id="empNameMsg"></span>
+                                            </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Email</label>
+                                            <input type="email" class="form-control" name="email" th:field="*{employeeEmail}" readonly>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Department</label>
+                                            <input type="email" class="form-control" name="dept" th:field="*{dept}" readonly>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Division</label>
+                                            <input type="email" class="form-control" name="division" th:field="*{division}" readonly>
+                                            
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="inputEmail4">Team</label>
+                                            <input type="email" class="form-control" name="team" th:field="*{team}" readonly>
+                                            
+                                        </div>
+                                        <button type="submit" id="btn" class="btn btn-primary px-4">Save</button>
+                                    </form>
+        
+                                </div>
+                            </div>
+        
+                        </div>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                     <script>
+            $(document).ready(function() {
+                
+               
+                   
+                    // Use keyup event on name field
+                    $("#accountName").keyup(function() {
+                        if (validateName()) {
+                        	$("#accountName").css("border", "1px solid #ced4da");
+               	            // Set label
+               	            $("#empNameMsg").html("");
+                        } else {
+                            // If the name is not validated
+                            // Set border red
+                            
+                        }
+                        
+                    });
+        
+                  
+        
+                    function validateName() {
+             		    var name = $("#accountName").val();
+             		  
+
+             		    if (name === null || name.trim() === '') {
+             		        console.log("null");
+             		        $("#accountName").css("border", "2px solid red");
+             		        $("#empNameMsg").html("<p class='text-danger'>Name cannot be empty.</p>");
+             		        return false;
+             		    }
+
+             		    // Check if the name contains only alphabet characters (neglecting spaces)
+             		    var regex = /^[A-Za-z\s]+$/;
+             		    if (!regex.test(name)) {
+             		        $("#accountName").css("border", "2px solid red");
+             		        $("#empNameMsg").html("<p class='text-danger'>Please enter a valid name.</p>");
+             		        return false;
+             		    }
+
+             		    else{
+             		    	return true;
+             		    }
+             		    
+             		}
+
+                    $("#emailForm").submit(function(event) {
+                        event.preventDefault();
+             
+                        var name = $("#accountName").val();
+
+                        validateName();
+                        if (validateName()) {
+                        	$.ajax({
+                                type: 'POST',
+                                url: '/admin/account',
+                                data: {
+                                    name: name,
+                                   
+                                },
+                                
+                                success: function(response) {
+                                    console.log(response);
+                                    var successMessage = response;
+    
+                                    iziToast.success({
+                                        title: 'Success',
+                                        message: successMessage,
+                                        position: 'topCenter',
+                                        timeout: 5000,
+                                        progressBarColor: 'green',
+                                        transitionIn: 'fadeInLeft',
+                                        transitionOut: 'fadeOutRight',
+                                        onClosed: function(instance, toast, closedBy){
+                                           // Reload the window after the toast is closed
+                                           setTimeout(function() {
+                                               window.location.reload();
+                                           }, 500); // Adjust the delay as needed
+                                       }
+                                    });
+                                    var toast = document.querySelector('.iziToast');
+                                    toast.style.top = '55px';
+                                },
+    
+                                error: function(xhr, status, error) {
+                                    console.log(status);
+                                    var errorMessage = xhr.responseText;
+                                    iziToast.warning({
+                                        message: errorMessage,
+                                        icon: 'fa fa-exclamation-triangle',
+                                        position: 'topCenter',
+                                        timeout: 5000,
+                                        progressBarColor: 'red',
+                                        backgroundColor: '#f5d1d3',
+                                        padding: '20px',
+                                        transitionIn: 'fadeInLeft',
+                                        transitionOut: 'fadeOutRight'
+                                    });
+                                    var toast = document.querySelector('.iziToast');
+                                    toast.style.top = '55px';
+                                }
+                            });
+                              
+                          
+                        }
+                    });
+        
+                   
+            });
+        </script>
+                      
+                        
+                        <div class="tab-pane fade" id="password" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                   
+                                    <h5 class="card-title mb-0">Password</h5>
+                                </div>
+                                <div class="card-body">
+                                    
+                                    <form id="passwordForm">
+                                        <div class="form-group">
+                                            <label for="inputPasswordCurrent">Current password</label>
+                                            <input type="password" class="form-control" name="cpassword" id="cpassword">
+                                            <span id="cpasMsg"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew">New password</label>
+                                            <input type="password" class="form-control" id="npassword" name="npassword">
+                                            <span id="npasMsg"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew2">Verify password</label>
+                                            <input type="password" class="form-control" id="vpassword" name="vpassword">
+                                            <span id="vpasMsg"></span>
+                                        </div>
+                                        <button type="submit" id="pasBtn" class="btn btn-primary px-4">Save</button>
+                                    </form>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+            $(document).ready(function() {
+                // set initially button state hidden
+                
+                
+                // use keyup event on password
+                $("#cpassword").keyup(function(){
+                    // check
+                    if(cvalidatePassword()){
+                        // set input password border green
+                        $("#cpassword").css("border","1px solid #ced4da");
+                        //set passMsg 
+                        $("#cpasMsg").html(" ");
+                    }else{
+                            // set input password border red
+                        
+                    }
+                    
+                });
+            
+                $("#npassword").keyup(function(){
+                    // check
+                    if(nvalidatePassword()){
+                        // set input password border green
+                        $("#npassword").css("border","1px solid #ced4da");
+                        //set passMsg 
+                        $("#npasMsg").html(" ");
+                    }else{
+                    
+                    }
+                    
+                });
+                
+                
+                
+                $("#vpassword").keyup(function(){
+                    // check
+                    if(vvalidatePassword()){
+                        // set input password border green
+                        $("#vpassword").css("border","2px solid #ced4da");
+                        //set passMsg 
+                        $("#vpasMsg").html("");
+                    }else{
+                            // set input password border red
+                        
+                    }
+                    
+                });
+                
+            
+            function cvalidatePassword(){
+                //get input password value
+                var pass=$("#cpassword").val();
+                if (pass === null || pass.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#cpassword").css("border", "2px solid red");
+                    $("#cpasMsg").html("<p class='text-danger'>Passwrod cannot be empty.</p>");
+                    return false;
+                }
+                // check it s length
+                if(pass.length >= 5){
+                    return true;
+                }else{
+                    $("#cpassword").css("border","2px solid red");
+                    //set passMsg 
+                    $("#cpasMsg").html("<p class='text-danger'>Please enter valid confirm password.</p>");
+                    return false;
+                }
+        
+            }
+            
+            function nvalidatePassword(){
+                //get input password value
+                var pass=$("#npassword").val();
+                if (pass === null || pass.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#npassword").css("border", "2px solid red");
+                    $("#npasMsg").html("<p class='text-danger'>Passwrod cannot be empty.</p>");
+                    return false;
+                }
+                // check it s length
+                if(pass.length >= 5){
+                    return true;
+                }else{
+                    // set input password border red
+                    $("#npassword").css("border","2px solid red");
+                    //set passMsg 
+                    $("#npasMsg").html("<p class='text-danger'>Please enter valid new password.</p>");
+                    return false;
+                }
+        
+            }
+            function vvalidatePassword(){
+                //get input password value
+                var pass=$("#vpassword").val();
+                if (pass === null || pass.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#vpassword").css("border", "2px solid red");
+                    $("#vpasMsg").html("<p class='text-danger'>Passwrod cannot be empty.</p>");
+                    return false;
+                }
+                // check it s length
+                if(pass.length >= 5){
+                    return true;
+                }else{
+                    $("#vpassword").css("border","2px solid red");
+                    //set passMsg 
+                    $("#vpasMsg").html("<p class='text-danger'>Please enter valid vierify password.</p>");
+                    return false;
+                }
+        
+            }
+                $("#passwordForm").submit(function(event) {
+                    event.preventDefault(); // prevent form from submitting and reloading the page
+                    var cpas = $("#cpassword").val();
+                    var vpas = $("#vpassword").val();
+                    var npas = $("#npassword").val();
+                    
+                    cvalidatePassword();
+                    nvalidatePassword();
+                    vvalidatePassword();
+                    if (cvalidatePassword() && nvalidatePassword() && vvalidatePassword()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/pasChange',
+                        data: {
+                            cpas: cpas,
+                            vpas: vpas,
+                            npas: npas
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            var successMessage = response;
+        
+                            // Display the success toast
+                            iziToast.success({
+                                title: 'Success',
+                                message: successMessage,
+                                position: 'topCenter',
+                                timeout: 5000,
+                                progressBarColor: 'green',
+                                transitionIn: 'fadeInLeft',
+                                transitionOut: 'fadeOutRight'
+                            });
+                            var toast = document.querySelector('.iziToast');
+                            toast.style.top = '55px';
+                        },
+        
+                        error: function(xhr, status, error) {
+                            console.log(status);
+                            var errorMessage = xhr.responseText;
+                            iziToast.warning({
+                                message: errorMessage,
+                                icon: 'fa fa-exclamation-triangle',
+                                position: 'topCenter',
+                                timeout: 5000,
+                                progressBarColor: 'red',
+                                backgroundColor: '#f5d1d3',
+                                padding: '20px',
+                                transitionIn: 'fadeInLeft',
+                                transitionOut: 'fadeOutRight'
+                            });
+                            var toast = document.querySelector('.iziToast');
+                            toast.style.top = '55px';
+                        }
+                    });
+                    }
+                });
+            });
+        </script>
+                        
+                        <div class="tab-pane fade" id="contactUs" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                   
+                                    <h5 class="card-title mb-0">Contact Info</h5>
+                                </div>
+                                <div class="card-body">
+        
+                                    <form id="contactForm">
+                                        <div class="form-group">
+                                            <label for="inputPasswordCurrent">Address</label>
+                                            <input type="text" class="form-control" id="contactAddress" name="address" placeholder="Address">
+                                            <span id="addMsg"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordCurrent">Email</label>
+                                            <input type="email" class="form-control" id="contactEmail" name="contactEmail" placeholder="Email">
+                                            <span id="contactEmailMsg"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew">Phone Number</label>
+                                            <input type="text" class="form-control" id="contactPhone" name="phone" placeholder="Phone Number">
+                                            <span id="phoneMsg"></span>
+                                        </div>
+                                        
+                                        <button type="submit" id="contactBtn" class="btn btn-primary px-4">Save</button>
+                                    </form>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+            $(document).ready(function() {
+                
+           
+                $("#contactEmail").keyup(function(){
+                        if(validateEmail()){
+                            // if the email is validated
+                            // set input email border green
+                            $("#contactEmail").css("border","1px solid #ced4da");
+                            // and set label 
+                            $("#contactEmailMsg").html(" ");
+                        }else{
+                            // if the email is not validated
+                            // set border red
+                            
+                        }
+                        buttonState();
+                    });
+                $("#contactAddress").keyup(function(){
+                    if(validateAddress()){
+                        // if the email is validated
+                        // set input email border green
+                        $("#contactAddress").css("border","1px solid #ced4da");
+                        // and set label 
+                        $("#addMsg").html(" ");
+                    }else{
+                        // if the email is not validated
+                        // set border red
+                        
+                    }
+                    buttonState();
+                });
+                
+                $("#contactPhone").keyup(function(){
+                    if(validatePhoneNumber()){
+                        // if the email is validated
+                        // set input email border green
+                        $("#contactPhone").css("border","1px solid #ced4da");
+                        // and set label 
+                        $("#phoneMsg").html(" ");
+                    }else{
+                        // if the email is not validated
+                        // set border red
+                        
+                    }
+                    buttonState();
+                });
+                
+                
+            
+            
+            function validateAddress() {
+                var address = $("#contactAddress").val();
+                if (address === null || address.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#contactAddress").css("border", "2px solid red");
+                    $("#addMsg").html("<p class='text-danger'>Address cannot be empty.</p>");
+                    return false;
+                }
+                if (address.trim().length > 0) {
+                    // Address is valid
+                    
+                    return true;
+                } else {
+                    // Address is empty or invalid
+                    $("#contactAddress").css("border","2px solid red");
+                    $("#addMsg").html("<p class='text-danger'>Please enter valid address.</p>");
+                    return false;
+                }
+            }
+        
+            function validateEmail() {
+                var email = $("#contactEmail").val();
+                if (email === null || email.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#contactEmail").css("border","2px solid red");
+                    $("#contactEmailMsg").html("<p class='text-danger'>Email cannot be empty.</p>");
+                    return false;  
+                }
+                var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                if (emailPattern.test(email)) {
+                    // Email is valid
+                    
+                    return true;
+                } else {
+                    // Email is empty or invalid
+                    $("#contactEmail").css("border","2px solid red");
+                    $("#contactEmailMsg").html("<p class='text-danger'>Please enter valid address.</p>");
+                    return false;
+                }
+            }
+        
+            function validatePhoneNumber() {
+                var phoneNumber = $("#contactPhone").val();
+                if (phoneNumber === null || phoneNumber.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#contactPhone").css("border", "2px solid red");
+                    $("#phoneMsg").html("<p class='text-danger'>Phone number cannot be empty.</p>");
+                    return false;
+                }
+                var phonePattern = /^((09|\+?959|\+?95 9)([2-9]\d{8}|[2-9]\d{7}|[2-9]\d{6}))$/;
+                if (phonePattern.test(phoneNumber)) {
+                    // Phone number is valid
+                    
+                    return true;
+                } else {
+                    // Phone number is empty or invalid
+                    $("#contactPhone").css("border","2px solid red");
+                    $("#phoneMsg").html("<p class='text-danger'>Please enter valid phone number.</p>");
+                    return false;
+                }
+            }
+            
+                $("#contactForm").submit(function(event) {
+                    event.preventDefault(); // prevent form from submitting and reloading the page
+                    var email = $("#contactEmail").val();
+                    var phone = $("#contactPhone").val();
+                    var address = $("#contactAddress").val();
+                    
+                    validateAddress();
+                    validateEmail();
+                    validatePhoneNumber();
+                    
+                    if(validateAddress() && validateEmail() && validatePhoneNumber()){
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/contactInfo',
+                        data: {
+                            email: email,
+                            phone: phone,
+                            address:address
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            var successMessage = response;
+        
+                            // Display the success toast
+                            iziToast.success({
+                                title: 'Success',
+                                message: successMessage,
+                                position: 'topCenter',
+                                timeout: 5000,
+                                progressBarColor: 'green',
+                                transitionIn: 'fadeInLeft',
+                                transitionOut: 'fadeOutRight'
+                            });
+                            var toast = document.querySelector('.iziToast');
+                            toast.style.top = '55px';
+                        },
+        
+                        error: function(xhr, status, error) {
+                            console.log(status);
+                            var errorMessage = xhr.responseText;
+                            iziToast.warning({
+                                message: errorMessage,
+                                icon: 'fa fa-exclamation-triangle',
+                                position: 'topCenter',
+                                timeout: 5000,
+                                progressBarColor: 'red',
+                                backgroundColor: '#f5d1d3',
+                                padding: '20px',
+                                transitionIn: 'fadeInLeft',
+                                transitionOut: 'fadeOutRight'
+                            });
+                            var toast = document.querySelector('.iziToast');
+                            toast.style.top = '55px';
+                        }
+                    });
+                    }
+                });
+            });
+        </script>
+                        
+                        <div class="tab-pane fade" id="emailConfigure" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                   
+                                    <h5 class="card-title mb-0">Email Configuration</h5>
+                                </div>
+                                <div class="card-body">
+                                   
+                                    <form id="emailConfigureForm">
+                                        <div class="form-group">
+                                            <label for="inputPasswordCurrent">Host Name</label>
+                                            <input type="text" class="form-control" id="inputHost" name="host" value="smtp.example.com" disabled>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew">Port Number</label>
+                                            <input type="text" class="form-control" id="inputPort" name="port" value="587" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew2">Email</label>
+                                            <input type="email" class="form-control" id="configName" name="name" th:value="${session.configEmail}">
+                                            <span id="configNameMsg"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPasswordNew2">App Passwords</label>
+                                            <input type="password" class="form-control" id="configPas" name="pas" th:value="${session.configPas}">
+                                            <span id="configPasMsg"></span>
+                                        </div>
+                                        <button type="submit" id="configBtn" class="btn btn-primary px-4">Save</button>
+                                    </form>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                       $(document).ready(function() {
+                            // AJAX request for updating email configuration
+                       
+                       $("#configName").keyup(function(){
+                        if(validateEmail()){
+                            // if the email is validated
+                            // set input email border green
+                            $("#configName").css("border","1px solid #ced4da");
+                            // and set label 
+                            $("#configNameMsg").html(" ");
+                        }else{
+                            // if the email is not validated
+                            // set border red
+                            
+                        }
+                        
+                    });
+                       $("#configPas").keyup(function(){
+                           if(validatePassword()){
+                               // if the email is validated
+                               // set input email border green
+                               $("#configPas").css("border","1px solid #ced4da");
+                               // and set label 
+                               $("#configPasMsg").html(" ");
+                           }else{
+                               // if the email is not validated
+                               // set border red
+                               
+                           }
+                           
+                       });
+                      
+                       function validateEmail() {
+                           var email = $("#configName").val();
+                        if (email === null || email.trim() === '') {
+                         // If the name is null or empty
+                         console.log("null");
+                         $("#configName").css("border", "2px solid red");
+                         $("#configNameMsg").html("<p class='text-danger'>Email cannot be empty.</p>");
+                         return false;
+                     }
+                           var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                           if (emailPattern.test(email)) {
+                               // Email is valid
+                               
+                               return true;
+                           } else {
+                               // Email is empty or invalid
+                               $("#configName").css("border","2px solid red");
+                            $("#configNameMsg").html("<p class='text-danger'>Please enter valid email.</p>");
+                               return false;
+                           }
+                       }
+                       function validatePassword(){
+                           //get input password value
+                           var pass=$("#configPas").val();
+                           if (pass === null || pass.trim() === '') {
+                            // If the name is null or empty
+                            console.log("null");
+                            $("#configPas").css("border", "2px solid red");
+                            $("#configPasMsg").html("<p class='text-danger'>Password cannot be empty.</p>");
+                            return false;
+                        }
+                           // check it s length
+                           if(pass.length >= 16){
+                               return true;
+                           }else{
+                               $("#configPas").css("border","2px solid red");
+                               $("#configPasMsg").html("<p class='text-danger'>Please enter valid password.</p>");
+                               return false;
+                           }
+        
+                       }
+                            $("#emailConfigureForm").submit(function(event) {
+                                event.preventDefault(); // prevent form from submitting and reloading the page
+                                var name = $("#configName").val();
+                                var pas = $("#configPas").val();
+                                validateEmail();
+                                validatePassword();
+                                if(validateEmail() &&  validatePassword()){
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/admin/sendEmail',
+                                    data: {
+                                        username: name,
+                                        password: pas
+                                    },
+                                    success: function(response) {
+                                        console.log(response);
+                                        
+                                        var successMessage = response.message;
+        
+                                        // Update the form HTML
+                                       
+        
+                                        // Display the success toast
+                                        iziToast.success({
+                                            title: 'Success',
+                                            message: successMessage,
+                                            position: 'topCenter',
+                                            timeout: 5000,
+                                            progressBarColor: 'green',
+                                            transitionIn: 'fadeInLeft',
+                                            transitionOut: 'fadeOutRight'
+                                        });
+                                        var toast = document.querySelector('.iziToast');
+                                        toast.style.top = '55px';
+                                    },
+        
+                                    error: function(xhr, status, error) {
+                                        console.log(status);
+                                        var errorMessage = xhr.responseText;
+                                        iziToast.warning({
+                                            message: errorMessage,
+                                            icon: 'fa fa-exclamation-triangle',
+                                            position: 'topCenter',
+                                            timeout: 5000,
+                                            progressBarColor: 'red',
+                                            backgroundColor: '#f5d1d3',
+                                            padding: '20px',
+                                            transitionIn: 'fadeInLeft',
+                                            transitionOut: 'fadeOutRight'
+                                        });
+                                        var toast = document.querySelector('.iziToast');
+                                        toast.style.top = '55px';
+                                    }
+                                });
+                                }
+                            });
+                        });
+        
+                        </script>
+                        
+                        <div  class="tab-pane fade" id="notifications" role="tabpanel">
+                            <h6>NOTIFICATION SETTINGS</h6>
+                            <hr>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">Lunch Remind</label>
+                              </div>
+                          </div>
+                          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                          <script>
+            $(document).ready(function() {
+                var toggleValue = '[[${session.toggle}]]'; // Replace with the actual value from your backend
+                console.log(toggleValue);
+                // Set the toggle switch based on the toggleValue
+                if (toggleValue == 'true') {
+                    $('#customSwitch1').prop('checked', true);
+                } else {
+                    $('#customSwitch1').prop('checked', false);
+                }
+            });
+        </script>
+                          
+                          <div class="tab-pane fade" id="Remind" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                   
+                                    <h5 class="card-title mb-0">Remind Date and Time</h5>
+                                </div>
+                                <div class="card-body">
+                                   
+                                    <form id="RemindForm">
+                                        <div class="form-group">
+                                            <label for="inputPasswordCurrent">Import Date and Time</label>                                
+                                            <input type="datetime-local" class="form-control" id="dateTime" name="datetime">
+                                            <span id="dateTimeMsg"></span>
+                                        </div>                  
+                                        <button type="submit" id="remindBtn" class="btn btn-primary">Save</button>
+                                    </form>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+       </main>
+		
+     </section>   
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+    <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+ 
+     <script>
+        $(document).ready(function() {
+             $("#dateTime").keyup(function(){
+                    if(validateDateTime()){
+                        // if the email is validated
+                        // set input email border green
+                        $("#dateTime").css("border","1px solid #ced4da");
+                        // and set label 
+                        $("#dateTimeMsg").html(" ");
+                    }else{
+                        // if the email is not validated
+                        // set border red
+                        
+                    }
+                    
+                });
+               
+            function validateDateTime() {
+                var dateTime = $("#dateTime").val();
+               
+                   if (dateTime === null || dateTime.trim() === '') {
+                    // If the name is null or empty
+                    console.log("null");
+                    $("#dateTime").css("border", "2px solid red");
+                    $("#dateTimeMsg").html("<p class='text-danger'>Date and time cannot be empty.</p>");
+                    return false;
+                }
+                // Replace the pattern with your desired datetime pattern
+                var dateTimePattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
+                if (dateTimePattern.test(dateTime)) {
+                    // Datetime is valid
+                    return true;
+                } else {
+                    // Datetime is empty or invalid
+                    $("#dateTime").css("border","2px solid red");
+                    $("#dateTimeMsg").html("<p class='text-danger'>Please enter valid password.</p>");
+                    return false;
+                }
+            }
+            $("#RemindForm").submit(function(event) {
+                event.preventDefault(); // prevent form from submitting and reloading the page
+                var dateTimeValue = $("#dateTime").val();
+                
+                validateDateTime();
+                if( validateDateTime()){
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/remindSchedule',
+                    data: {
+                        datetime: dateTimeValue
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        var successMessage = response.message;
+    
+                        // Display the success toast
+                        iziToast.success({
+                            title: 'Success',
+                            message: successMessage,
+                            position: 'topCenter',
+                            timeout: 5000,
+                            progressBarColor: 'green',
+                            transitionIn: 'fadeInLeft',
+                            transitionOut: 'fadeOutRight'
+                        });
+                        var toast = document.querySelector('.iziToast');
+                        toast.style.top = '55px';
+                    },
+    
+                    error: function(xhr, status, error) {
+                        console.log(status);
+                        var errorMessage = xhr.responseText;
+                        iziToast.warning({
+                            message: errorMessage,
+                            icon: 'fa fa-exclamation-triangle',
+                            position: 'topCenter',
+                            timeout: 5000,
+                            progressBarColor: 'red',
+                            backgroundColor: '#f5d1d3',
+                            padding: '20px',
+                            transitionIn: 'fadeInLeft',
+                            transitionOut: 'fadeOutRight'
+                        });
+                        var toast = document.querySelector('.iziToast');
+                        toast.style.top = '55px';
+                    }
+                });
+                }
+            });
+        });
+    </script>
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-kPvG++WELT8Pn7GzDxs/V1I28R2C8mdgk0c1ZLdMjbqsX3OiF8C3d/5+FxO5e5/Z" crossorigin="anonymous"></script>
+    <!-- Add jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <!-- Add the following script -->
+    <script>
+    $(document).ready(function() {
+      $('#customSwitch1').on('change', function() {
+        var switchValue = $(this).prop('checked');
+        $.ajax({
+          url: '/toogle',
+          method: 'POST',
+          data: { switchValue: switchValue },
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+        });
+      });
+    });
+    
+    </script>
+    
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

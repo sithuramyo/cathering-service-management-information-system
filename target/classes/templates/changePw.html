@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email & password validation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Source Sans Pro", sans-serif;
+        }
+        
+        body {
+            background: #2c3e50;
+        }
+        
+        .custom-card {
+            width: 400px; /* Adjust the width as needed */
+            height: 350px; /* Adjust the height as needed */
+            margin-top: 20px; /* Add the desired margin-top value */
+        }
+        .email{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-5">
+                <div class="card shadow px-3 py-2 custom-card">
+                    <div class="card-body">
+                        <form th:action="@{/reset_password}" method="post" style="max-width: 420px; margin: 0 auto;" id="changePas">                          
+                            <h3 class="text-center" style="font-size: 25px;">Change Your Password!</h3>
+                            <br>
+                            <div class="form-group email">
+                                <input class="form-control" type="password" name="password" id="password" placeholder="New Password" />
+                                <span id="pasMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="cpassword" id="cpassword" placeholder="Confirm Password" />                               
+                                <span id="cpasMsg"></span>
+                            </div>
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary btn-block" id="btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+            $("#password").keyup(function(){
+                validatePassword();
+            });
+        
+            $("#cpassword").keyup(function(){
+                validateCPassword();
+            });
+        
+            function validatePassword(){
+                var pass = $("#password").val();
+                if (pass === null || pass.trim() === '') {
+                    $("#password").css("border", "2px solid red");
+                    $("#pasMsg").html("<p class='text-danger'>Password cannot be empty.</p>");
+                    return false;
+                }
+                if (pass.length >= 5) {
+                    $("#password").css("border", "2px solid green");
+                    $("#pasMsg").html("<p class='text-success'>Password is valid.</p>");
+                    return true;
+                } else {
+                    $("#password").css("border", "2px solid red");
+                    $("#pasMsg").html("<p class='text-danger'>Please enter a valid password (minimum 5 characters).</p>");
+                    return false;
+                }
+            }
+        
+            function validateCPassword(){
+                var pass = $("#password").val();
+                var cpass = $("#cpassword").val();
+                if (cpass === null || cpass.trim() === '') {
+                    $("#cpassword").css("border", "2px solid red");
+                    $("#cpasMsg").html("<p class='text-danger'>Confirm password cannot be empty.</p>");
+                    return false;
+                }
+                if (cpass === pass) {
+                    $("#cpassword").css("border", "2px solid green");
+                    $("#cpasMsg").html("<p class='text-success'>Confirm password is valid.</p>");
+                    return true;
+                } else {
+                    $("#cpassword").css("border", "2px solid red");
+                    $("#cpasMsg").html("<p class='text-danger'>Passwords do not match.</p>");
+                    return false;
+                }
+            }
+        
+            $("#changePas").submit(function(event) {
+                var isPasswordValid = validatePassword();
+                var isCPasswordValid = validateCPassword();
+                if (!isPasswordValid || !isCPasswordValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+    <script th:inline="javascript">
+    var errorOtpMessage = /*[[${errorOtpMessage}]]*/ null;
+
+    if (errorOtpMessage && errorOtpMessage.trim() !== "") {
+    	iziToast.warning({
+            message: errorOtpMessage,
+            icon: 'fa fa-exclamation-triangle',
+            position: 'topCenter',
+            timeout: 5000,
+            progressBarColor: 'red',
+            backgroundColor: '#f5d1d3',
+            padding: '20px',
+            transitionIn: 'fadeInLeft',
+            transitionOut: 'fadeOutRight'
+        });
+       
+    }
+
+</script>
+</body>
+</html>

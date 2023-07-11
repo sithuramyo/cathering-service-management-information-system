@@ -1,0 +1,114 @@
+#modal-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding-top: 30px;
+    opacity: 0;
+    transition: 0.5s ease all;
+    z-index: 99999;
+}
+
+#modal-wrapper.active {
+    opacity: 1;
+}
+
+#modal-wrapper.active #modal-confirmation {
+    margin-top: 0;
+    opacity: 1;
+}
+
+
+#modal-confirmation {
+    display: inline-block;
+    margin-top: -30px;
+    opacity: 0;
+    max-width: 400px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background: #fff;
+    text-align: left;
+    transition: 0.5s ease all;
+}
+
+#modal-headers {
+    position: relative;
+    background:#4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#modal-header h5 {
+    font-weight: 300;
+    margin: 0;
+}
+#modal-header h5 {
+    font-weight: 300;
+    margin: 0;
+}
+#modal-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#modal-close:hover {
+    color: #fff;
+}
+
+#modal-content {
+    padding: 30px 15px;
+}
+
+#modal-content p {
+    margin: 0;
+    color: #61686e;
+}
+
+#modal-buttons {
+    padding: 0 15px 15px 15px;
+    text-align: right;
+}
+
+#modal-button-no {
+    border: 2px solid #4290f5;
+    padding: 10px 30px;
+    background: #fff;
+    color: #98a1a9;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+}
+
+#modal-button-no:hover {
+    background: #4290f5;
+    color: #fff;
+}
+
+#modal-button-yess {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 10px;
+}
+
+#modal-button-yess:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}

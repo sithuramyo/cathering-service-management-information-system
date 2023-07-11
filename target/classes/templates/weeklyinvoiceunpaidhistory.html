@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	   <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+	<link th:href="@{/css/style.css}" rel="stylesheet" />
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link th:href="@{/css/deleteconfirm.css}" rel="stylesheet" />
+
+	<title>Weekly Invoice Unpaid List</title>
+</head>
+<style>
+  #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+</style>
+<body>
+<section id="sidebar">
+    <a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+    <ul class="side-menu top">
+        <li>
+            <a th:href="@{/}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+          <li th:if="${session.staffid ne 'default_admin'}">
+            <a th:href="@{/admin/cateringStart}">
+              <i class="bx bx-dish"></i>
+
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+  
+ <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li class="active">
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+        
+    </ul>
+
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+	 <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+          <nav>
+
+			<i class='bx bx-menu' ></i>	
+			<input type="checkbox" id="switch-mode" hidden>
+	
+		</nav>
+	<div class="container mt-5">
+		<div class="col-md-12">
+  <div class="row justify-content-start">
+    <div class="col-md-2 mb-3" style="margin-left:5px;margin-right:-15px;">
+      Start Date :  <input type="date" class="form-control" id="start_date">
+    </div>
+    <div class="col-md-2 mb-3">
+      End Date :  <input type="date" class="form-control" id="end_date">
+    </div>
+    <div class="col-md-4 mt-4 mb-3 mr-2">
+      <button id="searchBtn" class="btn btn-primary">Search</button>
+    
+      <button id="resetBtn" class="btn btn-secondary">Reset</button>
+    </div>
+     <div class="col-md-2 mt-4 mb-3 mr-3">
+      <button id="deleteAllBtn" type="button" class="btn btn-danger" th:if="${session.result != 0}">Delete All</button>
+    </div>
+  </div>
+</div>
+		<div class="row mt-5 mx-auto" id="card-container">
+    <div class="col-sm-4" th:each="data,index: ${session.hlist}">
+      <div class="card d-flex flex-column">
+        <div class="image">
+        <a th:href="@{/admin/calWeeklyUnpaidInvoice/{id}(id=${data.id})}">
+            <img src="/image/invoiceImg.png" alt="Logo" />
+          </a>
+        </div>
+        <div class="card-inner d-flex flex-column justify-content-between">
+          <div class="header">
+            <h5 style="font-size: 16px;">
+                Save Date: <span th:text="${data.paymentdate}"></span>
+            </h5>
+            <h5 style="font-size: 16px;">
+               Invoice for: <span th:text="${data.invoicedate}"></span>
+            </h5>
+            <div class="d-flex justify-content-end">
+         	<i id="trash-icon-${data.id}" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>
+          	<input type="hidden" th:value="${data.id}" th:name="id" name="id" id="invoiceUnPaidId"/>
+        	</div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+	</div>
+	</section>   
+	
+    <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	$(document).ready(function() {
+		  // Add event listener to the button
+	$("#deleteAllBtn").click(function() {
+    var userResult = function(result) {
+        if (result === 1) {
+    $.ajax({
+      url: '/admin/deleteAllUnpaid',
+      type: 'GET',
+     
+      success: function(response) {
+          console.log(response);
+          $("#deleteAllBtn").hide();
+          var cardContainer = $("#card-container");
+
+          // Hide the card container
+          cardContainer.hide();
+
+          // Clear the existing cards
+          cardContainer.empty();
+
+          // Create an empty container to store the HTML for all the cards
+          var cardsHtml = '';
+
+          // Iterate over the response and generate the HTML for each card
+          response.wi.forEach(function(data) {
+            // Generate the HTML for each card
+            var cardHtml = '<div class="col-sm-4">' +
+    '<div class="card d-flex flex-column">' +
+    '<div class="image">' +
+    '<a href="/admin/calWeeklyUnpaidInvoice/' + data.id + '">' +
+    '<img src="/image/invoiceImg.png" alt="Logo" />' +
+    '</a>' +
+    '</div>' +
+    '<div class="card-inner d-flex flex-column justify-content-between">' +
+    '<div class="header">' +
+    '<h5 style="font-size: 16px;">Save Date: <span>' + ' ' + data.paymentdate + '</span></h5>' +
+    '<h5 style="font-size: 16px;">Invoice for: <span>' + ' ' + data.invoicedate + '</span></h5>' +
+    '<div class="d-flex justify-content-end">' +
+    '<i id="trash-icon-' + data.id + '" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>' +
+    '<input type="hidden"  value="' + data.id + '" name="id" name="id" id="id" />' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
+            // Append the card HTML to the container
+            cardsHtml += cardHtml;
+          });
+
+          // Append all the cards to the card container in one operation
+          cardContainer.append(cardsHtml);
+
+          // Show the card container after updating
+          cardContainer.show();
+
+          // Display success message using iziToast
+          var successMessage = response.message;
+          iziToast.success({
+              title: 'Success',
+              message: successMessage,
+              position: 'topCenter',
+              timeout: 5000,
+              progressBarColor: 'green',
+              transitionIn: 'fadeInLeft',
+              transitionOut: 'fadeOutRight',		    	     
+          });
+          var toast = document.querySelector('.iziToast');
+          toast.style.top = '55px';
+        },
+      
+
+error: function(xhr, status, error) {
+  console.log(status);
+  var errorMessage = response;
+  iziToast.warning({
+      message: errorMessage,
+      icon: 'fa fa-exclamation-triangle',
+      position: 'topCenter',
+      timeout: 5000,
+      progressBarColor: 'red',
+      backgroundColor: '#f5d1d3',
+      padding: '20px',
+      transitionIn: 'fadeInLeft',
+      transitionOut: 'fadeOutRight'
+  });
+  var toast = document.querySelector('.iziToast');
+  toast.style.top = '55px';
+}
+    });
+}
+else {
+    return true;
+}
+    }
+    toggleModal('Are you sure you want to delete all?', userResult);
+  });
+	});
+  function toggleModal(text, callback) {
+    $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+
+    $modal = $('<div id="modal-confirmation"><div id="modal-header"><h5><i class="bx bxs-error-circle" aria-hidden="true"></i> Confirm Delete</h5><span data-confirm="0" class="modal-action" id="modal-close"><i class="fa fa-times" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm="0" id="modal-button-no">No</button><button class="modal-action" data-confirm="1" id="modal-button-yes">Yes</button></div></div>').appendTo($wrapper);
+
+    setTimeout(function() {
+      $wrapper.addClass('active');
+    }, 100);
+
+    $wrapper.find('.modal-action').click(function() {
+      var result = $(this).data('confirm');
+      $wrapper.removeClass('active').delay(500).queue(function() {
+        $wrapper.remove();
+        callback(result);
+      });
+    });
+  }
+	</script>
+	<script>
+	// Add event listener to trash icons
+	$(document).on('click', '.trash-icon', function() {
+		  
+	    var id = $("#invoiceUnPaidId").val(); 
+	    console.log('InvoiceId ' + id);
+	    // Perform AJAX POST request
+	    var userResult = function(result) {
+	        if (result === 1) {
+	    $.ajax({
+	      url: '/admin/deleteUnpaidInvoice',
+	      type: 'POST',
+	      data: { invoiceUnPaidId: id },
+	      success: function(response) {
+	          console.log(response);
+	          
+	          var cardContainer = $("#card-container");
+
+	          // Hide the card container
+	          cardContainer.hide();
+
+	          // Clear the existing cards
+	          cardContainer.empty();
+
+	          // Create an empty container to store the HTML for all the cards
+	          var cardsHtml = '';
+
+	          // Iterate over the response and generate the HTML for each card
+	          response.wi.forEach(function(data) {
+	            // Generate the HTML for each card
+	          var cardHtml = '<div class="col-sm-4">' +
+    '<div class="card d-flex flex-column">' +
+    '<div class="image">' +
+    '<a href="/admin/calWeeklyUnpaidInvoice/' + data.id + '">' +
+    '<img src="/image/invoiceImg.png" alt="Logo" />' +
+    '</a>' +
+    '</div>' +
+    '<div class="card-inner d-flex flex-column justify-content-between">' +
+    '<div class="header">' +
+    '<h5 style="font-size: 16px;">Save Date: <span>' + ' ' + data.paymentdate + '</span></h5>' +
+    '<h5 style="font-size: 16px;">Invoice for: <span>' + ' ' + data.invoicedate + '</span></h5>' +
+    '<div class="d-flex justify-content-end">' +
+    '<i id="trash-icon-' + data.id + '" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>' +
+    '<input type="hidden"  value="' + data.id + '" name="id" name="id" id="id" />' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
+	            // Append the card HTML to the container
+	            cardsHtml += cardHtml;
+	          });
+
+	          // Append all the cards to the card container in one operation
+	          cardContainer.append(cardsHtml);
+
+	          // Show the card container after updating
+	          cardContainer.show();
+
+	          // Display success message using iziToast
+	          var successMessage = response.message;
+	          iziToast.success({
+	              title: 'Success',
+	              message: successMessage,
+	              position: 'topCenter',
+	              timeout: 5000,
+	              progressBarColor: 'green',
+	              transitionIn: 'fadeInLeft',
+	              transitionOut: 'fadeOutRight',		    	     
+	          });
+	          var toast = document.querySelector('.iziToast');
+	          toast.style.top = '55px';
+	          if(response.wi.length === 0){
+	        	  $("#deleteAllBtn").hide();
+	          }
+	        },
+	      
+
+	error: function(xhr, status, error) {
+	  console.log(status);
+	  
+	  iziToast.warning({
+	      message: errorMessage,
+	      icon: 'fa fa-exclamation-triangle',
+	      position: 'topCenter',
+	      timeout: 5000,
+	      progressBarColor: 'red',
+	      backgroundColor: '#f5d1d3',
+	      padding: '20px',
+	      transitionIn: 'fadeInLeft',
+	      transitionOut: 'fadeOutRight'
+	  });
+	  var toast = document.querySelector('.iziToast');
+	  toast.style.top = '55px';
+	}
+	    });
+	}
+	else {
+	    return true;
+	}
+	    }
+	    toggleModal('Are you sure to delete now?', userResult);
+	  });
+	  function toggleModal(text, callback) {
+	    $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+
+	    $modal = $('<div id="modal-confirmation"><div id="modal-header"><h5><i class="bx bxs-error-circle" aria-hidden="true"></i> Confirm Delete</h5><span data-confirm="0" class="modal-action" id="modal-close"><i class="fa fa-times" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm="0" id="modal-button-no">No</button><button class="modal-action" data-confirm="1" id="modal-button-yes">Yes</button></div></div>').appendTo($wrapper);
+
+	    setTimeout(function() {
+	      $wrapper.addClass('active');
+	    }, 100);
+
+	    $wrapper.find('.modal-action').click(function() {
+	      var result = $(this).data('confirm');
+	      $wrapper.removeClass('active').delay(500).queue(function() {
+	        $wrapper.remove();
+	        callback(result);
+	      });
+	    });
+	  }
+	</script>
+	<script>
+	  $(document).ready(function() {
+		  $("#searchBtn").click(function() {
+	      event.preventDefault(); // prevent form from submitting and reloading the page
+
+	      // Get the start date and end date values
+	      var startDate = $("#start_date").val();
+	      var endDate = $("#end_date").val();
+
+	      // Create an object with the date values
+	      var formData = {
+	        startDate: startDate,
+	        endDate: endDate
+	      };
+
+	      // Send the Ajax request
+	      $.ajax({
+	    	  type: 'POST',
+	    	  url: '/admin/searchUnpaidList',
+	    	  contentType: 'application/json',
+	    	  data: JSON.stringify(formData),
+	    	  dataType: 'json',
+	    	  success: function(response) {
+	    	    console.log(response);
+	    	    var cardContainer = $("#card-container");
+
+	    	    // Hide the card container
+	    	    cardContainer.hide();
+
+	    	    // Clear the existing cards
+	    	    cardContainer.empty();
+
+	    	    // Create an empty container to store the HTML for all the cards
+	    	    var cardsHtml = '';
+
+	    	    // Iterate over the response and generate the HTML for each card
+	    	    response.wi.forEach(function(data) {
+	    	      // Generate the HTML for each card
+	    	     var cardHtml = '<div class="col-sm-4">' +
+    '<div class="card d-flex flex-column">' +
+    '<div class="image">' +
+    '<a href="/admin/calWeeklyUnpaidInvoice/' + data.id + '">' +
+    '<img src="/image/invoiceImg.png" alt="Logo" />' +
+    '</a>' +
+    '</div>' +
+    '<div class="card-inner d-flex flex-column justify-content-between">' +
+    '<div class="header">' +
+    '<h5 style="font-size: 16px;">Save Date: <span>' + ' ' + data.paymentdate + '</span></h5>' +
+    '<h5 style="font-size: 16px;">Invoice for: <span>' + ' ' + data.invoicedate + '</span></h5>' +
+    '<div class="d-flex justify-content-end">' +
+    '<i id="trash-icon-' + data.id + '" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>' +
+    '<input type="hidden"  value="' + data.id + '" name="id" name="id" id="id" />' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
+	    	      // Append the card HTML to the container
+	    	      cardsHtml += cardHtml;
+	    	    });
+
+	    	    // Append all the cards to the card container in one operation
+	    	    cardContainer.append(cardsHtml);
+
+	    	    // Show the card container after updating
+	    	    cardContainer.show();
+
+	    	    // Display success message using iziToast
+	    	    var successMessage = response.message;
+	    	    iziToast.success({
+                    title: 'Success',
+                    message: successMessage,
+                    position: 'topCenter',
+                    timeout: 5000,
+                    progressBarColor: 'green',
+                    transitionIn: 'fadeInLeft',
+                    transitionOut: 'fadeOutRight'
+                });
+	    	    var toast = document.querySelector('.iziToast');
+                toast.style.top = '55px';
+	    	  },
+	    	  error: function(xhr, status, error) {
+	    		  // Handle the error response from the controller
+	    		  console.log(status);
+	    		  var responseJson = JSON.parse(xhr.responseText);
+	    	      var errorMessage = responseJson.message;
+	    		  // Hide the card container
+	    		  var cardContainer = $("#card-container");
+      
+
+      // Clear the existing cards
+      cardContainer.empty();
+      console.log(xhr.responseJSON.wi.length);
+      // Check if wi size is not zero
+      if (xhr.responseJSON.wi.length > 0) {
+        // Create an empty container to store the HTML for all the cards
+        var cardsHtml = '';
+
+        // Iterate over the response and generate the HTML for each card
+        xhr.responseJSON.wi.forEach(function(data) {
+          // Generate the HTML for each card
+          console.log(data.id);
+          console.log(data.paymentdate);
+          console.log(data.starttoenddate);
+          var cardHtml = '<div class="col-sm-4">' +
+          '<div class="card d-flex flex-column">' +
+          '<div class="image">' +
+          '<a href="/admin/calWeeklyUnpaidInvoice/' + data.id + '">' +
+          '<img src="/image/invoiceImg.png" alt="Logo" />' +
+          '</a>' +
+          '</div>' +
+          '<div class="card-inner d-flex flex-column justify-content-between">' +
+          '<div class="header">' +
+          '<h5 style="font-size: 16px;">Save Date: <span>' + ' ' + data.paymentdate + '</span></h5>' +
+          '<h5 style="font-size: 16px;">Invoice for: <span>' + ' ' + data.invoicedate + '</span></h5>' +
+          '<div class="d-flex justify-content-end">' +
+          '<i id="trash-icon-' + data.id + '" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>' +
+          '<input type="hidden"  value="' + data.id + '" name="id" name="id" id="id" />' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>' +
+          '</div>';
+          // Append the card HTML to the container
+          cardsHtml += cardHtml;
+        });
+
+        // Append all the cards to the card container in one operation
+        cardContainer.append(cardsHtml);
+      }
+
+
+	    		  // Display error message using iziToast
+	    		  iziToast.error({
+	    		    title: 'Error',
+	    		    message: errorMessage,
+	    		    position: 'topCenter',
+	    		    timeout: 5000,
+	    		    progressBarColor: 'red',
+	    		    transitionIn: 'fadeInLeft',
+	    		    transitionOut: 'fadeOutRight'
+	    		  });
+	    		  var toast = document.querySelector('.iziToast');
+                  toast.style.top = '55px';
+	    		}
+
+	    	});
+
+	    });
+
+	    // Reset button click event
+	 // Reset button click event
+	    $("#resetBtn").click(function() {
+	        // Reset the form fields
+	        event.preventDefault();
+	        $("#start_date").val("");
+	        $("#end_date").val("");
+	        
+	        // AJAX request to the controller
+	        $.ajax({
+	            url: '/admin/UnpaidListReset',
+	            method: 'GET',
+	            success: function(response) {
+	                console.log(response);
+	                
+	                var cardContainer = $("#card-container");
+
+		    	    // Hide the card container
+		    	    cardContainer.hide();
+
+		    	    // Clear the existing cards
+		    	    cardContainer.empty();
+
+		    	    // Create an empty container to store the HTML for all the cards
+		    	    var cardsHtml = '';
+
+		    	    // Iterate over the response and generate the HTML for each card
+		    	    response.wi.forEach(function(data) {
+		    	      // Generate the HTML for each card
+		    	     var cardHtml = '<div class="col-sm-4">' +
+    '<div class="card d-flex flex-column">' +
+    '<div class="image">' +
+    '<a href="/admin/calWeeklyUnpaidInvoice/' + data.id + '">' +
+    '<img src="/image/invoiceImg.png" alt="Logo" />' +
+    '</a>' +
+    '</div>' +
+    '<div class="card-inner d-flex flex-column justify-content-between">' +
+    '<div class="header">' +
+    '<h5 style="font-size: 16px;">Save Date: <span>' + ' ' + data.paymentdate + '</span></h5>' +
+    '<h5 style="font-size: 16px;">Invoice for: <span>' + ' ' + data.invoicedate + '</span></h5>' +
+    '<div class="d-flex justify-content-end">' +
+    '<i id="trash-icon-' + data.id + '" class="bx bx-trash trash-icon" style="font-size: 30px; color: red;"></i>' +
+    '<input type="hidden"  value="' + data.id + '" name="id" name="id" id="id" />' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '</div>';
+		    	      // Append the card HTML to the container
+		    	      cardsHtml += cardHtml;
+		    	    });
+
+		    	    // Append all the cards to the card container in one operation
+		    	    cardContainer.append(cardsHtml);
+
+		    	    // Show the card container after updating
+		    	    cardContainer.show();
+
+		    	    // Display success message using iziToast
+		    	    var successMessage = response.message;
+		    	    iziToast.success({
+		    	        title: 'Success',
+		    	        message: successMessage,
+		    	        position: 'topCenter',
+		    	        timeout: 5000,
+		    	        progressBarColor: 'green',
+		    	        transitionIn: 'fadeInLeft',
+		    	        transitionOut: 'fadeOutRight',		    	        
+		    	    });
+		    	    var toast = document.querySelector('.iziToast');
+                    toast.style.top = '55px';
+		    	  },
+	            
+	    
+	    error: function(xhr, status, error) {
+            console.log(status);
+            iziToast.warning({
+                message: errorMessage,
+                icon: 'fa fa-exclamation-triangle',
+                position: 'topCenter',
+                timeout: 5000,
+                progressBarColor: 'red',
+                backgroundColor: '#f5d1d3',
+                padding: '20px',
+                transitionIn: 'fadeInLeft',
+                transitionOut: 'fadeOutRight'
+            });
+            var toast = document.querySelector('.iziToast');
+            toast.style.top = '55px';
+        }
+	    });
+	    });
+	  });
+	</script>
+</body>
+<!-- side bar script -->
+        <script src="/js/script.js"></script>
+</html>

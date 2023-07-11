@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="/css/sidebar.css">
+	<link rel="stylesheet" href="/css/post.css">
+	<link rel="stylesheet" href="/css/operatordashboard.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<!-- Link to Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<style type="text/css">
+.menu-error{
+	color:red;
+	font-weight:bold;
+	font-size:20px;
+}
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+       
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.grid-item {
+  position: relative;
+}
+
+.grid-item i {
+  color: #fff;
+  opacity: .2;
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+</style>
+	<title>OperatorHub</title>
+</head>
+<body>
+
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+		<ul class="side-menu top">
+			<li class="active">
+				<a th:href="@{/}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/operator/cateringStart}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Lunch Register</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/operator/feedback}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Feedback and Suggestions</span>
+				</a>
+			</li>
+			
+		
+		</ul>
+		<ul class="side-menu">
+			<li>
+				 <a th:href="@{/operator/operatorSetting}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				  <a th:href="@{/logout}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			
+			<input type="checkbox" id="switch-mode" hidden>
+			
+			
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		
+
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3>[[${registercost}]] MMK</h3>
+						<p>Registered Cost</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>[[${total}]] MMK</h3>
+						<p>Actual Cost Deducated from Salary</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3>[[${rneprice}]] MMK</h3>
+						<p>Lost Cost(Register Uneaten)</p>
+					</span>
+				</li>
+			</ul>
+			<br>
+			<ul class="grid-container">
+			 <li class="grid-item" id="import-header">
+
+			  <h3>DAT Cost: [[${session.datCost}]] MMK</h3>
+			  <i class="fas fa-dollar-sign"></i>
+			</li>
+			
+			  <li class="grid-item" id="import-header">
+			   
+			    <h3>Employee Cost: [[${session.empCost}]] MMK</h3>
+			    <i class="fas fa-dollar-sign"></i>
+			  </li>
+			</ul>
+
+			<div class="table-data">
+				<div class="todo">
+                      <div class="head">
+                          <h3> Menu for this week</h3>
+                       
+                      </div>
+                      <div class="fade-in-image">
+                          <div class="container text-center">
+                              <div th:text="${message}" class="menu-error"></div>
+                                  <div class="pdf-block">
+                                  
+                                     <th:block th:each="cateList : ${latestCatering}">
+                                         <div class="">
+                                             
+                                             <div class="pdf-blocks">
+                                                    <img th:src="@{'img/' + ${cateList.filename}}" width="450px" height="500px" ></div>
+                                             </div>
+                                            
+                                         </div>
+                                     </th:block>
+                          </div>
+                       </div>
+                  </div>
+				<div class="todo" >
+					
+					<div style="display: flex;justify-content: center;">
+						<input type="hidden" th:value="${registrationdateslist}" id="datelist">
+						<input type="hidden" th:value="${holidaydateslist}" id="holidaylist">
+						<div id="dayMonth" class="days-month-box content" >
+						  <header>
+							<i class="ph-bold ph-caret-left"></i>
+							<span></span>
+							<i class="ph-bold ph-caret-right"></i>
+						  </header><br>
+						   <header class="weekdays-header">
+						      <div class="weekday-header">Sun</div>
+						      <div class="weekday-header">Mon</div>
+						      <div class="weekday-header">Tue</div>
+						      <div class="weekday-header">Wed</div>
+						      <div class="weekday-header">Thu</div>
+						      <div class="weekday-header">Fri</div>
+						      <div class="weekday-header">Sat</div>
+						    </header>
+						  <main class="main-days"></main>
+						  <a th:href="@{/operator/cateringStart}" class="btn btn-primary" style=" margin-left: 80px;
+            border-radius: 50px;" id="import-header"><i class="bx bx-calendar"></i> Show Full Calender</a>
+						</div>
+					</div>
+					
+				  </div>
+				  <div class="todo">
+					<div class="head">
+						<h3>Annoucement</h3>
+					
+					</div>
+					<section id="post-container" style="height:500px; overflow: hidden;overflow-y: scroll;background-color:lightblue;">
+						<div th:each="post : ${annoucelist}" class="post">
+						<img class="post__avatar" src="/image/DAT.jpeg" alt="" />
+							<div class="post__content">
+							<header class="post__header">
+									<p class="post__user">Admin</p>
+				
+	
+							</header>
+						   <div class="post__body">
+					   
+								<img class="post__img" th:src="@{${'/image/'+post.imagePath}}" alt="" />
+								<p  th:text="${post.text}" />
+							</div>
+								
+										<div class="post__footer">
+												Creation Date:<span th:text="${#dates.format(post.creationDate, 'yyyy-MM-dd HH:mm')}"></span>
+												<br>Due Date:<span th:text="${#temporals.format(post.expirationDate, 'yyyy-MM-dd HH:mm')}"></span>
+
+										</div>
+									</div>
+									
+								</div>
+					 </section>
+				</div>
+					</div>
+				</div>
+				
+				
+				
+			</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	<div th:if="${pasMessage != null}" id="inactiveToast">
+       <span th:text="${pasMessage}" style="display: none;"></span>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+    $(document).ready(function() {
+     var inactive = document.getElementById("inactiveToast");
+    
+        if (inactive) {
+            iziToast.warning({
+                title: 'Warning',
+                message: inactive.textContent,
+                position: 'topCenter',
+                timeout: 5000,
+             messageColor: 'white',      
+             });
+             var toast = document.querySelector('.iziToast');
+             toast.style.top = '70px';
+        }
+     
+    });
+</script>
+	<script>
+		var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Agu', 'Sep', 'Out', 'Nov', 'Dec'];
+	  
+	  //Registration date table from Thymeleaf
+	  var datelist = document.querySelector('#datelist').value;
+	  var holidayList = document.querySelector('#holidaylist').value;
+	  console.log(holidayList);
+	  
+	  const date = new Date();
+	  
+	  function getDaysOfMonth() {
+	   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+	  }
+	  
+	  function renderDaysOfMonth() {
+		  let output = '';
+		  const lastDay = getDaysOfMonth();
+		 
+
+		  let day = 1;
+
+		  for (day; day <= lastDay; day++) {
+		    const currentDate = formatDate(day, date.getMonth(), date.getFullYear());
+		    const isActive = datelist.includes(currentDate);
+		    const isCurrentDate = currentDate === formatDate(date.getDate(), date.getMonth(), date.getFullYear());
+		    const isWeekend = isSaturday(currentDate) || isSunday(currentDate);
+		    const isHoliday = holidayList.includes(currentDate);
+
+		    const activeClass = isActive ? 'active' : '';
+		    const currentClass = isCurrentDate ? 'current' : '';
+		    const weekendClass = isWeekend ? 'weekend' : '';
+		    const holidayClass = isHoliday ? 'holiday' : '';
+
+		    const classes = `${activeClass} ${currentClass} ${weekendClass} ${holidayClass}`;
+		    output += `<div class="${classes}">${day}</div>`;
+		  }
+
+		  return output;
+		}
+
+		function isSaturday(date) {
+		  const dayOfWeek = new Date(date).getDay();
+		  return dayOfWeek === 6; // Saturday is represented by 6 (0 = Sunday, 1 = Monday, ...)
+		}
+
+		function isSunday(date) {
+		  const dayOfWeek = new Date(date).getDay();
+		  return dayOfWeek === 0; // Sunday is represented by 0 (0 = Sunday, 1 = Monday, ...)
+		}
+
+	  
+	  
+	  function formatDate(day, month, year) {
+	   const monthName = months[month];
+	   return `${year}-${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+	  }
+	  
+	  //Update the calendar
+	  const element = document.getElementById('dayMonth');
+	  element.querySelector('main').innerHTML = renderDaysOfMonth();
+	  element.querySelector('header span').innerHTML = `${date.toLocaleString('en-US', { month: 'long' }).toUpperCase()} ${date.getFullYear()}`;
+	  
+	  </script>
+		<!-- ApexCharts -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		
+		
+
+<script type="text/javascript">
+//TOGGLE SIDEBAR
+const menuBar = document.querySelector('#content nav .bx.bx-menu');
+const sidebar = document.getElementById('sidebar');
+const profileLink = document.querySelector('#sidebar .profile');
+const firstMenuItem = document.querySelector('#sidebar .side-menu.top');
+menuBar.addEventListener('click', function () {
+ sidebar.classList.toggle('hide');
+ if (sidebar.classList.contains('hide')) {
+    profileLink.remove();
+  } else {
+    sidebar.insertBefore(profileLink, firstMenuItem);
+  }
+})
+</script>
+</body>
+</html>

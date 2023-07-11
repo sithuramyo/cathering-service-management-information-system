@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Feedback Suggestion</title>
+    
+    	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="/css/sidebar.css">	
+		<link rel="stylesheet" href="/css/script.js">	
+	
+    
+    <!-- feedback css, jquery, js -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateyo/2.3.2/jquery.rateyo.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateyo/2.3.2/jquery.rateyo.min.js"></script>
+
+<!-- Link to Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-DYj+89rHxRmlJPrV7+u8lL92Z7a9fOq3zJ0/kj+whOy7xoh+e3cHY3bkg8mBrZJ19MzHtmRnA7gW8YtJTrBkxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3-beta2/css/all.min.css" integrity="sha512-lX0iWsLJ7eGcJPMOy7syYYC/qxwcpwih36oShQOk/M7AdPP9L1sZ7wnhBYlyzKj+FVx8Wzg/mwvLaj33YtHjLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/op_feedback.css}">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- izitoast -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+  
+    <style>
+    .star-rating {
+        color: #2b282833; /* Change color as desired */
+    }
+    
+    .star-rating .fa-star {
+        transition: color 0.3s ease; /* Add smooth color transition */
+        font-size: 24px; /* Adjust size as desired */
+        margin-left:8px;
+    }
+    
+    .star-rating .fa-star.checked {
+        color: #007bff; /* Change color as desired */
+    }
+    
+    .star-rating .fa-star:hover{
+    	color:#007bff;
+    }
+    
+    .error-message{
+    	color:red;
+    }
+    
+    .frating{
+    }
+    
+    .feedback-group{
+    	box-shadow:0px 0px transparent;
+    }
+    
+    .feedback-table{
+    	width:90%;
+    }
+    
+    .feedback-text{
+    	font-size:22px;
+    	padding:0;
+    	margin:0;
+    }
+    
+    #review_text {
+            resize: none;
+    }
+	textarea {
+	    margin-top: 10px;
+	  
+	     max-width: 100%;
+	    width: 100%;
+	    width: 500px;
+	
+	    -moz-border-bottom-colors: none;
+	    -moz-border-left-colors: none;
+	    -moz-border-right-colors: none;
+	    -moz-border-top-colors: none;
+	    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+	    border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+	    border-image: none;
+	    border-radius: 6px 6px 6px 6px;
+	    border-style: none solid solid none;
+	    border-width: medium 1px 1px medium;
+	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+	    color: #555555;
+	    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	    font-size: 1em;
+	    line-height: 1.4em;
+	    padding: 5px 8px;
+	    transition: background-color 0.2s ease 0s;
+	  }
+  
+  	textarea:focus {
+      background: none repeat scroll 0 0 #FFFFFF;
+      outline-width: 0;
+  	}
+  	.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+</style>
+     <script>
+     $(document).ready(function() {
+    	 var successMessage = "";
+    	 $('.star-rating .fa-star').click(function() {
+            var rating = $(this).index() + 1;
+            var category = $(this).parent().data('category');
+            console.log('rating is'+ rating + " "+ 'categroy is '+ category);
+            updateRating(category, rating);
+        });
+        
+        function updateRating(category, rating) {
+            var stars = $('.star-rating[data-category="' + category + '"] .fa-star');
+            stars.removeClass('checked');
+
+            for (var i = 0; i < rating; i++) {
+                stars.eq(i).addClass('checked');
+            }
+            
+            $('input[name="' + category + 'Rating"]').val(rating);
+        }
+        
+        $('#usrform').submit(function(e) {
+            var qualityRating = parseInt($('input[name="qualityRating"]').val());
+            var costRating = parseInt($('input[name="costRating"]').val());
+            var cleaneseRating = parseInt($('input[name="cleaneseRating"]').val());
+           
+            if (isNaN(qualityRating) || isNaN(costRating) || isNaN(cleaneseRating) ||
+                qualityRating === 0 || costRating === 0 || cleaneseRating === 0) {
+                e.preventDefault();
+                errorMessage = "Please select a rating for all categories.";
+                if (errorMessage) {
+                    iziToast.success({
+                        title: 'Error',
+                        message: errorMessage,
+                        icon:'fa fa-exclamation-triangle',
+                        position: 'topCenter',
+                        backgroundColor: '#f5d1d3',
+                        timeout: 2000,
+                        progressBarColor: 'red',
+                        transitionIn: 'fadeInLeft',
+                        transitionOut: 'fadeOutRight'
+                    });
+                }
+            } 
+
+            
+        });
+    });
+    </script>
+</head>
+
+	<body>
+
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+           <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+		<ul class="side-menu top">
+			<li class="">
+				<a th:href="@{/}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/operator/cateringStart}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Lunch Register</span>
+				</a>
+			</li>
+			<li class="active">
+				<a th:href="@{/operator/feedback}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Feedback and Suggestions</span>
+				</a>
+			</li>
+		
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a th:href="@{/operator/operatorSetting}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/logout}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+	
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+		
+			<input type="checkbox" id="switch-mode" hidden>
+
+		
+		</nav>
+		<!-- NAVBAR -->
+		
+		
+		<!-- MAIN -->
+		<main style="background:white">
+			<!-- feedback here -->	
+		
+   		<div class="container">
+	        <header class="header">
+	            <h1 id="title" class="text-center">Restaurant Feedback Form</h1>
+	           
+	        </header>
+	        <form th:action="@{/operator/review}" method="post" th:object="${feedback}"  class="feedback-group" id="usrform">
+	            <div class="form-group">
+                <label>Hi,<span class="ms-2" th:text="${session.operatorname}"></span></label>
+	            </div>
+	            <p th:if="${successMessage!=null}" >
+	           		<p th:text="${successMessage}" th:value="${successMessage}" id="successMessage"></p>
+	            </p>
+           	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <div>
+              <table class="feedback-table">
+                    <tr>
+                      <th class="feedback-text">
+							How would you rate food quality?
+                      </th>
+                     </tr>
+                     <tr>
+                     	 <td>
+                            <div class="form-check star-rating frating" data-category="quality">
+                                <span class="fa fa-star" th:each="i : ${#numbers.sequence(1, 5)}"
+                                th:classappend="${feedback.getQuality() >= i} ? 'checked' : ''"></span>
+                                <input type="hidden" name="qualityRating" th:value="${feedback.getRating('quality')}" />
+                            </div>
+                      	</td>
+                     </tr>
+                    <tr>
+                        <th class="feedback-text">
+                            How would you rate food cost?
+                        </th>
+                       
+                    </tr>
+                    <tr>
+                    	 <td scope="row">
+                            <div class="form-check star-rating frating" data-category="cost">
+                                <span class="fa fa-star" th:each="i : ${#numbers.sequence(1, 5)}"
+                                th:classappend="${feedback.getCost() >= i} ? 'checked' : ''"></span>
+                                <input type="hidden" name="costRating" th:value="${feedback.getRating('cost')}" />                            
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="feedback-text">
+                            How would you rate food cleaness?
+                        </th>
+                    </tr>
+                    <tr>
+                    	<td scope="row">
+                            <div class="form-check star-rating frating" data-category="cleanese">
+                                <span class="fa fa-star" th:each="i : ${#numbers.sequence(1, 5)}"
+                                th:classappend="${feedback.getCleanese() >= i} ? 'checked' : ''"></span>
+                                <input type="hidden" name="cleaneseRating" th:value="${feedback.getRating('cleanese')}" />       
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        
+            <div class="form-group">
+                <textarea placeholder="Any comments or suggestions?" data-height="42.5" height="20px" id="review_text" name="suggest" class="input-textarea" th:field="*{suggest}"></textarea>
+ 				<span th:if="${#fields.hasErrors('suggest')}" th:errors="*{suggest}" class="error-message text-danger"></span>
+            </div>
+            
+            <div id="rating-error" class="mt-3 mb-3 text-danger" style=" width:500px; height:30px; background-color:#ddd; display:none; text-align:center;">
+ 			  		
+   			</div>
+        
+            <div class="submit-gps">
+                <input type="submit" value="Suggest" id="submit" class="submit-button border-0"/>
+            </div>
+          </form>
+    	
+    	</div>
+    	
+    	
+		</main>
+			
+			
+		
+		
+	</section>
+	
+		
+
+</body>
+<script>
+    const menuBar = document.querySelector('#content nav .bx.bx-menu');
+    const sidebar = document.getElementById('sidebar');
+    const profileLink = document.querySelector('#sidebar .profile');
+    const firstMenuItem = document.querySelector('#sidebar .side-menu.top');
+    menuBar.addEventListener('click', function () {
+    	sidebar.classList.toggle('hide');
+     if (sidebar.classList.contains('hide')) {
+        profileLink.remove();
+      } else {
+        sidebar.insertBefore(profileLink, firstMenuItem);
+      }
+    })
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve the successMessage element
+        var successMessageElement = document.getElementById('successMessage');
+        
+        // Check if the successMessage element exists and its value is not null
+        if (successMessageElement && successMessageElement.innerHTML !== '') {
+            // Display the success message as a toast
+            iziToast.success({
+                title: 'Success',
+                message: successMessageElement.innerHTML,
+                position: 'topCenter',
+                timeout:2000
+            });
+            setTimeout(()=>{
+            	window.location.href="/operator/feedback";
+            },2100);
+            
+           
+        }
+    });
+</script>
+
+<script>
+     $(document).ready(function() {
+            $('#review_text').on('focus', function() {
+                $(this).data('originalHeight', $(this).outerHeight());
+                $(this).animate({ height: '160px' }, 'slow');
+            }).on('blur', function() {
+                $(this).animate({ height: $(this).data('originalHeight') }, 'slow');
+            });
+        });
+    </script>
+</html>

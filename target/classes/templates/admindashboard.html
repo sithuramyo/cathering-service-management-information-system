@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AdminHub</title>
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+ <link rel="stylesheet" href="/css/post.css">
+ <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3-beta2/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/datatables.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/css/loading.css">
+</head>
+<style>
+.menu-error{
+	color:red;
+	font-weight:bold;
+	font-size:20px;
+}
+    .feedback-icon {
+  background-color:  rgba(253, 174, 253, 0.7); /* Transparent purple color */
+  color: #7c328b; /* Set the color of the icon to contrast with the background */
+  padding: 5px;
+  border-radius: 50%; /* To make the icon appear circular */
+}
+      #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+/* image annimation */
+.fade-in-image{
+  animation: fadeIn 5s;
+}
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100%{opacity: 1;}
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+.grid-item {
+  position: relative;
+}
+
+.grid-item i {
+  color: #fff;
+  opacity: .1;
+  font-size: 70px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+.head h3{
+margin: 0 auto;}
+</style>
+<body  onload="initializeDateRange()">
+
+<div class="modal-overlay">
+    <div id="load">
+      <div>G</div>
+      <div>N</div>
+      <div>I</div>
+      <div>D</div>
+      <div>A</div>
+      <div>O</div>
+      <div>L</div>
+    </div>
+  </div>
+  <!-- SIDEBAR -->
+  <section id="sidebar">
+  
+       
+        <a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+           
+         
+  
+    <ul class="side-menu top">
+        <li class="active">
+            <a th:href="@{/}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li th:if="${session.staffid ne 'default_admin'}">
+            <a th:href="@{/admin/cateringStart}">
+              <i class="bx bx-dish"></i>
+
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+  
+  <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Add Holiday Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+       
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+        
+    </ul>
+
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+   <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+
+			<i class='bx bx-menu' ></i>	
+			<input type="checkbox" id="switch-mode" hidden>
+	
+	<button type="button" class="btn btn-outline-primary"  data-bs-toggle="modal" data-bs-target="#annouceModal" style="margin-left:auto">
+  <i class="bx bxs-megaphone"></i> Create Announcement
+</button>
+
+
+
+
+		</nav>
+        <main>
+         
+
+            <ul class="box-info">
+                  <li>
+                      <i class='bx bxs-group'></i>
+                     
+                      <span class="text">
+                          <h3>[[${totalregister}]]</h3>
+                          <p>Total Registered</p>
+                      </span>
+                  </li>
+                  <li>
+                      <i class='bx bxs-calendar-check'></i>
+                      <span class="text">
+                          <h3>[[${neworder}]]</h3>
+                          <p>Orders</p>
+                      </span>
+                  </li>
+                  <li>
+                      <i class="bx bx-bell"></i>
+  
+                      <span class="text">
+                          <h3>[[${countNotiOperator}]]</h3>
+                          <p>Notification-On User</p>
+                      </span>
+                  </li>
+                  <li>
+                      <i class='bx bxs-message-dots feedback-icon' ></i>
+  
+                      <span class="text">
+                          <span th:if="${flist == null or flist.isEmpty()}"></span>
+                <h3 th:else th:text="${#lists.size(flist)}"></h3>
+                <p>Feedback</p>
+                
+                      </span>
+                  </li>
+              </ul >
+  				<ul class="box-info" th:if="${session.staffid ne 'default_admin'}">
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3>[[${registercost}]] MMK</h3>
+						<p>Registered Cost</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>[[${total}]] MMK</h3>
+						<p>Actual Cost Deducated from Salary</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-dollar-circle' ></i>
+					<span class="text">
+						<h3>[[${rneprice}]] MMK</h3>
+						<p>Lost Cost(Register Uneaten)</p>
+					</span>
+				</li>
+			</ul>
+  <ul class="grid-container">
+ <li class="grid-item" id="import-header">
+  <i class="fas fa-dollar-sign"></i>
+  <h4>DAT Cost: [[${session.datCost}]] MMK</h4>
+  <i class="fas fa-dollar-sign"></i>
+</li>
+
+  <li class="grid-item" id="import-header">
+    <i class="fas fa-dollar-sign"></i>
+    <h4>Employee Cost: [[${session.empCost}]] MMK</h4>
+    <i class="fas fa-dollar-sign"></i>
+  </li>
+</ul>
+              <div class="table-data">
+                  <div class="order">
+                      <div class="head">
+                          <h3> Menu for this week</h3>
+                       
+                      </div>
+                      <div class="fade-in-image">
+                          <div class="container text-center">
+                              <div th:text="${message}" class="menu-error"></div>
+                                  <div class="pdf-block">
+                                  
+                                     <th:block th:each="cateList : ${latestCatering}">
+                                         <div class="">
+                                             
+                                             <div class="pdf-blocks">
+                                                    <img th:src="@{'img/' + ${cateList.filename}}" width="450px" height="500px" ></div>
+                                             </div>
+                                            
+                                         </div>
+                                     </th:block>
+                          </div>
+                       </div>
+                  </div>
+                  <div class="order">
+                      <div class="head">
+                        <h3>Lunch Reports Count</h3>
+                         
+                      </div>
+              
+                    <table id="lunchcount"
+                          th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+                          style="width:100%" class="table table-hover">
+
+                          <thead id="import-header">
+                              <tr>
+                                  <th>Date</th>
+                                  <th>Register-Eat</th>
+                                  <th>Register No-Eat</th>
+                                  <th>Unregister Eat</th>
+                                  <th>Show More</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr id="task-1" class="task-list-row" data-task-id="1" data-user="Larry"
+                                  data-status="In Progress" data-milestone="Milestone 2" data-priority="Urgent"
+                                  data-tags="Tag 2" th:each="view : ${lunchlist}">
+                                  <td th:text="${view.date}"></td>
+                                  <td th:text="${view.re}"></td>
+                                  <td th:text="${view.rne}"></td>
+                                  <td th:text="${view.ue}"></td>
+                                  <td><a type="button" class=""
+                                          th:href="@{/admin/list/{date}(date=${view.date})}"><i class="fas fa-angle-double-right"></i>
+
+
+                                          </a></td>
+                              </tr>
+                          </tbody>
+                      </table>
+
+                    
+                  </div>
+                  <div class="todo">
+                      
+                      <input type="date" id="date-input" th:value="${lunchcountenddate}">
+                      <div id="donut-chart"></div>
+                         <!--   <center><h3 id="noChartText" style="transform:translate(0px, -185px);display:none;" class="text-danger">Not Available</h3></center> -->
+                  </div>
+                  <div class="order">
+                      
+                       <input type="date" onchange="filterDate()" th:value="${lunchcountstartdate}" id="lunchcountstartdate">
+                      <input type="date" onchange="filterDate()" th:value="${lunchcountenddate}" id="lunchcountenddate">
+                      <canvas id="bar-chart"></canvas>
+            <!--  <center><h3 id="noGraphText" class="text-danger" style="display: none;">Not Available</h3></center> -->
+                  </div>
+                  
+  				<div class="order">
+  				<div class="head">
+                 <h3>DAT,Employee Lunch-Costing Report</h3>   
+                          
+                      </div>
+  				<div class="data-table">
+  				<table id="lunchcost" 
+                          th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+                          style="width:100%" class="table table-hover ">
+                            <thead id="import-header">
+                                <tr>
+                                    <th>Dates</th>
+                                    <th>TotalDATCost</th>
+                                    <th>TotalEmployeeCost</th>
+                                    <th>TotalPax</th>
+                                    <th>Each DAT Price </th>
+                                    <th>Each Emp Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                       
+                                <tr th:each="lunchcost:${lunchcostlist}">
+                                    <td th:text="${lunchcost.dates}"></td>
+                                   <td th:text="(${lunchcost.extrapax}+${lunchcost.quantity})*${lunchcost.datcost}+'.0'"></td>
+                                  <td th:text="(${lunchcost.extrapax}+${lunchcost.quantity})*${lunchcost.employeecost}+'.0'"></td> 
+                                    <td th:text="(${lunchcost.extrapax}+${lunchcost.quantity})"></td> 
+                                    <td th:text="${lunchcost.datcost}"></td>
+                                    <td th:text="${lunchcost.employeecost}"></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+  				</div>
+  				
+                   
+  				</div>
+                    
+                  <div class="todo">
+                      
+                      <input type="date" onchange="filterDateForLunchCost()" id="lunchcoststartdate" th:value="${lunchcoststartdate}">
+                      <input type="date" onchange="filterDateForLunchCost()" id="lunchcostenddate" th:value="${lunchcostenddate}">
+                      <canvas id="lunchcostbarchart"></canvas>
+                      
+                     
+                    
+                  </div>
+  
+              </div>
+          </main>
+        
+    </section>   
+ <div class="modal fade" id="annouceModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="annouceModalLabel"><i class="bx bxs-megaphone"></i>
+             Annoucement</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+          <section class="">
+        <form id="create-post-form" class="create-post__form" enctype="multipart/form-data" action="">
+            <div class="create-post__text-wrap">
+                <textarea aria-label="Write something about you..." name="post-text" id="create-post-txt" oninput="this.parentNode.dataset.replicatedValue = this.value" placeholder="Write something about you..."></textarea>
+            </div>
+            <label for="duration">Post Duration:</label>
+			<select id="duration" name="duration" style="padding: 7px;" >
+			<option value="1">1 Day</option>
+			<option value="7">1 Week</option>
+			<option value="30">1 Month</option>
+			</select><br>
+            <div class="create-post__media-wrap" id="create-post-media-wrap"></div>
+    
+            <div class="create-post__buttons">
+                <div class="create-post__assets-buttons">
+                    <button type="button" aria-label="Add an image to the post" class="create-post__asset-btn" for="create-post-media" onclick="this.querySelector('input').click()">
+                        <img class="icon" src="https://raw.githubusercontent.com/Javieer57/create-post-component/43c8008a45b699957d2070cc23362f1953c65d78/icons/camera-tumblr.svg" alt="" />
+                        Photo
+                        <input type="file" name="post-img" id="create-post-media" accept=".png, .jpg, .jpeg, .gif" />
+                    </button>
+                   
+                </div>
+                <button class="create-post__submit" type="submit" disabled id="create-post-submit-btn">Publish</button>
+            </div>
+        </form>
+    </section>
+    </div>
+    </div></div></div>
+      
+              
+        
+    <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/js/importvalidation.js">
+
+</script>
+<div th:if="${pasMessage != null}" id="inactiveToast">
+       <span th:text="${pasMessage}" style="display: none;"></span>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+    $(document).ready(function() {
+     var inactive = document.getElementById("inactiveToast");
+    
+        if (inactive) {
+            iziToast.warning({
+                title: 'Warning',
+                message: inactive.textContent,
+                position: 'topCenter',
+                timeout: 5000,
+             messageColor: 'white',      
+             });
+             var toast = document.querySelector('.iziToast');
+             toast.style.top = '70px';
+        }
+     
+    });
+</script>
+  <script>
+        let createPostForm = document.querySelector("#create-post-form");
+        /* Choosing Image File */
+let createPostMedia = document.querySelector("#create-post-media");
+let createPostText = document.querySelector("#create-post-txt");
+let createPostSubmitBtn = document.querySelector("#create-post-submit-btn");
+let mediaLabel = document.querySelector('[for="create-post-media"]');
+let postsContainer = document.querySelector("#posts-container");
+/* image upload ready */
+let mediaContainer = document.querySelector("#create-post-media-wrap");
+
+mediaLabel.addEventListener("keypress", (e) => {
+	if (e.key === "Enter") {
+		e.target.click();
+	}
+});
+
+createPostForm.addEventListener("submit", handleSubmit, false);
+createPostMedia.addEventListener("input", handleAddImg, false);
+
+createPostText.addEventListener("input", watchInputs, false);
+createPostMedia.addEventListener("change", watchInputs, false);
+
+function watchInputs() {
+	if (createPostText.value === "" && createPostMedia.value === "") {
+		createPostSubmitBtn.setAttribute("disabled", "true");
+		createPostForm.removeEventListener("submit", handleSubmit, false);
+	} else {
+		createPostSubmitBtn.removeAttribute("disabled");
+		createPostForm.addEventListener("submit", handleSubmit, false);
+	}
+}
+
+function generateImgPreview(file) {
+	let reader = new FileReader();
+
+	reader.readAsDataURL(file);
+	reader.onloadend = () => {
+		let preview = `
+			<figure class="create-post__media-item">
+				<button type="button" aria-label="delete image">
+					<img src="https://raw.githubusercontent.com/Javieer57/create-post-component/43c8008a45b699957d2070cc23362f1953c65d78/icons/close.svg" alt="" />
+				</button>
+				<img src="${reader.result}" alt="" />
+			</figure>	
+		`;
+
+		mediaContainer.innerHTML = preview;
+
+		let closeBtn = mediaContainer.querySelector("button");
+		closeBtn.addEventListener("click", removeCreatePostImg, false);
+	};
+}
+
+function handleAddImg(e) {
+	const file = e.target.files[0];
+
+	if (!isValidImage(file)) {
+		createPostMedia.value = "";
+		return;
+	}
+
+	generateImgPreview(file);
+}
+
+watchInputs();
+
+/* Generate post functions */
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  let postContent = {
+    text: createPostText.value,
+    img: createPostMedia.files[0],
+    duration: document.querySelector('#duration').value
+  };
+
+  let formData = new FormData();
+  formData.append('text', postContent.text);
+  formData.append('image', postContent.img);
+ formData.append('duration',postContent.duration);
+ console.log(formData);
+  try {
+    const response = await fetch('/admin/posts', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (response.ok) {
+    	iziToast.success({
+            title: 'Success',
+            message: "Successfully Posted!!",
+            position: 'topCenter',
+            timeout: 5000,
+            progressBarColor: 'green',
+            
+            transitionIn: 'fadeInLeft',
+            transitionOut: 'fadeOutRight'
+          });
+      cleanCreatePost();
+   
+    } else {
+      console.error('Error creating post:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error creating post:', error);
+  }
+}
+
+function sanitizeText(text) {
+	
+	var element = document.createElement("div");
+	element.innerText = text.trim();
+	return element.innerHTML;
+}
+
+
+function cleanCreatePost() {
+	createPostText.value = "";
+	removeCreatePostImg();
+	watchInputs();
+}
+
+function removeCreatePostImg() {
+	mediaContainer.innerHTML = "";
+	createPostMedia.value = "";
+	watchInputs();
+}
+
+
+function isValidImage(file) {
+	let isValid = isValidFileSize(file) && isValidFileSize(file);
+	return isValid;
+}
+
+function isValidFileType(file) {
+	const fileTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+	return fileTypes.includes(file.type);
+}
+
+function isValidFileSize(file) {
+	if (file.size > 3048576) {
+		alert("Please upload an image smaller than 1MB");
+	}
+	return file.size < 3048576;
+}
+
+
+
+    </script> 
+              
+<!--                -->
+      
+<script th:inline="javascript">
+    var transactions = [[${lunchlist}]]
+  var lunchcosttransaction=[[${lunchcostlist}]]
+
+    console.log(transactions);
+    
+   /*  if (transactions.length != 0) {
+        document.getElementById("noGraphText").style.display = "none";
+        document.getElementById("noChartText").style.display = "none";
+    }
+    if(transactions.length === 0){
+        
+        document.getElementById("noGraphText").style.display = "block";
+        document.getElementById("noChartText").style.display = "block";
+    }
+    
+    if(lunchcosttransaction!=null){
+    	document.getElementById("noLineText").style.display = "none";
+
+    }if(lunchcosttransaction==null){
+    	document.getElementById("noLineText").style.display = "block";
+
+    } */
+   
+</script>
+ <!-- ============ Java Script Files  ================== -->
+	
+
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/datatables.min.js"></script>
+    <script src="/assets/js/pdfmake.min.js"></script>
+    <script src="/assets/js/vfs_fonts.js"></script>
+   <script src="/assets/js/customdashboard.js"></script>
+
+
+        
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="/js/admindashboard.js"></script>
+
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

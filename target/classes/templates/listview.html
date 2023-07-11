@@ -1,0 +1,1024 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+<!--     dashboard import style-->
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+
+
+<!-- feedback css, jquery, js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateyo/2.3.2/jquery.rateyo.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.rateyo/2.3.2/jquery.rateyo.min.js"></script>
+ 
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.9/css/bootstrap.min.css"
+      integrity="sha384-1lkN7kBs25CdB+BKj3I8+TBzGtv9XwoCYYKmRan5PmkvcBp7m3hHjsiCz6Wdzb6j" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!--<div class="d-flex flex-column">-->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+<!-- izitoast -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
+
+  <!-- DataTables -->
+
+    <link rel="stylesheet" href="/assets/css/datatables.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+ 
+ <link rel="stylesheet" href="/css/updateconfirm.css">
+ <link rel="stylesheet" href="/css/deleteconfirm.css">
+
+
+</head>
+
+<style>
+
+
+.table tbody tr:nth-child(even) {
+           
+            padding-bottom:0px !important;
+            
+        }
+
+        .table tbody tr:nth-child(odd) {
+          background: #e9e9e9
+        }
+
+        .table th {
+            color: white;
+        }
+
+        td i {
+            margin-right: 50px;
+            /* add some space to the right of the icons */
+        }
+          #optable,table1,table2,table3 {
+    font-size: 15px;
+  }
+  #feedbackTable{
+  font-size:13px;
+  margin-bottom:0px;
+  }
+        #toast-message {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 999;
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px;
+      border-radius: 5px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    #toast-message.toast-show {
+      opacity: 1;
+    }
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-indicator.active {
+  background-color: green;
+}
+
+.status-indicator.inactive {
+  background-color: grey;
+}
+.con{
+padding-left:2%;
+padding-right:2%;
+}
+.nav-tabs .nav-item {
+  border-radius: 5px;
+}
+
+
+.nav-tabs .nav-link {
+  color: #007bff;
+}
+
+.data-table {
+  font-size: 12px;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: lightblue;
+  color: #007bff;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color:#007bff;
+    background-color: lightblue;
+  
+}
+
+ .star-rating {
+      color: #444; /* Change color as desired */
+  }
+  
+  .star-rating .fa-star {
+      transition: color 0.3s ease; /* Add smooth color transition */
+      font-size: 24px; /* Adjust size as desired */
+  }
+  
+  .star-rating .fa-star.checked {
+      color: gold; /* Change color as desired */
+  }
+  .star-rating .fa-star.empty {
+    	 	color: transparent; /* Set the color of empty stars to transparent */
+ }
+      #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+
+</style>
+<script>
+    $(document).ready(function() {
+        $('.star-rating .fa-star').click(function() {
+           var rating = $(this).index();
+           var category = $(this).parent().data('category');
+           console.log('rating is'+ rating + " "+ 'categroy is '+ category);
+           updateRating(category, rating);
+       });
+       
+       function updateRating(category, rating) {
+           var stars = $('.star-rating[data-category="' + category + '"] .fa-star');
+           stars.removeClass('checked');
+
+           if (rating > 0) {
+               for (var i = 0; i < rating; i++) {
+                   stars.eq(i).addClass('checked');
+               }
+           }else{
+               stars.eq(i).removeClass()
+           }
+           
+           $('input[name="' + category + 'Rating"]').val(rating);
+
+       }
+   });
+</script>
+<body onload="initTables()">
+
+
+  <!-- SIDEBAR -->
+  <section id="sidebar">
+<a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+    <ul class="side-menu top">
+          <li>
+                <a th:href="@{/}">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+        <li  th:if="${session.staffid ne 'default_admin'}">
+            <a th:href="@{/admin/cateringStart}">
+                <i class="bx bx-calendar"></i>
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+  
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        
+        <i class="bx bx-edit-alt"></i>
+        <span class="text"> Holiday Add Manually</span>
+    </a>
+</li>
+<li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li  class="active">
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a onclick="location.href='/logout'" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+           <nav>
+
+			<i class='bx bx-menu' ></i>	
+			<input type="checkbox" id="switch-mode" hidden>
+	
+		</nav>
+        <!-- NAVBAR -->
+        <div class="d-flex flex-column ">
+           <ul class="nav nav-tabs flex-row " id="myTab" role="tablist">
+              
+                <li class="nav-item" >
+                    <a class="nav-link active" data-toggle="tab" href="#user-list" role="tab" aria-controls="user-list"
+                        aria-selected="true">Register Eat List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#register-list" role="tab" aria-controls="register-list"
+                        aria-selected="false">Register No-Eat List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#unregister-list" role="tab" aria-controls="unregister-list"
+                        aria-selected="false">Unregister Eat List</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+            <!-- operator list -->
+            
+                <div class="tab-pane fade show active" id="user-list" role="tabpanel" aria-labelledby="user-list-tab">
+                    <!-- first table goes here -->
+                    <div class="con data_table">
+                        
+                        <table id="table1"
+                            th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+                            style="width:100%" class="table table-hover">
+                            <thead  id="import-header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>DoorlogNo</th>
+                                    <th>Department</th>
+                                    <th>Division</th>
+                                    <th>Date</th>
+                                    <th>Role</th>
+                                    <th>Staff Id</th>
+                                    <th>Status</th>
+                                    <th>Team</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="view1 : ${registeredeat}">
+            
+                                    <td th:text="${view1.employeeName}"></td>
+                                    <td th:text="${view1.id.doorLogNo}"></td>
+                                    <td th:text="${view1.dept}"></td>
+                                    <td th:text="${view1.division}"></td>
+                                    <td th:text="${view1.id.dates}"></td>
+                                    <td th:text="${view1.role}"></td>
+                                    <td th:text="${view1.staffId}"></td>
+                                    <td th:text="${view1.status}"></td>
+                                    <td th:text="${view1.team}"></td>
+                                </tr>
+    
+    
+                            </tbody>
+                        </table>
+                     
+    
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="register-list" role="tabpanel" aria-labelledby="register-list-tab">
+                    <!-- second table goes here -->
+                    <div class="con data_table">
+                        
+                        <table id="table2"
+                            th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+                            style="width:100%" class="table table-hover">
+                            <thead  id="import-header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>DoorlogNo</th>
+                                    <th>Department</th>
+                                    <th>Division</th>
+                                    <th>Date</th>
+                                    <th>Role</th>
+                                    <th>Staff Id</th>
+                                    <th>Status</th>
+                                    <th>Team</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="view2 : ${registereduneat}">
+    
+                                    <td th:text="${view2.employeeName}"></td>
+                                    <td th:text="${view2.id.doorLogNo}"></td>
+                                    <td th:text="${view2.dept}"></td>
+                                    <td th:text="${view2.division}"></td>
+                                    <td th:text="${view2.id.dates}"></td>
+                                    <td th:text="${view2.role}"></td>
+                                    <td th:text="${view2.staffId}"></td>
+                                    <td th:text="${view2.status}"></td>
+                                    <td th:text="${view2.team}"></td>
+                                    
+                                </tr>
+    
+    
+                            </tbody>
+                        </table>
+                    
+                        
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="unregister-list" role="tabpanel" aria-labelledby="unregister-list-tab">
+                    <!-- third table goes here -->
+                    <div class="con data_table">
+                        
+                        <table id="table3"
+                            th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+                            style="width:100%" class="table table-hover">
+                            <thead  id="import-header">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>DoorlogNo</th>
+                                    <th>Department</th>
+                                    <th>Division</th>
+                                    <th>Date</th>
+                                    <th>Role</th>
+                                    <th>Staff Id</th>
+                                    <th>Status</th>
+                                    <th>Team</th>
+                                </tr>
+                            </thead> 
+                            <tbody>
+                                <tr th:each="view3 : ${unregisteredeat}">
+    
+                                    <td th:text="${view3.employeeName}"></td>
+                                    <td th:text="${view3.id.doorlogno}"></td>
+                                    <td th:text="${view3.dept}"></td>
+                                    <td th:text="${view3.division}"></td>
+                                    <td th:text="${view3.id.date}"></td>
+                                    <td th:text="${view3.role}"></td>
+                                    <td th:text="${view3.staffId}"></td>
+                                    <td th:text="${view3.status}"></td>
+                                    <td th:text="${view3.team}"></td>
+                                   
+                                </tr>
+    
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+                
+            </div>
+        </div>
+ 
+
+ 
+
+          
+     </section>   
+    <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+     	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+          <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+          
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/datatables.min.js"></script>
+    <script src="/assets/js/pdfmake.min.js"></script>
+    <script src="/assets/js/vfs_fonts.js"></script>
+        <script src="/assets/js/customlistview.js"></script>
+    
+          <script>
+           function updateStatusIndicators() {
+                  $('.status-cell').each(function() {
+                    var status = $(this).find('.status-indicator');
+                    var statusValue = $(this).find('input').val();
+                    var isActive = statusValue.trim() === 'ACTIVE';
+      
+                    if (isActive) {
+                      status.addClass('active');
+                      status.removeClass('inactive');
+                    } else {
+                      status.addClass('inactive');
+                      status.removeClass('active');
+                    }
+                  });
+                }
+      
+      
+          </script>
+          
+        <script>
+        updateStatusIndicators();
+        $('.edit-btn').click(function() {
+            
+            var row = $(this).closest('tr');
+         
+            var staffid = row.find('td:eq(0)').text();
+            console.log(id);
+            var name = row.find('td:eq(1)').text();
+            var dln = row.find('td:eq(2)').text();
+            var dept = row.find('td:eq(4)').text();
+            var role = row.find('td:eq(5)').text();
+           
+            $('#staffid').val(staffid);
+            $('#name').val(name);
+            $('#dln').val(dln);
+            $('#dept').val(dept);
+            $('.roleselect').val(role);
+            
+            $('#editModal').modal('show');
+            $('#editModal').off('hidden.bs.modal');
+          });
+      
+        $('#updateOperator').click(function(e) {
+        	  e.preventDefault();
+        	  var staffid = $('#staffid').val();
+        	  var updatedName = $('#name').val();
+        	  var updatedDln = $('#dln').val();
+        	  var updatedDept = $('#dept').val();
+        	  var updatedRole = $('.roleselect').val();
+			
+        	  var userResult = function(result) {
+        	    if (result === 1) {
+        	      $.ajax({
+        	        type: 'POST',
+        	        url: '/admin/updateEmployee',
+        	        data: {
+        	          staffid: staffid,
+        	          role: updatedRole
+        	        },
+        	        success: function(response) {
+        	          iziToast.success({
+        	            title: 'Success',
+        	            message: response,
+        	            position: 'topCenter',
+        	            timeout: 3000,
+        	            progressBarColor: 'green',
+        	            transitionIn: 'fadeInLeft',
+        	            transitionOut: 'fadeOutRight', onClosed: function() {
+        	                $('#editModal').modal('hide');
+        	               /*  $('body').removeClass('modal-open');
+        	                $('.modal-backdrop').remove(); */
+        	            }
+        	          });
+        	          console.log("Hello " + staffid);
+        	          var row = $('tr:contains(' + staffid + ')');
+                      row.find('td:eq(5)').text(updatedRole);
+               
+                    	  var staffId = document.getElementById("staffId").value;
+                    	  console.log("Hello " + staffId);
+
+                          if (staffId != 'default_admin') {
+                           row.find('.edit-btn, .delete-btn').hide(); 
+                          }
+                    	
+                      console.log("Hello " + staffId);
+                     
+        	        },
+        	        error: function(xhr, status, error) {
+        	          // Handle error if needed
+        	        }
+        	      });
+        	    } else {
+        	      // Handle the case if the user cancels the action
+        	    }
+        	  }
+
+        	  toggleModals('Are you sure you want to update this employee? ', userResult);
+        	});
+
+        	// Reset the modal on close
+        	$('#editModal').on('hidden.bs.modal', function() {
+        	  $(this).find('form')[0].reset();
+        	});
+
+        	// Event handler for the close button in the modal dialog
+        	$('#closeOperator').click(function() {
+        	  $('#editModal').modal('hide');
+        	});
+
+
+       
+        function toggleModals(text, callback) {
+             
+            $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+            
+            $modal = $('<div id="modal-confirmation"><div id="modal-headers"><h5> Confirm Update</h5><span data-confirm=0 class="modal-action" id="modal-close"><i class="fa fa-times" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm=0 id="modal-button-no">No</button><button class="modal-action" data-confirm=1 id="modal-button-yess">Yes</button></div></div>').appendTo($wrapper);
+            
+            setTimeout(function() {
+                $wrapper.addClass('active');
+            }, 100);
+            
+            $wrapper.find('.modal-action').click(function() {
+                var result = $(this).data('confirm');
+                $wrapper.removeClass('active').delay(500).queue(function() {
+                   $wrapper.remove();
+                   callback(result);
+                });
+            });
+
+        }
+      
+       
+      
+          </script>
+          <script>
+  $(document).ready(function() {
+    $(document).on('click', '.delete-btn', function(e) {
+      
+
+      var row = $(this).closest('tr');
+      var id = row.find('td:eq(0)').text();
+
+      var userResult = function(result) {
+        if (result === 1) {
+        	
+          $.ajax({
+        	  
+            type: 'POST',
+            url: '/admin/deleteEmployee',
+            data: { staffid: id },
+            success: function(response) {
+            
+
+              var statusCell = row.find('td:eq(6)');
+              statusCell.html('<span class="status-indicator inactive"></span>');
+              row.find('.edit-btn').remove();
+              row.find('.delete-btn').remove();
+              iziToast.warning({
+                message: response,
+                icon: 'fa fa-exclamation-triangle',
+                position: 'topCenter',
+                timeout: 5000,
+                progressBarColor: 'red',
+                backgroundColor: '#f5d1d3',
+                padding: '20px',
+                transitionIn: 'fadeInLeft',
+                transitionOut: 'fadeOutRight'
+              });
+              // row.remove();
+              
+            },
+            error: function(xhr, status, error) {
+            	
+            }
+          });
+        } else {
+          // Handle cancellation
+        }
+      }
+
+      toggleModal('Are you sure you want to delete this employee?', userResult);
+    });
+
+   
+  });
+
+  function toggleModal(text, callback) {
+    $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+
+    $modal = $('<div id="modal-confirmation"><div id="modal-header"><h5><i class="bx bxs-error-circle" aria-hidden="true"></i> Confirm Delete</h5><span data-confirm="0" class="modal-action" id="modal-close"><i class="bx bx-x" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm="0" id="modal-button-no">No</button><button class="modal-action" data-confirm="1" id="modal-button-yes">Yes</button></div></div>').appendTo($wrapper);
+
+    setTimeout(function() {
+      $wrapper.addClass('active');
+    }, 100);
+
+    $wrapper.find('.modal-action').click(function() {
+      var result = $(this).data('confirm');
+      $wrapper.removeClass('active').delay(500).queue(function() {
+        $wrapper.remove();
+        callback(result);
+      });
+    });
+  }
+</script>
+            <script>
+             $(document).ready(function () {
+              // Get the input field and table
+              var input = $("#searchInput");
+              var dateInput = $("#dateFilter");
+              var table = $("#feedbackTable");
+
+              // Save the table header row
+              var headerRow = table.find("thead tr");
+
+              // Add an event listener to the input field that triggers on each keyup
+              input.on("keyup", function () {
+                  // Get the value of the input field
+                  var value = $(this).val().toLowerCase();
+
+                  // Filter the table rows that do not contain the search value
+                  table.find("tbody tr").filter(function () {
+                      $(this).toggle($(this).text().toLowerCase().includes(value));
+                  });
+              });
+
+              // Add an event listener to the date input field that triggers on change
+              dateInput.on("change", function () {
+                  // Get the selected date from the input field
+                  var selectedDate = new Date($(this).val());
+
+  // Check if the date input field has a value or not
+                  if ($(this).val() === "") {
+                      // Show all rows in the table
+                      table.find("tbody tr").show();
+                  } else {
+                      // Filter the table rows that do not match the selected date
+                      table.find("tbody tr").filter(function () {
+                          var rowDateStr = $(this).find("td:eq(2)").text();
+                          var rowDate = new Date(rowDateStr);
+                          var match = rowDate.toDateString() == selectedDate.toDateString();
+                          $(this).toggle(match);
+                      });
+                  }
+              });
+
+              // Show the table header
+              table.find("thead").show();
+          });
+        </script>
+       <script>
+             
+          </script>
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

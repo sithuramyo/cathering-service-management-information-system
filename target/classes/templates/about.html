@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+</head>
+<style>
+:root {
+    --col-primary: #24242e;
+    --col-secondary: #ffffff;
+    --col-primary-button: #40314e;
+    --col-secondary-button: #c0b3a0;
+    --col-accent: #30343f;
+    --col-bg: #2a2e38;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+html {
+    font-size: 16px;
+    font-family: raleway, sans-serif;
+    color: white;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    background: var(--col-bg);
+}
+
+
+#site-logo:before {
+    content: ":~$ ";
+}
+
+#site-logo:after {
+    content: " _";
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0;
+    border-left: 2px solid var(--col-secondary);
+    padding-left: 2rem;
+}
+
+h1 > .emphasis {
+    font-size: 3em;
+    line-height: 1.5;
+}
+
+.clamped {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+#splash {
+    background: var(--col-accent);
+  
+}
+
+#landing-els {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4rem;
+    padding: 0 2rem;
+}
+
+#landing-els > a {
+    text-decoration: none;
+    margin-left: 2rem;
+    background: var(--col-secondary-button);
+    border: 2px solid var(--col-secondary-button);
+    color: var(--col-primary);
+    font-weight: 700;
+    padding: 1rem 1.2rem;
+    border-radius: .2rem;
+    transition: background 200ms, color 200ms;
+}
+
+#landing-els > a:hover {
+    background: transparent;
+    color: var(--col-secondary-button);
+}
+
+
+
+.term-anim:after {
+    content: "_";
+    animation-name: term-anim_flash;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+}
+
+@keyframes term-anim_flash {
+    0% {
+        opacity: 0;
+    }
+    
+    30% {
+        opacity: 1;
+    }
+    
+    100% {
+        opacity: 0;
+    }
+}
+
+
+
+
+a.highlight {
+    position: relative;
+}
+
+a.highlight:before {
+    content: "";
+    position: absolute;
+    height: 40%;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background: #3b8ef5;
+    opacity: .4;
+    transition: height 100ms;
+}
+
+a.highlight:hover:before {
+    height: 100%;
+}
+   * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+   
+    margin: 0px auto;
+    font-family: poppins;
+}
+
+header {
+    height: 20%;
+  
+    align-items: center;
+   
+}
+
+.title, .content {
+    flex: 1;
+}
+
+.title h3 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.content h5 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.content p {
+    font-size: 14px;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 50px;
+    row-gap: 70px;
+    padding: 50px 0px;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.profile figure {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.profile figure img {
+    width: 80%;
+}
+
+.profile figure figcaption {
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 12px;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.profile figure::after {
+    content: attr(data-value);
+    width: 100%;
+    transform-origin: 0 0;
+    transform: rotate(90deg);
+    position: absolute;
+    text-transform: uppercase;
+    font-size: 12px;
+    right: -92%;
+}
+
+.profile:nth-child(2) {
+    margin-top: 70px;
+}
+
+.profile:nth-child(4) {
+    margin-top: -70px;
+}
+
+.profile:nth-child(6) {
+    margin-top: -70px;
+}
+
+footer {
+    height: 5%;
+    color: #BDBDBD;
+    display: grid;
+    place-items: center;
+    font-size: 12px;
+}
+
+footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+@media screen and (max-width: 1440px) {
+    body {
+        width: 70%;
+    }
+    
+    main {
+        column-gap: 50px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    body {
+        width: 80%;
+    }
+    
+    main {
+        column-gap: 35px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        width: 90%;
+    }
+    
+    main {
+        column-gap: 25px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        width: 90%;
+        height: auto;
+        margin: 50px auto 10px;
+    }
+
+    header {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        row-gap: 20px;
+    }
+
+    .title {
+        align-self: flex-start;
+    }
+
+    .title h3 {
+        font-size: 30px;
+    }
+
+    main {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 0px;
+        row-gap: 0px;
+    }
+
+    .profile:nth-child(2),
+    .profile:nth-child(4),
+    .profile:nth-child(6) {
+        margin-top: 50px;
+    }
+
+    .profile:nth-child(3),
+    .profile:nth-child(5) {
+        margin-top: 0px;
+    }
+}
+
+.back-button{
+	background-color:grey;
+}
+</style>
+<body>
+
+
+    <div id="splash">
+        <div class="clamped" id="landing-els">
+            <h1>
+                <span class="emphasis term-anim">About us</span>
+                <span>Catering Management system,</span>
+                <span>Our digital solution revolutionizes the management system by integrating the company and employee lunch processes on half-assed system.</span>
+            </h1>
+    
+            <a th:href="@{/contactus}" class="nav-link">Contact us!</a>
+        </div>
+        <header>
+            <div class="title">
+                <h3>Our creative teams</h3>
+            </div>
+            
+        </header>
+    <main>
+       
+        <div class="profile">
+            <figure data-value="Developer">
+                <img src="/image/sithu.jpg" alt="">
+                <figcaption>Sithura Myo</figcaption>
+            </figure>
+        </div>
+    
+        <div class="profile">
+            <figure data-value="Team-Lead">
+                <img src="/image/khaing.jpg" alt="">
+                <figcaption>Khaing Thazin Oo</figcaption>
+            </figure>
+        </div>
+    
+        <div class="profile">
+            <figure data-value="UI/UX Designer">
+                <img src="/image/sandar.jpg" alt="">
+                <figcaption>Sandar Kyaw</figcaption>
+            </figure>
+        </div>
+    
+       
+    
+        <div class="profile">
+            <figure data-value="UI/UX Designer">
+                <img src="/image/aca.jpg" alt="">
+                <figcaption>Aye Chan Aung</figcaption>
+            </figure>
+        </div>
+    
+        <div class="profile">
+            <figure data-value="Developer">
+                <img src="/image/hsu.jpg" alt="">
+                <figcaption>Hsu Pyae Aung</figcaption>
+            </figure>
+        </div>
+     
+    </main>
+    </div>
+    
+	<div class="col-md-12">
+                       
+       <a type="button" th:href="@{/login}" class="back-button">
+        Back <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+</body>
+</html>

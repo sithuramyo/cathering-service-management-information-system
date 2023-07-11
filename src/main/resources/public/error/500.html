@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 Error Page</title>
+    <link rel="stylesheet" href="/css/errorpagedesign.css">
+    <link href='https://fonts.googleapis.com/css?family=Anton|Passion+One|PT+Sans+Caption' rel='stylesheet' type='text/css'>
+   </head>
+<body>
+  
+
+        <!-- Error Page -->
+        <div class="error">
+            <div class="container-floud">
+                <div class="col-xs-8 ground-color" >
+                    <div class="container-error-404">
+                        <div class="clip"><div class="shadow"><span class="digit thirdDigit">4</span></div></div>
+                        <div class="clip"><div class="shadow"><span class="digit secondDigit">0</span></div></div>
+                        <div class="clip"><div class="shadow"><span class="digit firstDigit">5</span></div></div>
+                        <div class="msg">OH!<span class="triangle"></span></div>
+                    </div>
+                    
+                    <h2 class="internal">Internal Server Error!</h2>
+                    <h4>Sorry, something went wrong on our end.<br> We're working to fix the problem and will have things back to normal as soon as possible.<br>Contact us: <a href="mailto:sithuramyo@gmail.com">sithuramyo@gmail.com</a></h4>
+                   <br>
+                    <a href="/" class="button"><i class="fa fa-angle-left"></i>Return to Home</a>
+                </div>
+            </div>
+        </div>
+    <!-- Error Page -->
+    <script>
+         function randomNum()
+        {
+            "use strict";
+            return Math.floor(Math.random() * 9)+1;
+        }
+            var loop1,loop2,loop3,time=30, i=0, number, selector3 = document.querySelector('.thirdDigit'), selector2 = document.querySelector('.secondDigit'),
+                selector1 = document.querySelector('.firstDigit');
+            loop3 = setInterval(function()
+            {
+              "use strict";
+                if(i > 40)
+                {
+                    clearInterval(loop3);
+                    selector3.textContent = 5;
+                }else
+                {
+                    selector3.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+            loop2 = setInterval(function()
+            {
+              "use strict";
+                if(i > 80)
+                {
+                    clearInterval(loop2);
+                    selector2.textContent = 0;
+                }else
+                {
+                    selector2.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+            loop1 = setInterval(function()
+            {
+              "use strict";
+                if(i > 100)
+                {
+                    clearInterval(loop1);
+                    selector1.textContent = 0;
+                }else
+                {
+                    selector1.textContent = randomNum();
+                    i++;
+                }
+            }, time);
+    </script>
+</body>
+</html>

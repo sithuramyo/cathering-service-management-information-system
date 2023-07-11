@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Setting Page</title>
+     
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Font Awesome -->
+       <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-DYj+89rHxRmlJPrV7+u8lL92Z7a9fOq3zJ0/kj+whOy7xoh+e3cHY3bkg8mBrZJ19MzHtmRnA7gW8YtJTrBkxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-lX0iWsLJ7eGcJPMOy7syYYC/qxwcpwih36oShQOk/M7AdPP9L1sZ7wnhBYlyzKj+FVx8Wzg/mwvLaj33YtHjLg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-VbryHMF8Wz1gQ0plEYzLcscvWXfW0qap3GpckZzA0ktvO8o/L4e4PJfKhFdY1BQvT8WtnT+T9T0MAdAB6QvHlQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.9/css/bootstrap.min.css" integrity="sha384-1lkN7kBs25CdB+BKj3I8+TBzGtv9XwoCYYKmRan5PmkvcBp7m3hHjsiCz6Wdzb6j" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+
+</head>
+<style>
+#sidebar a{
+text-decoration:none;}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+</style>
+<body>
+     <!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+		<ul class="side-menu top">
+			<li class="">
+				<a th:href="@{/}">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/operator/cateringStart}">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Lunch Register</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/operator/feedback}">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Feedback and Suggestions</span>
+				</a>
+			</li>
+		
+		</ul>
+		<ul class="side-menu">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/logout}" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
+	
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+		
+			<input type="checkbox" id="switch-mode" hidden>
+
+		
+		</nav>
+		<!-- NAVBAR -->
+		
+<div class="container mt-3">
+   
+    <div class="row">
+        <div class="col-md-5 col-xl-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Profile Settings</h5>
+                </div>
+
+                <div class="list-group list-group-flush" role="tablist">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account" role="tab">
+                      Account
+                    </a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#password" role="tab">
+                      Password
+                    </a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#notifications" role="tab">
+                      Notifications
+                    </a>              
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-xl-8">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="account" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                           
+                            <h5 class="card-title mb-0">Private info</h5>
+                        </div>
+                        <div class="card-body">
+                               <form id="accountForm" th:object="${op}">
+                                       
+                                            <div class="form-group">
+                                                <label for="inputFirstName">Name</label>
+                                                <input type="text" class="form-control" id="accountName" name="name" th:field="*{employeeName}">
+                                                <span id="empNameMsg"></span>
+                                            </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Email</label>
+                                            <input type="email" class="form-control" name="email" th:field="*{employeeEmail}" readonly>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Department</label>
+                                            <input type="email" class="form-control" name="dept" th:field="*{dept}" readonly>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputEmail4">Division</label>
+                                            <input type="email" class="form-control" name="division" th:field="*{division}" readonly>
+                                            
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="inputEmail4">Team</label>
+                                            <input type="email" class="form-control" name="team" th:field="*{team}" readonly>
+                                            
+                                        </div>
+                                        <button type="submit" id="btn" class="btn btn-primary px-4">Save</button>
+                                    </form>
+                           
+                            
+                        </div>
+                    </div>
+
+                </div>
+                  <script>
+    $(document).ready(function() {
+    	
+
+ 	    // Use keyup event on name field
+ 	     
+                    // Use keyup event on name field
+                    $("#accountName").keyup(function() {
+                        if (validateName()) {
+                        	$("#accountName").css("border", "1px solid #ced4da");
+               	            // Set label
+               	            $("#empNameMsg").html("");
+                        } else {
+                            // If the name is not validated
+                            // Set border red
+                            
+                        }
+                        
+                    });
+        
+                  
+        
+                    function validateName() {
+             		    var name = $("#accountName").val();
+             		  
+
+             		    if (name === null || name.trim() === '') {
+             		        console.log("null");
+             		        $("#accountName").css("border", "2px solid red");
+             		        $("#empNameMsg").html("<p class='text-danger'>Name cannot be empty.</p>");
+             		        return false;
+             		    }
+
+             		    // Check if the name contains only alphabet characters (neglecting spaces)
+             		    var regex = /^[A-Za-z\s]+$/;
+             		    if (!regex.test(name)) {
+             		        $("#accountName").css("border", "2px solid red");
+             		        $("#empNameMsg").html("<p class='text-danger'>Please enter a valid name.</p>");
+             		        return false;
+             		    }
+
+             		    else{
+             		    	return true;
+             		    }
+             		    
+             		}
+
+
+ 	   $("#accountForm").submit(function(event) {
+ 	       event.preventDefault();
+ 	      
+ 	       var name = $("#accountName").val();     
+ 	     validateName();
+ 	       if (validateName()) {
+ 	          
+ 	    	  $.ajax({
+                   type: 'POST',
+                   url: '/operator/account',
+                   data: {
+                       name: name,
+                      
+                   },
+                   
+                   success: function(response) {
+                       console.log(response);
+                       var successMessage = response;
+
+                      iziToast.success({
+                         title: 'Success',
+                         message: successMessage,
+                         position: 'topCenter',
+                         timeout: 5000,
+                         progressBarColor: 'green',
+                         transitionIn: 'fadeInLeft',
+                         transitionOut: 'fadeOutRight',
+                         onClosed: function(instance, toast, closedBy){
+                            // Reload the window after the toast is closed
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 500); // Adjust the delay as needed
+                        }
+                     });
+                       var toast = document.querySelector('.iziToast');
+                       toast.style.top = '55px';
+                   },
+
+                   error: function(xhr, status, error) {
+                       console.log(status);
+                       var errorMessage = xhr.responseText;
+                       iziToast.warning({
+                           message: errorMessage,
+                           icon: 'fa fa-exclamation-triangle',
+                           position: 'topCenter',
+                           timeout: 5000,
+                           progressBarColor: 'red',
+                           backgroundColor: '#f5d1d3',
+                           padding: '20px',
+                           transitionIn: 'fadeInLeft',
+                           transitionOut: 'fadeOutRight'
+                       });
+                       var toast = document.querySelector('.iziToast');
+                       toast.style.top = '55px';
+                   }
+               });
+ 	              
+ 	          
+ 	           }
+ 	  });
+    });
+</script>
+
+                <div class="tab-pane fade" id="password" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                           
+                            <h5 class="card-title mb-0">Password</h5>
+                        </div>
+                        <div class="card-body">
+                            
+                           <form id="passwordForm">
+                                <div class="form-group">
+                                    <label for="inputPasswordCurrent">Current password</label>
+                                    <input type="password" class="form-control" name="cpassword" id="cpassword" >
+                                    <span id="cpasMsg"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew">New password</label>
+                                    <input type="password" class="form-control" id="npassword" name="npassword" >
+                                	<span id="npasMsg"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPasswordNew2">Verify password</label>
+                                    <input type="password" class="form-control" id="vpassword" name="vpassword" >
+                                	<span id="vpasMsg"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary px-4">Save</button>
+                            </form>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+                <div  class="tab-pane fade" id="notifications" role="tabpanel">
+                    <h6>NOTIFICATION SETTINGS</h6>
+                    <hr>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Lunch Remind</label>
+                      </div>
+                  </div>
+                  
+            </div>
+        </div>
+    </div>
+
+</div>
+ </section>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                  <script>
+    $(document).ready(function() {
+        var toggleValue = '[[${session.toggle}]]'; // Replace with the actual value from your backend
+        console.log(toggleValue);
+        // Set the toggle switch based on the toggleValue
+        if (toggleValue == 'true') {
+            $('#customSwitch1').prop('checked', true);
+        } else {
+            $('#customSwitch1').prop('checked', false);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+    	
+		// use keyup event on password
+		$("#cpassword").keyup(function(){
+			// check
+			if(cvalidatePassword()){
+				// set input password border green
+				$("#cpassword").css("border","1px solid #ced4da");
+				//set passMsg 
+				$("#cpasMsg").html("");
+			}else{
+					// set input password border red
+				
+			}
+			
+		});
+	
+		$("#npassword").keyup(function(){
+			// check
+			if(nvalidatePassword()){
+				// set input password border green
+				$("#npassword").css("border","1px solid #ced4da");
+				//set passMsg 
+				$("#npasMsg").html("");
+			}else{
+			
+			}
+			
+		});
+		
+		
+		
+		$("#vpassword").keyup(function(){
+			// check
+			if(vvalidatePassword()){
+				// set input password border green
+				$("#vpassword").css("border","1px solid #ced4da");
+				//set passMsg 
+				$("#vpasMsg").html("");
+			}else{
+					// set input password border red
+				
+			}
+			
+		});
+		
+	
+	function cvalidatePassword(){
+		//get input password value
+		var pass=$("#cpassword").val();
+		if (pass === null || pass.trim() === '') {
+            // If the name is null or empty
+            console.log("null");
+            $("#cpassword").css("border", "1px solid #ced4da");
+            $("#cpasMsg").html("");
+            return false;
+        }
+		// check it s length
+		if(pass.length >= 5){
+			return true;
+		}else{
+			$("#cpassword").css("border","2px solid red");
+			//set passMsg 
+			$("#cpasMsg").html("<p class='text-danger'>Please enter valid confirm password.</p>");
+			return false;
+		}
+
+	}
+	
+	function nvalidatePassword(){
+		//get input password value
+		var pass=$("#npassword").val();
+		if (pass === null || pass.trim() === '') {
+            // If the name is null or empty
+            console.log("null");
+            $("#npassword").css("border", "2px solid red");
+            $("#npasMsg").html("<p class='text-danger'>Passwrod cannot be empty.</p>");
+            return false;
+        }
+		// check it s length
+		if(pass.length >= 5){
+			return true;
+		}else{
+			// set input password border red
+			$("#npassword").css("border","2px solid red");
+			//set passMsg 
+			$("#npasMsg").html("<p class='text-danger'>Please enter valid new password.</p>");
+			return false;
+		}
+
+	}
+	function vvalidatePassword(){
+		//get input password value
+		var pass=$("#vpassword").val();
+		if (pass === null || pass.trim() === '') {
+            // If the name is null or empty
+            console.log("null");
+            $("#vpassword").css("border", "2px solid red");
+            $("#vpasMsg").html("<p class='text-danger'>Passwrod cannot be empty.</p>");
+            return false;
+        }
+		// check it s length
+		if(pass.length >= 5){
+			return true;
+		}else{
+			$("#vpassword").css("border","2px solid red");
+			//set passMsg 
+			$("#vpasMsg").html("<p class='text-danger'>Please enter valid vierify password.</p>");
+			return false;
+		}
+
+	}
+        $("#passwordForm").submit(function(event) {
+            event.preventDefault(); // prevent form from submitting and reloading the page
+            var cpas = $("#cpassword").val();
+            var vpas = $("#vpassword").val();
+            var npas = $("#npassword").val();
+            console.log('Cpas :' + cpas);
+            console.log('Vpas :' + vpas);
+            console.log('Npas :' + npas);
+            
+            cvalidatePassword();
+            nvalidatePassword();
+            vvalidatePassword();
+            if(cvalidatePassword() && nvalidatePassword() && vvalidatePassword()){
+            $.ajax({
+                type: 'POST',
+                url: '/operator/pasChange',
+                data: {
+                    cpas: cpas,
+                    vpas: vpas,
+                    npas: npas
+                },
+                success: function(response) {
+                    console.log(response);
+                    var successMessage = response;
+
+                    // Display the success toast
+                    iziToast.success({
+                        title: 'Success',
+                        message: successMessage,
+                        position: 'topCenter',
+                        timeout: 5000,
+                        progressBarColor: 'green',
+                        transitionIn: 'fadeInLeft',
+                        transitionOut: 'fadeOutRight'
+                    });
+                    var toast = document.querySelector('.iziToast');
+                    toast.style.top = '55px';
+                },
+
+                error: function(xhr, status, error) {
+                    console.log(status);
+                    var errorMessage = xhr.responseText;
+                    iziToast.warning({
+                        message: errorMessage,
+                        icon: 'fa fa-exclamation-triangle',
+                        position: 'topCenter',
+                        timeout: 5000,
+                        progressBarColor: 'red',
+                        backgroundColor: '#f5d1d3',
+                        padding: '20px',
+                        transitionIn: 'fadeInLeft',
+                        transitionOut: 'fadeOutRight'
+                    });
+                    var toast = document.querySelector('.iziToast');
+                    toast.style.top = '55px';
+                }
+            });
+            }
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-kPvG++WELT8Pn7GzDxs/V1I28R2C8mdgk0c1ZLdMjbqsX3OiF8C3d/5+FxO5e5/Z" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  $('#customSwitch1').on('change', function() {
+    var switchValue = $(this).prop('checked');
+    $.ajax({
+      url: '/toogle',
+      method: 'POST',
+      data: { switchValue: switchValue },
+      success: function(response) {
+        console.log(response);
+      },
+      error: function(xhr, status, error) {
+        console.log(xhr.responseText);
+      }
+    });
+  });
+});
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/additional-methods.min.js"></script>
+   
+    <script>
+    const menuBar = document.querySelector('#content nav .bx.bx-menu');
+    const sidebar = document.getElementById('sidebar');
+    const profileLink = document.querySelector('#sidebar .profile');
+    const firstMenuItem = document.querySelector('#sidebar .side-menu.top');
+    menuBar.addEventListener('click', function () {
+    	sidebar.classList.toggle('hide');
+     if (sidebar.classList.contains('hide')) {
+        profileLink.remove();
+      } else {
+        sidebar.insertBefore(profileLink, firstMenuItem);
+      }
+    })
+    </script>
+</body>
+</html>

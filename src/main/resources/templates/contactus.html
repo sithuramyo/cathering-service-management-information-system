@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+    
+    <title>Contact Us</title>
+    <style>
+        .overlay {
+  background-image: linear-gradient(
+    to right,
+    rgba(90, 100, 232, 0.9),
+    rgba(84, 96, 234, 0.9)
+  );
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: relative;
+  padding: 110px 0;
+}
+.section-bg {
+  background-size: cover;
+  position: relative;
+  background-position: left;
+  z-index: 0;
+  padding: 0;
+  min-height: auto;
+  overflow: hidden;
+}
+.contact-form {
+  position: relative;
+  padding: 45px 0 45px 60px;
+}
+
+.contact-form:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: 10px 40px 40px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  right: auto;
+  width: 100vw;
+}
+.particles-js-canvas-el {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.contact-form input {
+  border: 0;
+  background: transparent;
+
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  padding: 11px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 27px;
+
+  background-color: transparent;
+  background-image: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  transition: 0.3s ease-in-out;
+  border: 2px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.contact-form textarea {
+  border: 0;
+  background: transparent;
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  padding: 11px 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 27px;
+
+  background-color: transparent;
+  background-image: none;
+  border-radius: 0;
+  -webkit-appearance: none;
+  transition: 0.3s ease-in-out;
+  border: 2px solid transparent;
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+.contact-form input::placeholder {
+  color: #222;
+}
+.contact-form textarea::placeholder {
+  color: #222;
+}
+.contact-form input {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  height: 55px;
+}
+.contact-form input:hover,
+.contact-form input:focus {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  border: 2px solid transparent;
+  border-bottom-color: rgb(254, 132, 111);
+}
+.contact-form textarea:hover,
+.contact-form textarea:focus {
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  border: 2px solid transparent;
+  border-bottom-color: rgb(254, 132, 111);
+}
+
+.taso-btn {
+  background-color: #fff;
+  margin: 25px 0;
+  color: #214dcb;
+  -webkit-box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 0.32);
+  box-shadow: 0px 10px 30px 0px rgba(255, 255, 255, 0.17);
+}
+.contact-info {
+  padding: 0 30px 0px 0;
+}
+
+h2.contact-title {
+  font-size: 35px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 30px;
+}
+
+.contact-info p {
+  color: #ececec;
+}
+
+ul.contact-info {
+  margin-top: 30px;
+}
+
+ul.contact-info li {
+  margin-bottom: 22px;
+}
+
+ul.contact-info span {
+  font-size: 20px;
+  line-height: 26px;
+}
+ul.contact-info li {
+  display: flex;
+  width: 100%;
+}
+
+.info-left {
+  width: 10%;
+}
+
+.info-left i {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.info-right h4 {
+  color: #fff;
+  font-size: 18px;
+}
+.contact-page .info-left i {
+  color: #fe846f;
+}
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-family: "Poppins", sans-serif;
+  padding: 10px 30px 10px;
+  font-size: 17px;
+  line-height: 28px;
+  border: 0px;
+  border-radius: 10px;
+  -webkit-transition: color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out,
+    -webkit-box-shadow 0.15s ease-in-out;
+}
+.btn-big {
+  color: #ffffff;
+  -webkit-box-shadow: 0px 5px 20px 0px rgba(45, 45, 45, 0.47843137254901963);
+  box-shadow: 2px 5px 10px 0px rgba(45, 45, 45, 0.19);
+  color: #fff !important;
+  margin-right: 20px;
+  background: #fe846f;
+  transition: 0.2s;
+  border: 2px solid #fe846f;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 767px) {
+  .contact-form {
+    padding: 30px;
+  }
+  .contact-form:before {
+    width: 100%;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <section class="section-bg" style="background-image: url(https://i.guim.co.uk/img/media/ebfddefe90fa825ac56f195a64387db68a318fe4/0_215_6500_3902/master/6500.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=d2de06130373e67fda3f3a97821a5796);" data-scroll-index="7">
+        <div class="overlay pt-100 pb-100 ">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-6 d-flex align-items-center">
+                <div class="contact-info">
+      
+                  <h2 class="contact-title">CONTACT US!</h2>
+                  <p>If you have any questions or inquiries about <strong>CSMIS-Catering Service Management Information System </strong>,please fill out the form and send direct mail.</p>
+                  <ul class="contact-info">
+                    <li>
+                      <div class="info-left">
+                        <i class="fas fa-mobile-alt"></i>
+                      </div>
+                      <div class="info-right">
+                        <h4>[[${phone}]]</h4>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="info-left">
+                        <i class="fas fa-at"></i>
+                      </div>
+                      <div class="info-right">
+                        <h4>[[${email}]]</h4>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="info-left">
+                        <i class="fas fa-map-marker-alt"></i>
+                      </div>
+                      <div class="info-right">
+                        <h4>[[${address}]]</h4>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-lg-6 d-flex align-items-center">
+                <div class="contact-form">
+                  <!--Contact Form-->
+                  <form id='contact-form' method="post"><input type='hidden' name='form-name' value='contactForm' />
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Name *">
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <input type="email" name="email" class="form-control" id="email" placeholder="Enter Your Email *">
+                        </div>
+                      </div>
+      
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <textarea rows="4" name="message" class="form-control" id="message" placeholder="Enter Your Message *"></textarea>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <!--contact button-->
+                        <button type="button" onclick="sendtoadmin()" class="btn-big btn btn-bg">
+                          Send Us <i class="fas fa-arrow-right"></i>
+                        </button>
+                         <a type="button" th:href="@{/login}" class="btn-big btn btn-bg bg-danger">
+                          Back <i class="fas fa-arrow-left"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <script>
+    function sendtoadmin() {
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var message = document.getElementById('message').value;
+
+        if (name.trim() === '' && email.trim() === '' && message.trim() === '') {
+            iziToast.error({
+                title: 'Error',
+                message: 'Please fill all fields',
+                position: 'topCenter',
+                timeout: 3000,
+                backgroundColor: 'red',
+                messageColor: 'white'
+            });
+            var toast = document.querySelector('.iziToast');
+            toast.style.top = '55px';
+            return;
+        }
+
+        if (name.trim() === '') {
+            iziToast.error({
+                title: 'Error',
+                message: 'Please fill in the name',
+                position: 'topCenter',
+                timeout: 3000,
+                backgroundColor: 'red',
+                messageColor: 'white'
+            });
+            var toast = document.querySelector('.iziToast');
+            toast.style.top = '55px';
+            return;
+        }
+
+        if (email.trim() === '') {
+            iziToast.error({
+                title: 'Error',
+                message: 'Please fill in the email',
+                position: 'topCenter',
+                timeout: 3000,
+                backgroundColor: 'red',
+                messageColor: 'white'
+            });
+            var toast = document.querySelector('.iziToast');
+            toast.style.top = '55px';
+            return;
+        }
+
+        if (message.trim() === '') {
+            iziToast.error({
+                title: 'Error',
+                message: 'Please fill in the message',
+                position: 'topCenter',
+                timeout: 3000,
+                backgroundColor: 'red',
+                messageColor: 'white'
+            });
+            var toast = document.querySelector('.iziToast');
+            toast.style.top = '55px';
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('message', message);
+		console.log("Data ",formData);
+        $.ajax({
+            url: '/sendemail',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                iziToast.success({
+                    title: 'Success',
+                    message: 'Send successfully. Thank you for staying with us.',
+                    position: 'topCenter',
+                    timeout: 3000
+                });
+                var toast = document.querySelector('.iziToast');
+                toast.style.top = '55px';
+            },
+            error: function(xhr, status, error) {
+                iziToast.error({
+                    title: 'Error',
+                    message: 'Send failed.',
+                    position: 'topCenter',
+                    backgroundColor: 'red',
+                    messageColor: 'white',
+                    timeout: 5000
+                });
+                var toast = document.querySelector('.iziToast');
+                toast.style.top = '55px';
+            }
+        });
+
+
+    }
+</script>
+
+</body>
+</html>

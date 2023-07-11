@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Email & password validation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Source Sans Pro", sans-serif;
+        }
+        
+        body {
+            background: #2c3e50;
+        }
+        
+        .custom-card {
+            width: 400px;
+            /* Adjust the width as needed */
+            height: 350px;
+            /* Adjust the height as needed */
+            margin-top: 20px;
+            /* Add the desired margin-top value */
+        }
+        
+        .email {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4 mt-5">
+                <div class="card shadow px-3 py-2 custom-card">
+                    <div class="card-body">
+                        <form th:action="@{/otpAccept}" method="post" style="max-width: 420px; margin: 0 auto;" id="otpForm">
+                            <h3 class="text-center" style="font-size: 25px;"> Write Your OTPCode!!</h3>
+                            <h4 class="text-center" style="font-size: 16px;">Your OTP code will expire in 3 minutes.**</h4>
+                            <br>
+                            <div class="form-group email">
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" th:value="${email}">
+                                <span id="emailMsg"></span>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" id="otp" name="otp" placeholder="One Time Password" th:value="${otp}" />
+                                <span id="otpMsg"></span>
+                            </div>
+                            <div class="form-group mt-4">
+                                <button class="btn btn-primary btn-block" id="btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#email").keyup(function () {
+                validateEmail();
+            });
+
+            function validateEmail() {
+                var email = $("#email").val();
+                if (email === null || email.trim() === '') {
+                    $("#email").css("border", "2px solid red");
+                    $("#emailMsg").html("<p class='text-danger'>Email cannot be empty.</p>");
+                    return false;
+                }
+                var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                if (emailPattern.test(email)) {
+                    $("#email").css("border", "2px solid green");
+                    $("#emailMsg").html("<p class='text-success'>Email validated</p>");
+                    return true;
+                } else {
+                    $("#email").css("border", "2px solid red");
+                    $("#emailMsg").html("<p class='text-danger'>Please enter a valid email.</p>");
+                    return false;
+                }
+            }
+
+            $("#otp").keyup(function () {
+                validateOtp();
+            });
+
+            function validateOtp() {
+                var otp = $("#otp").val();
+                if (otp === null || otp.trim() === '') {
+                    $("#otp").css("border", "2px solid red");
+                    $("#otpMsg").html("<p class='text-danger'>Otp cannot be empty.</p>");
+                    return false;
+                }
+                var pattern1 = /^\d{5}$/;
+                var pattern = /^\d{6}$/;
+                if ((pattern.test(otp) && otp.length === 6) || (pattern1.test(otp) && otp.length === 5)) {
+                    $("#otp").css("border", "2px solid green");
+                    $("#otpMsg").html("<p class='text-success'>Verify password is validated</p>");
+                    return true;
+                } else {
+                    $("#otp").css("border", "2px solid red");
+                    $("#otpMsg").html("<p class='text-danger'>Invalid OTP code. Please try again.</p>");
+                    return false;
+                }
+            }
+
+            $("#otpForm").submit(function (event) {
+                var isEmailValid = validateEmail();
+                var isOtpValid = validateOtp();
+
+                if (!isEmailValid || !isOtpValid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+<script th:inline="javascript">
+var successMessage = /*[[${successMessage}]]*/ null;
+
+if (successMessage && successMessage.trim() !== "") {
+	iziToast.success({
+        title: 'Success',
+        message: successMessage,
+        position: 'topCenter',
+        timeout: 5000,
+        progressBarColor: 'green',
+        transitionIn: 'fadeInLeft',
+        transitionOut: 'fadeOutRight'
+    });
+    
+}
+    var errorMessage = /*[[${errorMessage}]]*/ null;
+
+    if (errorMessage && errorMessage.trim() !== "") {
+    	iziToast.warning({
+            message: errorMessage,
+            icon: 'fa fa-exclamation-triangle',
+            position: 'topCenter',
+            timeout: 5000,
+            progressBarColor: 'red',
+            backgroundColor: '#f5d1d3',
+            padding: '20px',
+            transitionIn: 'fadeInLeft',
+            transitionOut: 'fadeOutRight'
+        });
+       
+    }
+    var errorOtpMessage = /*[[${errorOtpMessage}]]*/ null;
+
+    if (errorOtpMessage && errorOtpMessage.trim() !== "") {
+    	iziToast.warning({
+            message: errorOtpMessage,
+            icon: 'fa fa-exclamation-triangle',
+            position: 'topCenter',
+            timeout: 5000,
+            progressBarColor: 'red',
+            backgroundColor: '#f5d1d3',
+            padding: '20px',
+            transitionIn: 'fadeInLeft',
+            transitionOut: 'fadeOutRight'
+        });
+       
+    }
+    </script>
+</body>
+</html>

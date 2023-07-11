@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+      
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+    <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link href="/css/index.css" rel="stylesheet" />
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+    <link rel="stylesheet" href="/css/successconfirm.css">
+</head>
+<style>
+    #sidebar a{
+        text-decoration: none;
+    }
+    #import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+</style>
+<style>
+        	
+	.warningMessage{
+		font-size: 20px;
+		font-family: cursive;
+		
+		animation: blink 1.5s linear infinite;
+	}
+@keyframes blink{
+0%{opacity: 0;}
+50%{opacity: .5;}
+100%{opacity: 1;}
+}
+
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+    </style>
+<body>
+
+
+  <!-- SIDEBAR -->
+  <section id="sidebar">
+  <a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a> 
+    <ul class="side-menu top">
+        <li >
+            <a th:href="@{/}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li th:if="${session.staffid ne 'default_admin'}"> 
+            <a th:href="@{/admin/cateringStart}">
+                <i class="bx bx-calendar"></i>
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+  <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li class="active">
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+
+    <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            
+
+            <input type="checkbox" id="switch-mode" hidden>
+           
+
+        </nav>
+        <div class="containter m-3">
+        <div class="col-md-10 blink m-4 text-center" th:if="${session.fridayBefore == 1}">
+         <span class="warningMessage text-danger">
+         Orders placed after Friday, 2:00 PM before Saturday will be processed next week. Please plan accordingly. Thank you!
+         </span>
+         </div>
+         <div class="col-md-10 blink m-4 text-center" th:if="${session.sundayBefore == 1}">
+         <span class="warningMessage text-danger">
+         Orders placed after Friday, 2:00 PM before Sunday will be processed next week. Please plan accordingly. Thank you!
+         </span>
+         </div>
+            <div class="row justify-content-center align-items-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 style="text-align: center; font-weight: bold;">Weekly Order</h1>
+            </div>
+            <div class="card-body">
+                <form id="orderForm" action="/admin/submitOrder" method="post">
+                    <div class="row justify-content-center align-items-center text-center" style="text-align: center; font-weight: bold;">
+                        <div class="col-12 col-md-3">Date</div>
+                        <div class="col-12 col-md-5">No. Of Pax</div>
+                        <div class="col-12 col-md-4">Avoid Meat Count</div>
+                    </div>
+                    <hr>
+                    <div class="row justify-content-center align-items-center" th:each="data,index: ${session.olist}">
+                        <div class="col-12 col-md-3 dayOfWeek text-center" th:text="${data.dayOfWeek}"></div>
+                        <input type="hidden" th:value="${data.dayOfWeek}" th:name="dayOfWeek" name="dayOfWeek">
+                        <div class="col-12 col-md-5 align-items-center">
+                            <div class="input-group d-flex justify-content-center" >
+                                <div style="display: flex; align-items: center;">
+                                    <input type="button" value="-" class="button-minus" data-field="quantity-[[${index}]]">
+                                    <input type="number" 
+                                        name="quantity" 
+                                        id="quantity-[[${index}]]" 
+                                        step="1" 
+                                        th:min="${data.quantity}" 
+                                        max="1000" 
+                                        value="${data.quantity}" 
+                                        th:name="quantity" 
+                                        class="quantity-field" 
+                                        style="width: 50px;"
+                                        th:value="${data.quantity}" 
+                                        oninput="this.value = !!this.value ? Math.abs(this.value) : 0;" 
+                                        onchange="if (this.value < this.getAttribute('min')) this.value = this.getAttribute('min'); calculateTotalCount();"
+                                    >
+                                    <input type="button" value="+" class="button-plus" data-field="quantity-[[${index}]]">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 text-center" th:text="${data.avoidMeat}"></div>
+                        <input type="hidden" th:value="${data.avoidMeat}" th:name="avoidMeat" name="avoidMeat" class="avoidMeat">
+                    </div>
+                    <div class="row justify-content-around">
+                        <div class="col-12 col-md-5">
+                            <label for="employeeCost" class="mb-2" th:if="${session.closeOrder != 0}">Employee Cost:</label>
+                            <input type="text" class="form-control" id="employeeCost" name="employeeCost" th:value="${session.empCost}" th:if="${session.closeOrder == 1}">
+                            <span id="employeeCostMsg"></span>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <label for="datCost" class="mb-2" th:if="${session.closeOrder != 0}">DAT Cost:</label>
+                            <input type="text" class="form-control" id="datCost" name="datCost" th:value="${session.datCost}" th:if="${session.closeOrder == 1}">
+                            <span id="datCostMsg"></span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="font-weight: bold;">
+                        <div class="col-12 col-md-5"></div>
+                        <div class="col-12 col-md-5" style="text-align: right;font-size: 20px;">Total no. Of Pax:</div>
+                        <div class="col-12 col-md-2 text-danger" data-total-count th:text="${session.totalCount}" style="font-size: 20px;"></div>
+                        <input type="hidden" name="totalCount" id="totalCount">
+                    </div>
+                    <div class="row mt-4 mb-3 justify-content-end px-3">
+                        <div class="col-md-12">
+                            <button type="submit" id="pdfButton" class="btn btn-primary btn-block w-100 p-2" th:if="${session.closeOrder == 1}">Order Now</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </div>
+        </div>
+     </section>  
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+     <script>
+        $("#employeeCost").keyup(function() {
+            if (validatePrice()) {
+                // If the price is validated
+                // Set input price border green
+                $("#employeeCost").css("border", "1px solid #ced4da");
+                // Set label
+                $("#employeeCostMsg").html("");
+            } else {
+                // If the price is not validated
+             
+            }
+        });
+    
+    function validatePrice() {
+        var price = $("#employeeCost").val();
+        var pricePattern = /^\d+(\.\d+)?$/;// Pattern to match an integer value (e.g., 1000)
+    
+        if (price === null || price.trim() === '') {
+            // If the price is null or empty
+            console.log("null");
+            $("#employeeCost").css("border", "2px solid red");
+          $("#employeeCostMsg").html("<p class='text-danger'>Price cannot empty.</p>");
+            return true;
+        }
+        // Check if the price matches the pattern
+        if (pricePattern.test(price.trim())) {
+            
+            return true;
+        } else {
+             $("#employeeCost").css("border", "2px solid red");
+             $("#employeeCostMsg").html("<p class='text-danger'>Please enter a valid price.</p>");
+            return false;
+        }
+    }
+    $("#datCost").keyup(function() {
+    if (validatePrice1()) {
+        // If the price is validated
+        // Set input price border green
+        $("#datCost").css("border", "1px solid #ced4da");
+        // Set label
+        $("#datCostMsg").html("");
+    } else {
+        // If the price is not validated
+        // Set border red
+      
+    }
+    });
+    
+    function validatePrice1() {
+    var price = $("#datCost").val();
+    var pricePattern = /^\d+(\.\d+)?$/; // Pattern to match an integer value (e.g., 1000)
+    
+    if (price === null || price.trim() === '') {
+    // If the price is null or empty
+    console.log("null");
+    $("#datCost").css("border", "2px solid red");
+    $("#datCostMsg").html("<p class='text-danger'>Price cannot empty.</p>");
+    return true;
+    }
+    //Check if the price matches the pattern
+    if (pricePattern.test(price.trim())) {
+    
+    return true;
+    } else {
+     $("#datCost").css("border", "2px solid red");
+    $("#datCostMsg").html("<p class='text-danger'>Please enter a valid price.</p>");
+    return false;
+    }
+    }
+    
+    $('#pdfButton').click(function(e) {
+        e.preventDefault();
+        validatePrice();
+        validatePrice1();
+        calculateTotalCount();
+        if (validatePrice() && validatePrice1()) {
+            var userResult = function(result) {
+                if (result === 1) {
+                    var formData = {
+                            quantity: [],
+                            dayOfWeek: [],
+                            avoidMeat: [],
+                            totalCount: $("#totalCount").val(),
+                            employeeCost: $("#employeeCost").val(),
+                            datCost: $("#datCost").val()
+                        };
+                     console.log('TotalCount :' + formData.totalCount);
+                        // Collect data from the form inputs
+                        $(".quantity-field").each(function() {
+                            formData.quantity.push($(this).val());
+                        });
+                        
+                        $(".dayOfWeek").each(function() {
+                            formData.dayOfWeek.push($(this).text());
+                        });
+                        
+                        $(".avoidMeat").each(function() {
+                            formData.avoidMeat.push($(this).val());
+                        });
+                        console.log(JSON.stringify(formData));
+                       
+                        if (validatePrice() && validatePrice1()) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/submitOrder',
+                            contentType: 'application/json',
+                            data: JSON.stringify(formData),
+                            success: function(response) {
+                                console.log(response);
+                                 console.log("Success");
+                                 window.location.href='/admin/orderView';
+                                },
+                                
+                                error: function(xhr, status, error) {
+                                    console.log(status);
+                                    var errorMessage = xhr.responseText;
+                                    iziToast.warning({
+                                        message: errorMessage,
+                                        icon: 'fa fa-exclamation-triangle',
+                                        position: 'topCenter',
+                                        timeout: 5000,
+                                        progressBarColor: 'red',
+                                        backgroundColor: '#f5d1d3',
+                                        padding: '20px',
+                                        transitionIn: 'fadeInLeft',
+                                        transitionOut: 'fadeOutRight'
+                                    });
+                                    var toast = document.querySelector('.iziToast');
+                                    toast.style.top = '55px';
+                                }
+                        });
+                        }
+                } else {
+                    return true;
+                }
+            };
+            
+            toggleModalOrder('Are you sure to confirm order?', userResult);
+        } else {
+            
+        }
+    });
+    
+    function toggleModalOrder(text, callback) {
+        $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+    
+        $modal = $('<div id="modal-confirmation"><div id="modal-header"><h5><i class="fas fa-check-circle" aria-hidden="true"></i> Confirm Success</h5><span data-confirm="0" class="modal-action" id="modal-close"><i class="fa fa-times" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm="0" id="modal-button-no">No</button><button class="modal-action" data-confirm="1" id="modal-button-yes">Yes</button></div></div>').appendTo($wrapper);
+    
+        setTimeout(function() {
+          $wrapper.addClass('active');
+        }, 100);
+    
+        $wrapper.find('.modal-action').click(function() {
+          var result = $(this).data('confirm');
+          $wrapper.removeClass('active').delay(500).queue(function() {
+            $wrapper.remove();
+            callback(result);
+          });
+        });
+      }
+        </script>
+    
+    <script>
+    
+    $('.button-plus').click(function(){
+        var $quantityField = $(this).siblings('.quantity-field');
+        var currentValue = parseInt($quantityField.val());
+        console.log("currentValue: " + currentValue);
+        if (!isNaN(currentValue)) {
+            $quantityField.val(currentValue + 1);
+        } else {
+            $quantityField.val(0);
+        }
+    });
+    
+    $('.button-minus').click(function(){
+        var $quantityField = $(this).siblings('.quantity-field');
+        var currentValue = parseInt($quantityField.val());
+        console.log("currentValue: " + currentValue);
+        if (!isNaN(currentValue) && currentValue > $quantityField.attr('min')) {
+            $quantityField.val(currentValue - 1);
+        } else {
+            $quantityField.val($quantityField.attr('min'));
+        }
+    });
+    
+    function calculateTotalCount() {
+        var totalCount = 0;
+        $('.quantity-field').each(function(){
+            var value = $(this).val();
+            console.log(value);
+            if (value.trim() !== '' && !isNaN(value)) {
+                totalCount += parseInt(value);
+            }
+        });
+        $('div[data-total-count]').text(totalCount);
+        $('#totalCount').val(totalCount);
+    }
+    
+    
+    $('.button-plus, .button-minus, .quantity-field').on('click input', function () {
+          calculateTotalCount();
+        });
+    $('form').submit(function(e) {
+        e.preventDefault()
+        calculateTotalCount();
+    });
+    
+    </script>
+   
+    <script src="/js/script.js"></script>
+</body>
+
+</html>

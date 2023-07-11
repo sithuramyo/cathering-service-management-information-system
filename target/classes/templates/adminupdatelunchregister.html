@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    
+    <!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="/css/sidebar.css">
+
+<!-- 	sidebar -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3-beta2/css/all.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Link to Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+	<script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+	
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css">
+<script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXXXXXXXXXX" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-9Xcb00sfrs1dpJnaR6+kmP/ymnU6oPKU6ZbT6T3r9XyPMc6y7yzsRfaStMyaSEdC0stzmvZJ2QHbT50rL3GQCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<style>
+  ul,
+        li {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .tg-list {
+          text-align: center;
+          display: flex;
+          align-items: center;
+        }
+
+        .tg-list-item {
+          margin: 0 2em;
+        }
+
+        h2 {
+          color: #777;
+        }
+
+        h4 {
+          color: #999;
+        }
+
+        .tgl {
+          display: none;
+        }
+
+        /* add default box-sizing for this scope */
+        .tgl,
+        .tgl:after,
+        .tgl:before,
+        .tgl *,
+        .tgl *:after,
+        .tgl *:before,
+        .tgl + .tgl-btn {
+          box-sizing: border-box;
+        }
+
+        .tgl::selection {
+          background: none;
+        }
+
+        .tgl + .tgl-btn {
+          outline: 0;
+          display: block;
+          width: 4em;
+          height: 2em;
+          position: relative;
+          cursor: pointer;
+          user-select: none;
+        }
+
+        .tgl + .tgl-btn:after,
+        .tgl + .tgl-btn:before {
+          position: relative;
+          display: block;
+          content: "";
+          width: 50%;
+          height: 100%;
+        }
+
+        .tgl + .tgl-btn:after {
+          left: 0;
+        }
+
+        .tgl + .tgl-btn:before {
+          display: none;
+        }
+
+        .tgl:checked + .tgl-btn:after {
+          left: 50%;
+        }
+
+        .tgl-ios + .tgl-btn {
+          background: #fbfbfb;
+          border-radius: 2em;
+          padding: 2px;
+          transition: all 0.4s ease;
+          border: 1px solid #e8eae9;
+        }
+
+        .tgl-ios + .tgl-btn:after {
+          border-radius: 2em;
+          background: #fbfbfb;
+          transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+            padding 0.3s ease, margin 0.3s ease;
+          box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08);
+        }
+
+        .tgl-ios + .tgl-btn:hover:after {
+          will-change: padding;
+        }
+
+        .tgl-ios + .tgl-btn:active {
+          box-shadow: inset 0 0 0 2em #e8eae9;
+        }
+
+        .tgl-ios + .tgl-btn:active:after {
+          padding-right: 0.8em;
+        }
+
+        .tgl-ios:checked + .tgl-btn {
+          background: #86d993;
+        }
+
+        .tgl-ios:checked + .tgl-btn:active {
+          box-shadow: none;
+        }
+
+        .tgl-ios:checked + .tgl-btn:active:after {
+          margin-left: -0.8em;
+        }
+.menu-error{
+	color:red;
+	font-weight:bold;
+	font-size:20px;
+}
+	
+#calendar {
+    width: 70%;
+    height: 120%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    order: 1;
+}
+
+.check_boxes{
+	margin-top:3%;
+}
+
+.avoid-box{
+    display: flex;
+    flex-direction: column;
+    margin-top:3%;
+    width:85%;
+}
+.check_boxes label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    display: inline-block;
+    margin-right: 54px;
+    margin-left:-14px;
+}
+
+.check_boxes label input[type="checkbox"] {
+    height: 20px;
+    margin-right: 3px;
+    width: 20px;
+}
+
+
+
+.avoid-box{
+	margin-top:10px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+	justify-content: space-between; 
+    align-items: center;
+    padding: 5px;
+}
+
+.calender-legend{
+	display:flex;
+	flex-direction:row-reverse;
+	justify-content:space-between;
+}
+
+@media screen and (max-width: 767px) {
+    .flex-container {
+        display: block;
+    }
+
+    #calendar {
+        width: 100%;
+        height: 100%;
+        margin-bottom: 100px;
+    }
+}
+.main{
+
+background-color:#fff;}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    #calendar {
+        width: 50%;
+        height: 50%;
+        margin-right: 20px;
+    }
+
+    .check_box {
+        width: 40%;
+    }
+}
+
+.avoid{
+	font-size:25px !important;
+}
+
+#legend{
+	width:27%;
+	margin-top:2%;
+}
+
+.legend-item {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    
+  }
+  .weekend {
+    background-color: #A59996; 
+  }
+  .holiday {
+    background-color: #EDBB99; 
+  }
+  .registered {
+    background-color: #7FD5F9;  
+  }
+  .registeredeat {
+    background-color: #DAF7A6;  
+  }
+  .registereduneat {
+    background-color: #FA7272;
+  }
+  .unregisteredeat {
+    background-color: #E6B4FB;
+  }
+  
+  .end{
+  	display:flex;
+  	align-items:center;
+  	margin-top:5px;
+  }
+  
+  .end .days{
+  	margin-left:5px;
+  }
+  
+ #register-button {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 53%;
+}
+
+#register-button:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+  
+</style>
+<style type="text/css">
+     #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+.image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}</style>
+
+	<title>OperatorHub</title>
+</head>
+<body>
+	
+	<section id="sidebar">
+    <a href="#" class="profile">
+         <center>
+                 <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+            
+            <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+             </center>
+        </a>  
+    <ul class="side-menu top">
+        <li >
+            <a th:href="@{/}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+        <li th:if="${session.staffid ne 'default_admin'}" class="active">
+            <a th:href="@{/admin/cateringStart}">
+              <i class="bx bx-dish"></i>
+
+                <span class="text">Lunch Register</span>
+            </a>
+        </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+         <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+       
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+        
+    </ul>
+
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a onclick="location.href='/logout'" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+	
+	
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		   <nav>
+
+			<i class='bx bx-menu' ></i>	
+			<input type="checkbox" id="switch-mode" hidden>
+
+
+		</nav>
+	
+	<!-- MAIN -->
+		<main  style="background:white;">
+			
+			
+			<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+				<div id="toast-container"></div>
+			</div>
+			
+			<div class="flex-container">
+				<div class="calender-legend">
+					<div id='calendar'></div>
+				
+			        <div id="legend">
+			        	<div class="end">
+			        		<span class="legend-item weekend"></span><span class="days"> Weekend</span>
+			        	</div>
+			        	
+			        	<div class="end">
+			    			<span class="legend-item holiday"></span><span class="days"> Holiday</span>
+			        	</div>
+			        	
+			        	<div class="end">
+				    		<span class="legend-item registered"></span><span class="days"> Registered-Date</span>		        	
+			        	</div>
+			        	
+			        	<div class="end">
+				    		<span class="legend-item registeredeat"></span><span class="days"> Registered-Eat-Date</span>		        	
+			        	</div>
+			        	
+			        	<div class="end">
+ 	      					<span class="legend-item registereduneat"></span><span class="days"> Registered-Not-Eat-Date</span>      		
+			        	</div>
+			        	
+			        	<div class="end">
+				    		<span class="legend-item unregisteredeat"></span><span class="days"> Unregistered-Eat-Date</span>		        	
+			        	</div>
+			        	
+			  		</div>
+			  		
+				</div>
+				<ul class="tg-list">
+        <li class="tg-list-item">
+            <h4>Get price info of each month</h4>
+            <input id="cb2" class="tgl tgl-ios" type="checkbox">
+            <label class="tgl-btn" for="cb2"></label>
+        </li>
+    </ul>
+    <div id="modal" style="display: none;">
+        <h2 id="monthPriceListTitle"></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Registered Eat</th>
+                    <th>Registered Uneat</th>
+                    <th>Unregistered Eat</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>                   
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+			    <div class="check_boxes">
+			    	
+			        <div class="col-form-label pt-0 avoid">Avoid Meats</div>
+			        <div class="avoid-box">
+			            <div class="">
+			                <label th:each="meat1: ${meat}" class="col-2">   
+			                    <input class="check_box" type="checkbox" th:text="${meat1.meatName}" th:value="${meat1.meatName}" id="meatCheckbox" >
+			                </label>
+			                <input type="hidden" th:value="${doorlogno}" id="doorlogNo">
+			                <input type="hidden" th:value="${dept}" id="dept">
+			                <input type="hidden" th:value="${division}" id="division">
+			                <input type="hidden" th:value="${employeeName}" id="employeeName">
+			                <input type="hidden" th:value="${staffId}" id="staffId">
+			                <input type="hidden" th:value="${status}" id="status">
+			                <input type="hidden" th:value="${team}" id="team">
+			                <input type="hidden" th:value="${role}" id="role">
+			            </div>
+			        </div>
+			        
+			        <button id="register-button" type="submit">Update</button>
+			        
+			    </div>
+		</div>
+		</main>
+			
+	</section>
+	<div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holidays Add</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+
+	<script> 
+     $(document).ready(function() {
+    var selectedDates = [];
+    var renderedMonths = [];
+    var doorLogNo = document.querySelector('#doorlogNo').value;
+    var dept = document.querySelector('#dept').value;
+    var division = document.querySelector('#division').value;
+    var employeeName = document.querySelector('#employeeName').value;
+    var role = document.querySelector('#role').value;
+    var staffId = document.querySelector('#staffId').value;
+    var status = document.querySelector('#status').value;
+    var team = document.querySelector('#team').value;
+    var meatCheckboxes = [...document.querySelectorAll('#meatCheckbox')];
+    console.log("doorlogno is "+ doorLogNo);
+    var avoidMeatList = [];
+     meatCheckboxes.forEach(function(checkbox) {
+       checkbox.addEventListener('change', function() {
+        if (this.checked) {
+         avoidMeatList.push(this.value);
+        } else {
+          const index = avoidMeatList.indexOf(this.value);
+         if (index > -1) {
+          avoidMeatList.splice(index, 1);
+        }
+      }
+      
+      console.log(avoidMeatList); 
+    });
+  });
+ 
+  $.get('/api/admin/dates', function(data) {
+   $.get('/api/admin/registereddate' , function(data1){
+	  $.get('/api/admin/avoidmeatlist' , function(data5){
+	   $.get('/api/admin/registeredeat' , function(data2){
+		   $.get('/api/admin/registerednoeat' , function(data3){
+			   $.get('/api/admin/unregisteredeat' , function(data4){
+    
+   registered = data1;
+   avoidmeatlist = data5;
+   if (typeof data5 !== 'string') {
+     data5 = String(data5);
+   }
+
+
+   var avoidMeat = data5.split(",").filter(function(str) {
+     return str.trim() !== '';
+   });
+   avoidMeat.forEach(meat => {
+     if (!avoidMeatList.includes(meat)) {
+       avoidMeatList.push(meat);
+     }
+   });
+
+   if (avoidMeatList.length > 0) {
+     $("input[type='checkbox']").each(function() {
+       if (avoidMeatList.includes($(this).val())) {
+         $(this).prop("checked", true);
+       }
+     });
+   } else {
+     console.log("No meat to avoid");
+   }
+
+   $("input[type='checkbox']").each(function() {
+     if ($(this).is(":checked")) {
+       meatCheckboxes.push($(this).val());
+     }
+   });
+
+
+   console.log("Avoid Meat  " + avoidmeatlist)
+   holidays = data;
+   registeredeat = data2;
+   registerednoeat = data3;
+   unregisteredeat = data4;
+   console.log("UnRegisteredeat " + unregisteredeat);
+  $('#calendar').fullCalendar({
+  
+    header: {
+      right: 'prev,next today'
+    },
+    viewRender: function(view, element) {
+    	  var currentMonth = view.intervalStart.format('MMMM');
+    	  renderedMonths.push(currentMonth);
+
+    	  $('#monthPriceListTitle').text('Your ' + currentMonth + ' Price List');
+    	  console.log('Current Month:', currentMonth);
+
+    	  $('#cb2').change(function() {
+    	    if (this.checked) {
+    	      $('#modal').show(); 
+    	    } else {
+    	      $('#modal').hide();
+    	    }
+    	  });
+
+    	  $.ajax({
+    	    url: '/api/admin/getmonth',
+    	    method: 'POST',
+    	    data: { month: currentMonth, doorlogno: doorLogNo },
+    	    success: function(response) {
+    	      console.log('AJAX response:', response);
+    	      var totalPrice = parseFloat(response.totalPrice);
+    	      var formattedTotalPrice = totalPrice.toFixed(2) + ' MMK';
+    	      $('#modal tbody tr td:nth-child(4)').text(formattedTotalPrice);
+    	      $('#modal tbody tr td:nth-child(1)').text(response.countre);
+    	      $('#modal tbody tr td:nth-child(2)').text(response.countrne);
+    	      $('#modal tbody tr td:nth-child(3)').text(response.countue);
+    	    },
+    	    error: function(xhr, status, error) {
+    	      console.error('AJAX error:', error);
+    	    }
+    	  });
+    	},
+    dayClick: function(date, jsEvent, view) {
+    	
+    	var now = moment();
+        var start = moment(date);
+        var currentMonth = moment().month();
+        var selectedWeek = start.week();
+        var currentWeek = moment().week();
+        var currentDay = moment().day();
+        var currentDate = moment();
+        var endOfMonth = moment(currentDate).endOf('month');
+        var lastWeekStart = moment(endOfMonth).subtract(1, 'week');
+        var lastWeekEnd = moment(endOfMonth);
+        var isLastWeek = currentDate.isBetween(lastWeekStart, lastWeekEnd);
+        if (date.isoWeekday() === 6 || date.isoWeekday() === 7) {
+        	iziToast.error({
+        	    message: 'You cannot select weekend.',
+        	    backgroundColor: 'red',
+        	    messageColor: 'white',
+        	    position: 'topCenter',
+        	    close: true,
+        	    timeout: 3000,
+        	    icon: 'none' // Add this line to set the icon to none
+        	});
+
+ 		     var toast = document.querySelector('.iziToast');
+ 	         toast.style.top = '70px';
+            return;
+        } 
+   
+        if (moment().day() === 5 && now.isAfter(moment().hour(13)) ) {
+            var nextWeekStart = moment().add(1, 'week').startOf('week');
+            var nextWeekEnd = moment().add(1, 'week').endOf('week');
+            if (moment(date).isBetween(nextWeekStart, nextWeekEnd, null, '[]')) {
+            	iziToast.error({
+      		       title: 'Error',
+      		       message: 'You cannot select this day because time is after 2:00PM of Friday',
+      		       backgroundColor: 'red',
+      		       messageColor: 'white',
+      		       position: 'topCenter',
+      		       close: true,
+      		       timeout: 3000
+      		     });
+      		     var toast = document.querySelector('.iziToast');
+      	         toast.style.top = '70px';
+                 return;
+            }
+        }
+        if (moment().day() === 6) {
+            var nextWeekStart = moment().add(1, 'week').startOf('week');
+            var nextWeekEnd = moment().add(1, 'week').endOf('week');
+            if (moment(date).isBetween(nextWeekStart, nextWeekEnd, null, '[]')) {
+            	iziToast.error({
+            	
+      		       
+      		       message: 'Your in Saturday,cannot select next week.',
+      		       backgroundColor: 'red',
+      		       messageColor: 'white',
+      		       position: 'topCenter',
+      		       close: true,
+      		       timeout: 3000
+      		     });
+      		     var toast = document.querySelector('.iziToast');
+      	         toast.style.top = '70px';
+                 return;
+            }
+        }
+        
+        for (var i = 0; i < holidays.length; i++) {
+            var holidayDate = moment(holidays[i].holidayDate, 'YYYY-MM-DD').add(1,'day');
+            if (start.isSame(holidayDate, 'day')) {
+            	iziToast.error({
+      		     
+      		       message: 'You cannot select Holiday.',
+      		       backgroundColor: 'red',
+      		       messageColor: 'white',
+      		       position: 'topCenter',
+      		       close: true,
+      		       timeout: 3000
+      		     });
+      		     var toast = document.querySelector('.iziToast');
+      	         toast.style.top = '70px';
+                 return;
+            }
+          }
+        var selectedWeekStart = moment(date).startOf('isoWeek');
+        var currentWeekStart = moment().startOf('isoWeek');
+        if (selectedWeekStart.isSameOrBefore(currentWeekStart, 'week')) {
+        	iziToast.error({
+  		      
+  		       message: 'You cannot select current week and past week.',
+  		       backgroundColor: 'red',
+  		       messageColor: 'white',
+  		       position: 'topCenter',
+  		       close: true,
+  		       timeout: 3000
+  		     });
+  		     var toast = document.querySelector('.iziToast');
+  	         toast.style.top = '70px';
+             return;
+        } 
+        if(!isLastWeek){
+        		if (selectedWeek > currentWeek && start.month() === currentMonth) {
+        			if (selectedDates.includes(date.format())) {
+            			var index = selectedDates.indexOf(date.format());
+            			selectedDates.splice(index, 1); 
+            			console.log('date : splice', selectedDates);
+            			$(this).css('background-color', 'white');
+        			} else {
+            		selectedDates.push(date.format());
+            		console.log('date : push', selectedDates);
+           		 	$(this).css('background-color', '#7FD5F9');
+        			}
+        		}else{
+        			iziToast.error({
+        	 		       title: 'Error',
+        	 		       message: 'You cannot select for nextmonth.',
+        	 		       backgroundColor: 'red',
+        	 		       messageColor: 'white',
+        	 		       position: 'topCenter',
+        	 		       close: true,
+        	 		       timeout: 3000
+        	 		     });
+        	 		     var toast = document.querySelector('.iziToast');
+        	 	         toast.style.top = '70px';
+        	            return;
+        		}
+    	}
+        else{
+        	 var nextMonthStart = moment(currentDate).add(1, 'months').startOf('month');
+             var nextMonthEnd = moment(nextMonthStart).endOf('month');
+             if (selectedWeek >= lastWeekEnd.week() && start.isBetween(endOfMonth, nextMonthEnd, null, '[]')) {
+            	 if (selectedDates.includes(date.format())) {
+                     var index = selectedDates.indexOf(date.format());
+                     selectedDates.splice(index, 1); 
+                     console.log('date : splice', selectedDates);
+                     $(this).css('background-color', 'white');
+                 } else {
+                     selectedDates.push(date.format());
+                     console.log('date : push', selectedDates);
+                     $(this).css('background-color', '#7FD5F9');
+                 } 
+             }
+             else{
+            	 iziToast.error({
+       		       title: 'Error',
+       		       message: 'You cannot select for currentmonth because your in last 7 days of currentmonth.',
+       		       backgroundColor: 'red',
+       		       messageColor: 'white',
+       		       position: 'topCenter',
+       		       close: true,
+       		       timeout: 3000
+       		     });
+       		     var toast = document.querySelector('.iziToast');
+       	         toast.style.top = '70px';
+                  return;
+             }
+          }
+    },
+dayRender: function(date, cell) {
+	var currentDate = moment(date).format('YYYY-MM-DD');  
+	  
+	if (selectedDates.includes(date.format())) {
+        cell.css('background-color', '#7FD5F9');
+    } else {
+        cell.css('background-color', 'white');
+    }
+   if (date.day() === 0 || date.day() === 6) {
+     cell.css('background-color', '#A59996');
+   }
+
+   var holidayDates = holidays.map(function(holiday) {
+     return moment(holiday.holidayDate, 'YYYY-MM-DD').add(1,'day');
+   });
+   
+   var registeredeatDates = registeredeat.map(function(registereat) {
+	     return moment(registereat.dates, 'YYYY-MM-DD').add(1,'day');
+	   });
+   var registerednoeatDates = registerednoeat.map(function(registernoeat) {
+	     return moment(registernoeat.dates, 'YYYY-MM-DD').add(1,'day');
+	   });
+   var unregisteredeatDates = unregisteredeat.map(function(unregistereat) {
+	     return moment(unregistereat.date, 'YYYY-MM-DD').add(1,'day');
+	   });
+   
+	   var registeredDates = registered.map(function(registration) {
+		    return moment(registration.date, 'YYYY-MM-DD').isSame(1, 'day');
+		  });
+	   
+		   var uniqueDates = new Set(registered.map(date => moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD'))); 
+	   	   selectedDates = [...uniqueDates];  
+	   	   
+	   	   
+  if (holidayDates.some(function(holidayDate) {
+	  
+	  return date.isSame(holidayDate, 'day');
+	})) {
+	  var holiday = holidays.find(function(holiday) {
+	    return moment(holiday.holidayDate, 'YYYY-MM-DD').isSame(date, 'day');
+	  });
+	  if (holiday) { // check if holiday is truthy
+	    cell.css('background-color', '#EDBB99');
+	    cell.css('text-align', 'center');
+	    cell.css('color', '#1C2833');
+	    cell.css('padding-top', '20px');
+	    cell.css('font-size' , '13px')
+	    cell.text(holiday.holidayName);
+	    $(window).resize(function() {
+		    if ($(window).width() < 768) {
+		      // On small screens, reduce the padding and font size
+		      cell.css('padding-top', '10px');
+		      cell.css('font-size', '15px');
+		    } else {
+		      // On larger screens, restore the original padding and font size
+		      cell.css('padding-top', '25px');
+		      cell.css('font-size', '15px');
+		    }
+		  });
+	  }
+	} 
+  if (registeredDates.includes(date.format('YYYY-MM-DD'))) {
+	    cell.css('background-color', '#7FD5F9');
+	    cell.css('text-align', 'center');
+	    cell.css('color', '#1C2833');
+	    $(window).resize(function() {
+	        if ($(window).width() < 768) {
+	          // On small screens, reduce the padding and font size
+	          cell.css('padding-top', '15px');
+	          cell.css('font-size', '14px');
+	        } else {
+	          // On larger screens, restore the original padding and font size
+	          cell.css('padding-top', '30px');
+	          cell.css('font-size', '14px');
+	        }
+	    });
+	} 
+	if (registeredeat.includes(date.format('YYYY-MM-DD'))) {
+		  cell.css('background-color', '#DAF7A6');
+		  cell.css('text-align', 'center');
+		  cell.css('color', '#1C2833');
+
+		  // Make the cell color change responsive
+		  $(window).resize(function() {
+		    if ($(window).width() < 768) {
+		      // On small screens, reduce the padding and font size
+		      cell.css('padding-top', '20px');
+		      cell.css('font-size', '14px');
+		    } else {
+		      // On larger screens, restore the original padding and font size
+		      cell.css('padding-top', '50px');
+		      cell.css('font-size', '13px');
+		    }
+		  });
+		}
+
+	if (registerednoeat.includes(date.format('YYYY-MM-DD'))) {
+		  cell.css('background-color', '#FA7272');
+		  cell.css('text-align', 'center');
+		  cell.css('color', '#1C2833');
+		  $(window).resize(function() {
+			    if ($(window).width() < 768) {
+			      // On small screens, reduce the padding and font size
+			      cell.css('padding-top', '20px');
+			      cell.css('font-size', '14px');
+			    } else {
+			      // On larger screens, restore the original padding and font size
+			      cell.css('padding-top', '50px');
+			      cell.css('font-size', '13px');
+			    }
+			  });
+		}
+	if (unregisteredeat.includes(date.format('YYYY-MM-DD'))) {
+		  cell.css('background-color', '#E6B4FB');
+		  cell.css('text-align', 'center');
+		  cell.css('color', '#1C2833');
+		  $(window).resize(function() {
+			    if ($(window).width() < 768) {
+			      // On small screens, reduce the padding and font size
+			      cell.css('padding-top', '20px');
+			      cell.css('font-size', '14px');
+			    } else {
+			      // On larger screens, restore the original padding and font size
+			      cell.css('padding-top', '50px');
+			      cell.css('font-size', '13px');
+			    }
+			  });
+		}
+
+
+
+
+
+}
+
+
+  });
+  
+  
+  
+  
+  
+			   });
+  
+  });
+  });
+     });
+  });
+   $('#register-button').click(function() {
+	    var datees = selectedDates.map(w => w = { dates: w });
+	    var avoidlist = avoidMeatList.map(w => w = { avoid: w });
+	    var registerDatesssss = {
+	        doorLogNo,
+	        dept,
+	        division,
+	        employeeName,
+	        staffId,
+	        status,
+	        team,
+	        role,
+	        dateList: datees,
+	        meatList: avoidlist
+	    };
+	    $.ajax({
+	        type: 'POST',
+	        url: '/api/operator/dateregister',
+	        contentType: 'application/json',
+	        data: JSON.stringify(registerDatesssss),
+	        success: function() {
+	        	 iziToast.success({
+	     		    title: 'Success',
+	     		    message: 'Update successful.',
+	     		    position: 'topCenter',
+	     		    timeout: 2000,
+	     		  });
+	     		  var toast = document.querySelector('.iziToast');
+	     	      toast.style.top = '70px';
+	            setTimeout(function() {
+	                window.location.href = '/admin/cateringStart'; 
+	            }, 2100);
+	        },
+	        error: function() {
+	        	iziToast.error({
+	  		       title: 'Error',
+	  		       message: 'Something is wrong.',
+	  		       backgroundColor: 'red',
+	  		       messageColor: 'white',
+	  		       position: 'topCenter',
+	  		       close: true,
+	  		       timeout: 3000
+	  		     });
+	  		     var toast = document.querySelector('.iziToast');
+	  	         toast.style.top = '70px';
+	             return;
+	        }
+	    });
+		 
+
+	});
+
+  });
+ 
+     });
+    
+    </script>
+<script src="/js/script.js"></script>
+</body>
+</html>

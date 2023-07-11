@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/styles.css">
+<link href="/css/invoice.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+     
+    <title>AdminHub</title>
+</head>
+<style>
+     #sidebar a{
+        text-decoration: none;
+    }
+
+#import-header {
+    position: relative;
+    background: #4290f5;
+    padding: 15px;
+    color: #fff;
+    text-align: left;
+}
+
+#import-header h3 {
+    font-weight: 300;
+    margin: 0;
+}
+
+#import-close {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #204a87;
+}
+
+#import-close:hover {
+    color: #fff;
+}
+
+
+#import-button-yes {
+    border: 2px solid #4290f5;
+    padding: 10px 50px;
+    background: #4290f5;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.5s ease all;
+    margin-left: 65%;
+}
+
+#import-button-yes:hover {
+    border: 2px solid darken(#4290f5, 8%);
+    background: darken(#4290f5, 8%);
+}
+    .custom-select {
+    appearance: none;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+   .image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+  
+</style>
+<body>
+
+
+  <!-- SIDEBAR -->
+  <section id="sidebar">
+   <a href="#" class="profile">
+            <center>
+                <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+
+                <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+            </center>
+        </a>
+    <ul class="side-menu top">
+        <li>
+            <a th:href="@{/}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">Dashboard</span>
+            </a>
+        </li>
+          <li th:if="${session.staffid ne 'default_admin'}">
+                <a th:href="@{/admin/cateringStart}">
+                    <i class="bx bx-calendar"></i>
+                    <span class="text">Lunch Register</span>
+                </a>
+            </li>
+        <li>
+          <a  data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+            <i class="bx bx-user"></i>
+              <span class="text">Employee Import</span>
+          </a>
+      </li>
+      <li>
+        <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+          <i class="bx bx-food-menu"></i>
+
+            <span class="text">Menu Import</span>
+        </a>
+    </li>
+    <li>
+      <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Holiday Import</span>
+      </a>
+  </li>
+  <li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/setupOrder}">
+                <i class='bx bxs-shopping-bag-alt'></i>
+
+                <span class="text">Order</span>
+            </a>
+        </li>
+     
+         <li>
+            <a th:href="@{/admin/orderList}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order History</span>
+            </a>
+        </li>
+         <li>
+            <a th:href="@{/admin/orderReport}">
+                <i class="bx bx-history"></i>
+
+
+                <span class="text">Order Report</span>
+            </a>
+        </li>
+        <li class="active">
+            <a th:href="@{/admin/setupInvoice}">
+                <i class="bx bx-receipt"></i>
+                <span class="text">Create Invoice</span>
+            </a>
+        </li>
+        <li>
+            <a  th:href="@{/admin/paidList}">
+                <i class="bx bx-credit-card"></i>
+
+                <span class="text">Paid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/unpaidList}">
+                <i class="bx bx-dollar-circle"></i>
+                  <span class="text">Unpaid Invoice History</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/monthlyInvoiceList}">
+                <i class="bx bx-history"></i>
+                <span class="text">Monthly Invoice Report</span>
+            </a>
+        </li>
+    </ul>
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/admin/adminSetting}">
+                <i class='bx bxs-cog'></i>
+                <span class="text">Settings</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+<div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header" id="import-header">
+            <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+            <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+           
+          </div>
+          <div class="modal-body">
+            <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+              <div class="form-group my-2">
+                <label for="file" class="form-label mr-2">Select file to import:</label>
+                <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+              </div>
+              
+      
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importEmployee()">Import</button>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+      <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+  
+<div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" class="form-inline"  enctype="multipart/form-data">
+        <div class="form-group my-2">
+          <label for="file" class="form-label mr-2">Select file to import:</label>
+          <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form id="holidayImportForm" >
+        <div class="form-group my-2">
+          <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+          <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+          <br>
+          <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+          <input type="text" id="holidayname" name="holidayname" class="form-control">
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importHoliday1()">Import</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+          <div class="modal-header" id="import-header">
+              <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+              <span data-confirm=0
+              class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+          </div>
+          <div class="modal-body">
+              <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                  <div class="form-group my-2">
+                      <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                      <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                  </div>
+                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal"id="import-button-yes" onclick="importMenu()">Import</button>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header" id="import-header">
+      <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+      <span data-confirm=0
+      class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+    </div>
+    <div class="modal-body">
+      <form class="form-inline" id="avoidmeat-form">
+        <div class="form-group my-2" >
+          <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3" placeholder="Type any avoid meat:">
+         <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+        </div>  
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<script src="/js/importvalidation.js">
+
+</script>
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            
+            <input type="checkbox" id="switch-mode" hidden>
+ 
+        </nav>
+        <!-- NAVBAR -->
+                <form id="myForm" action="/admin/creativeInvoice" th:object="${ci}" method="post" autocomplete="off">
+    
+          <h1 align="center">Invoice Form</h1>
+          
+          <div style="text-align:center;">
+              <span class="step" id="step-1">1</span>
+              <span class="step" id="step-2">2</span>
+          </div>
+          <div class="form active">
+          <div class="card tab mt-3" id="tab-1">
+              <h5 class="text-center mb-4">Resturant Info</h5>
+              <div class="field">
+              <input type="text" class="form-control" id="nameid" placeholder="Name" th:field="*{resturantname}" readonly>
+              <span id="nameMsg"></span>
+              </div>
+              <div class="field">
+              <input type="text" class="form-control" id="addressid" placeholder="Address" th:field="*{resaddress}" readonly>
+              <span id="addMsg"></span>
+              </div>
+              <div class="field">
+              <input type="text" class="form-control" id="phone" placeholder="Phone Number" th:field="*{resph}" readonly>
+              <span id="phoneMsg"></span>
+              </div>
+              <div class="field">
+              <input type="text" class="form-control" id="email" placeholder="Email" th:field="*{resemail}" readonly>
+              <span id="emailMsg"></span>
+              </div>
+              <div class="index-btn-wrapper">
+                  <div class="index-btn" id="firstBtn" >Next</div>
+              </div>
+          </div>
+          </div>
+          <div class="form">
+          <div class="card tab mt-3" id="tab-2">
+              <h5 class="text-center mb-4">Voucher Info</h5>
+              <div class="field">
+              <p class="form-text" style="font-size: 17px;color: black;">Voucher Id</p>
+              <input type="text" class="form-control" placeholder="Voucher Id" id="Vid" name="id" th:value="${session.invoiceId}" readonly="true">
+              
+              </div>
+              <div class="field">
+              <p class="form-text" style="font-size: 17px;color: black;">Start Date</p>
+              <input type="date" class="form-control" id="start" th:field="*{startdate}">
+               <span id="startMsg"></span>
+              </div>
+              <div class="field">
+              <p class="form-text" style="font-size: 17px;color: black;">End Date</p>
+              <input type="date" class="form-control" id="end" th:field="*{enddate}">
+              <span id="endMsg"></span>
+              </div>
+              <div class="field">
+              <p class="form-text" style="font-size: 17px;color: black;">Received By</p>
+              <input type="text" class="form-control" th:field="*{receivedby}" id="receive">
+             <span id="receiveMsg"></span>
+              </div>
+             <br>
+              <div class="mb-3 field">
+                  <select th:field="*{cashier}" id="cashier" class="custom-select" aria-label="Default select example">
+                    <option value="Cashier" selected>Cashier</option>
+                    <option th:each="operator : ${session.op}" th:value="${operator.employeeName}" th:text="${operator.employeeName}"></option>
+                      </select>
+                      <span id="cashierMsg"></span>
+                  </div>
+                  
+             <br>
+             
+          
+          
+          <div class="mb-3 field">
+                  <select th:field="*{approvedby}" id="approve" class="custom-select" aria-label="Default select example">
+                    <option value="Approved By" selected>Approved By</option>
+                    <option th:each="operator : ${session.op}" th:value="${operator.employeeName}" th:text="${operator.employeeName}"></option>
+                  </select>
+                  <span id="approveMsg"></span>
+              </div>
+             
+             
+              <br>
+          
+          
+          <div class="mb-3 field">
+                  <select th:field="*{paymethod}" id="pay" class="custom-select" aria-label="Default select example">
+                      <option value="Payment Method" selected>Payment Method</option>
+                      <option value="Cash">Cash</option>
+                    <option value="K-pay">K-pay</option>
+                    <option value="Wave-pay">Wave-pay</option>
+                    
+                  </select>
+                  <span id="payMsg"></span>
+                 
+              </div>
+             
+              
+              
+              <div class="index-btn-wrapper">
+                  <div class="index-btn" id="secondPreviousBtn">Previous</div>
+                  <div class="index-btn" id="secondBtn">Next</div>
+              </div>
+          </div>
+          
+          <div class="card tab mt-3" id="tab-3">
+              <div class="index-btn-wrapper">
+                  <div class="index-btn" id="finalPreviousBtn">Previous</div>
+                  <button class="index-btn" type="submit" name="submit" style="background: blue;">Submit</button>
+              </div>
+          </div>
+      </form>
+      
+     </section>   
+    
+  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+   $(".tab").css("display", "none");
+   $("#tab-1").css("display", "block");
+  
+
+$("#phone").keyup(function(){
+if(validatePhoneNumber()){
+  // if the email is validated
+  // set input email border green
+  $("#phone").css("border","1px solid #ced4da");
+  // and set label 
+  $("#phoneMsg").html(" ");
+}else{
+  // if the email is not validated
+  // set border red
+  
+}
+
+});
+
+// Use keyup event on name field
+$("#nameid").keyup(function() {
+    if (validateName()) {
+        // If the name is validated
+        // Set input name border green
+        $("#nameid").css("border", "1px solid #ced4da");
+        // Set label
+        $("#nameMsg").html(" ");
+    } else {
+        // If the name is not validated
+        // Set border red
+        
+    }
+    
+});
+
+$("#addressid").keyup(function(){
+if(validateAddress()){
+  // if the email is validated
+  // set input email border green
+  $("#addressid").css("border","1px solid #ced4da");
+  // and set label 
+  $("#addMsg").html(" ");
+}else{
+  // if the email is not validated
+  // set border red
+  
+}
+
+});
+$("#start").keyup(function(){
+if(validateStartDate()){
+  // if the email is validated
+  // set input email border green
+  
+}else{
+  // if the email is not validated
+  // set border red
+  
+}
+
+});
+$("#end").keyup(function(){
+if(validateEndDate()){
+  // if the email is validated
+  // set input email border green
+  
+}else{
+  // if the email is not validated
+  // set border red
+  
+}
+
+});
+$("#receive").keyup(function() {
+    if (validateReceive()) {
+        // If the name is validated
+        // Set input name border green
+        $("#receive").css("border", "1px solid #ced4da");
+        // Set label
+        $("#receiveMsg").html(" ");
+    } else {
+        // If the name is not validated
+        // Set border red
+        
+    }
+    
+});
+$("#approve").keyup(function() {
+    if (validateApprove()) {
+        // If the name is validated
+        // Set input name border green
+       
+    } else {
+        // If the name is not validated
+        // Set border red
+        
+    }
+    
+});
+$("#pay").keyup(function() {
+    if (validatePay()) {
+        // If the name is validated
+        // Set input name border green
+        
+    } else {
+        // If the name is not validated
+        // Set border red
+        
+    }
+    
+});
+$("#cashier").keyup(function() {
+    if (validateCashier()) {
+        // If the name is validated
+        // Set input name border green
+       
+    } else {
+        // If the name is not validated
+        // Set border red
+        
+    }
+    
+});
+$("#cashier").change(validateCashier);
+function validateCashier() {
+    // Get the value of the input name
+    var name = $("#cashier").val();
+    console.log(name);
+    if (name === 'Cashier') {
+        // If the name is null or empty
+        console.log("null");
+        $("#cashier").css("border", "2px solid red");
+        $("#cashierMsg").html("<p class='text-danger'>Choose an option.</p>");
+        return false;
+    }
+    else if(name !== 'Cashier'){
+       $("#cashier").css("border", "1px solid #ced4da");
+         // Set label
+         $("#cashierMsg").html(" ");
+      return true;
+    }
+    // Check the length of the name
+   
+}
+$("#approve").change(validateApprove);
+function validateApprove() {
+    // Get the value of the input name
+    
+    var name = $("#approve").val();
+    console.log('approve');
+    if (name === 'Approved By') {
+        // If the name is null or empty
+        console.log("null");
+        $("#approve").css("border", "2px solid red");
+        $("#approveMsg").html("<p class='text-danger'>Choose an option.</p>");
+        return false;
+    }
+    else{
+       $("#approve").css("border", "1px solid #ced4da");
+         // Set label
+         $("#approveMsg").html(" ");
+      return true;
+    }
+    // Check the length of the name
+   
+}
+$("#pay").change(validatePay);
+function validatePay() {
+    // Get the value of the input name
+    var name = $("#pay").val();
+    console.log('Pay'+ name);
+    if (name === 'Payment Method') {
+        // If the name is null or empty
+        console.log("null");
+        $("#pay").css("border", "2px solid red");
+        $("#payMsg").html("<p class='text-danger'>Choose an option.</p>");
+        return false;
+    }
+    else {
+      console.log('here');
+      $("#pay").css("border", "1px solid #ced4da");
+        // Set label
+        $("#payMsg").html(" ");
+      return true;
+    }
+    // Check the length of the name
+   
+}
+$("#start").on("change", validateStartDate);
+
+function validateStartDate() {
+  var name = $("#start").val();
+
+  if (name === null || name.trim() === '') {
+    $("#start").css("border", "2px solid red");
+    $("#startMsg").html("<p class='text-danger'>Start date cannot be empty.</p>");
+    return false;
+  }
+
+  var pattern = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!pattern.test(name)) {
+    $("#start").css("border", "2px solid red");
+    $("#startMsg").html("<p class='text-danger'>Please enter a valid start date.</p>");
+    return false;
+  }
+
+  var selectedDate = new Date(name);
+  var day = selectedDate.getDay();
+
+  if (day === 0 || day === 6) {
+    // If a weekend date is selected, reset the value to the next Monday
+    var nextMonday = getNextMonday(selectedDate);
+    $("#start").val(formatDate(nextMonday));
+    $("#start").css("border", "2px solid red");
+    $("#start").val('');
+    $("#startMsg").html("<p class='text-danger'>Weekend dates are not allowed.");
+    return false;
+  } else {
+    $("#start").css("border", "1px solid #ced4da");
+    $("#startMsg").html(" ");
+    return true;
+  }
+}
+
+function getNextMonday(date) {
+  var nextDay = new Date(date);
+  nextDay.setDate(date.getDate() + (8 - date.getDay()) % 7);
+  return nextDay;
+}
+
+function formatDate(date) {
+  var year = date.getFullYear();
+  var month = (date.getMonth() + 1).toString().padStart(2, '0');
+  var day = date.getDate().toString().padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
+
+$("#end").on("change", validateEndDate);
+function validateEndDate() {
+    // Get the value of the input name
+    var name = $("#end").val();
+    console.log(name);
+    if (name === null || name.trim() === '') {
+        // If the name is null or empty
+        console.log("null");
+        $("#end").css("border", "2px solid red");
+        $("#endMsg").html("<p class='text-danger'>End date cannot be empty.</p>");
+        return false;
+    }
+   var pattern = /^\d{4}-\d{2}-\d{2}$/;
+    
+    if (!pattern.test(name)) {
+        // If the entered value is not a valid date
+        $("#end").css("border", "2px solid red");
+        $("#endMsg").html("<p class='text-danger'>Please enter a valid end date.</p>");
+        return false;
+    }
+    
+    var selectedDate = new Date(name);
+    var day = selectedDate.getDay();
+
+    if (day === 0 || day === 6) {
+      // If a weekend date is selected, reset the value to the next Monday
+      var nextMonday = getNextMonday(selectedDate);
+      $("#end").val(formatDate(nextMonday));
+      $("#end").css("border", "2px solid red");
+      $("#end").val('');
+      $("#endMsg").html("<p class='text-danger'>Weekend dates are not allowed.");
+      return false;
+    } else {
+      $("#end").css("border", "1px solid #ced4da");
+      $("#endMsg").html(" ");
+      return true;
+    }
+    
+    // Check the length of the name
+   
+}
+function validateReceive() {
+    // Get the value of the input name
+    var name = $("#receive").val();
+    
+    if (name === null || name.trim() === '') {
+        // If the name is null or empty
+        console.log("null");
+        $("#receive").css("border", "2px solid red");
+        $("#receiveMsg").html("<p class='text-danger'>Name cannot be empty.</p>");
+        return false;
+    }
+    // Check the length of the name
+    if (name.trim().length >= 2 && name !== '' && name !== null) {
+      
+        return true;
+    } else {
+      $("#receive").css("border", "2px solid red");
+        $("#recieveMsg").html("<p class='text-danger'>Please enter a valid name.</p>");
+       
+        return false;
+    }
+}
+
+
+function validateName() {
+    // Get the value of the input name
+    var name = $("#nameid").val();
+    
+    if (name === null || name.trim() === '') {
+        // If the name is null or empty
+        console.log("null");
+        $("#nameid").css("border", "2px solid red");
+        $("#nameMsg").html("<p class='text-danger'>Name cannot be empty.</p>");
+        return false;
+    }
+    // Check the length of the name
+    if (name.trim().length >= 2 && name !== '' && name !== null) {
+      
+        return true;
+    } else {
+      $("#nameid").css("border", "2px solid red");
+        $("#nameMsg").html("<p class='text-danger'>Please enter a valid name.</p>");
+       
+        return false;
+    }
+}
+function validatePhoneNumber() {
+  var phoneNumber = $("#phone").val();
+  if (phoneNumber === null || phoneNumber.trim() === '') {
+        // If the name is null or empty
+        console.log("null");
+        $("#phone").css("border", "2px solid red");
+        $("#phoneMsg").html("<p class='text-danger'>Phone number cannot be empty.</p>");
+        return false;
+    }
+  var phonePattern = /^((09|\+?959|\+?95 9)([2-9]\d{8}|[2-9]\d{7}|[2-9]\d{6}))$/;
+  if (phonePattern.test(phoneNumber)) {
+      // Phone number is valid
+      
+      return true;
+  } else {
+      // Phone number is empty or invalid
+      $("#phone").css("border","2px solid red");
+    $("#phoneMsg").html("<p class='text-danger'>Please enter valid phone number.</p>");
+      return false;
+  }
+}
+function validateAddress() {
+  var address = $("#addressid").val();
+  if (address === null || address.trim() === '') {
+        // If the name is null or empty
+        console.log("null");
+        $("#addressid").css("border", "2px solid red");
+        $("#addMsg").html("<p class='text-danger'>Address cannot be empty.</p>");
+        return false;
+    }
+  if (address.trim().length > 0) {
+      // Address is valid
+      
+      return true;
+  } else {
+      // Address is empty or invalid
+      $("#addressid").css("border","2px solid red");
+    $("#addMsg").html("<p class='text-danger'>Please enter valid address.</p>");
+      return false;
+  }
+}
+
+function validateForm() {
+    var isValid = true;
+
+    // Restaurant Info validation
+    if (!validateName()) {
+        isValid = false;
+    }
+
+    if (!validateAddress()) {
+        isValid = false;
+    }
+
+    if (!validatePhoneNumber()) {
+        isValid = false;
+    }
+
+    var email = $("#email").val(); // Get the value of the input email
+
+    if (email !== null && email.trim() !== '') { // Check if email is not null and not empty
+        if (!validateEmail()) {
+            isValid = false;
+        }
+    }
+
+    return isValid;
+}
+
+function validateSecondForm() {
+    var isValid = true;
+
+    // Restaurant Info validation
+    if (!validateCashier()) {
+        isValid = false;
+    }
+
+    if (!validateApprove()) {
+        isValid = false;
+    }
+
+    if (!validateReceive()) {
+        isValid = false;
+    }
+
+    if (!validatePay()) {
+        isValid = false;
+    }
+
+    if (!validateStartDate()) {
+        isValid = false;
+    }
+
+    if (!validateEndDate()) {
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+function validateEmail() {
+    var email = $("#email").val(); // Get the value of the input email
+
+    var emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // Use regular expression to validate the email format
+
+    if (emailPattern.test(email)) {
+        // Set input email border green
+        $("#email").css("border", "1px solid #ced4da");
+        // Set label
+        $("#emailMsg").html(" ");
+        $("#emailMsg").show(); // Show the email validation message
+        return true;
+    } else {
+        $("#email").css("border", "2px solid red");
+        $("#emailMsg").html("<p class='text-danger'>Please enter a valid email.</p>");
+        $("#emailMsg").show(); // Show the email validation message
+        return false;
+    }
+}
+$("#email").keyup(function() {
+	  var email = $("#email").val();
+	  if (email !== null && email !== "") {
+	    if (validateEmail()) {
+	      // if the email is validated
+	      // set input email border green
+	      $("#email").css("border", "1px solid #ced4da");
+	      // and set label
+	      $("#email").html(" ");
+	    } else {
+	      // if the email is not validated
+	      // set border red
+	      $("#email").css("border", "2px solid red");
+	    }
+	  }
+	});
+
+// Rest of the code...
+
+// Form submit
+
+// Button click event handler
+$("#firstBtn").click(function() {
+    // Check if the first form is valid
+    		
+    			run(1, 2);
+    		
+    	
+});   
+$("#secondBtn").click(function() {
+	console.log('here');
+    // Check if the first form is valid
+   
+    if (validateSecondForm()) {
+        
+        console.log('here');
+        run(2, 3);
+    }
+});   
+$("#secondPreviousBtn").click(function() {
+    // Check if the first form is valid
+	
+		
+			console.log('here');
+	        run(2, 1);
+		
+
+   
+});
+$("#finalPreviousBtn").click(function() {
+    // Check if the first form is valid
+    if (validateSecondForm()) {
+        
+        console.log('here');
+        run(3, 2);
+    }
+});   
+
+function run(hideTab, showTab) {
+    // Progress bar
+  for (i = 1; i < showTab; i++) {
+        $("#step-" + i).css("opacity", "1");
+    }
+    
+    // Switch tab
+    $("#tab-" + hideTab).css("display", "none");
+    $("#tab-" + showTab).css("display", "block");
+    $("input").css("background", "#fff");
+}
+// Rest of your code...
+
+// Form submit
+$("#myForm").submit(function(event) {
+    if (!validateForm() && !validateSecondForm()) {
+        event.preventDefault();
+    }
+});
+
+});
+</script>
+<script th:inline="javascript">
+    var errorMessage = /*[[${message}]]*/ null;
+  console.log('errorMessage');
+    if (errorMessage && errorMessage.trim() !== "") {
+    	iziToast.warning({
+            message: errorMessage,
+            icon: 'fa fa-exclamation-triangle',
+            position: 'topCenter',
+            timeout: 5000,
+            progressBarColor: 'red',
+            backgroundColor: '#f5d1d3',
+            padding: '20px',
+            transitionIn: 'fadeInLeft',
+            transitionOut: 'fadeOutRight'
+        });
+        var toast = document.querySelector('.iziToast');
+        toast.style.top = '55px';
+    }
+    </script>
+ 
+<script src="/js/script.js"></script>
+</body>
+
+</html>

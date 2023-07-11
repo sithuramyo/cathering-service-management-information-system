@@ -1,0 +1,1499 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <!--     dashboard import style-->
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.9/css/bootstrap.min.css"
+        integrity="sha384-1lkN7kBs25CdB+BKj3I8+TBzGtv9XwoCYYKmRan5PmkvcBp7m3hHjsiCz6Wdzb6j" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--<div class="d-flex flex-column">-->
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- izitoast -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- DataTables -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/bs4-4.6.0/jszip-2.5.0/dt-1.11.2/b-2.0.1/b-html5-2.0.1/b-print-2.0.1/datatables.min.css" />
+    <script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4-4.6.0/jszip-2.5.0/dt-1.11.2/b-2.0.1/b-html5-2.0.1/b-print-2.0.1/datatables.min.js"></script>
+
+	<link rel="stylesheet" href="/assets/css/datatables.min.css">
+	<link rel="stylesheet" href="/assets/css/style.css">
+	
+    <link rel="stylesheet" href="/css/updateconfirm.css">
+    <link rel="stylesheet" href="/css/deleteconfirm.css">
+    
+
+</head>
+
+<style>
+	
+    .table tbody tr:nth-child(even) {
+        padding-bottom: 0px !important;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background: #e9e9e9
+    }
+
+    .table th {
+        color: white;
+    }
+
+    td i {
+        margin-right: 50px;
+        /* add some space to the right of the icons */
+    }
+
+    .nav-tabs .nav-item {
+        border-radius: 5px;
+    }
+
+
+    .nav-tabs .nav-link {
+        color: #007bff;
+    }
+
+    .data-table {
+        font-size: 12px;
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: lightblue;
+        color: #007bff;
+    }
+
+    .nav-tabs .nav-item.show .nav-link,
+    .nav-tabs .nav-link.active {
+        color: #007bff;
+        background-color: lightblue;
+
+    }
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.status-indicator.active {
+  background-color: green;
+}
+
+.status-indicator.inactive {
+  background-color: grey;
+}
+    #sidebar a {
+        text-decoration: none;
+    }
+
+    #import-header {
+        position: relative;
+        background: #4290f5;
+        padding: 15px;
+        color: #fff;
+        text-align: left;
+    }
+
+    #import-header h3 {
+        font-weight: 300;
+        margin: 0;
+    }
+
+    #import-close {
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        font-size: 1.5em;
+        cursor: pointer;
+        color: #204a87;
+    }
+
+    #import-close:hover {
+        color: #fff;
+    }
+
+
+    #import-button-yes {
+        border: 2px solid #4290f5;
+        padding: 10px 50px;
+        background: #4290f5;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.5s ease all;
+        margin-left: 65%;
+    }
+
+    #import-button-yes:hover {
+        border: 2px solid darken(#4290f5, 8%);
+        background: darken(#4290f5, 8%);
+    }
+
+    /* avoid meat edit and delete style */
+    #avoidEdits,
+    #avoidDeletes {
+        width: 75%;
+    }
+    
+    .image--cover {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 20px;
+
+  object-fit: cover;
+  object-position: center right;
+  box-shadow: 1px 1px 13px 3px gray;
+}
+
+  .circle {
+   display: inline-block;
+    width: 81px;
+    height: 19px;
+    border-radius: 6%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 12px;
+    line-height: 19px;
+  }
+
+  .circle-admin {
+    background-color: #ff704d;
+    color: white;
+  }
+
+  .circle-operator {
+    background-color: #9494b8;
+      color: white;
+}
+ .star-rating {
+      color: #444; /* Change color as desired */
+  }
+  
+  .star-rating .fa-star {
+      transition: color 0.3s ease; /* Add smooth color transition */
+      font-size: 24px; /* Adjust size as desired */
+  }
+  
+  .star-rating .fa-star.checked {
+      color: #007bff; /* Change color as desired */
+  }
+  .star-rating .fa-star.empty {
+    	 	color: transparent; /* Set the color of empty stars to transparent */
+ }
+</style>
+<script>
+    $(document).ready(function() {
+        $('.star-rating .fa-star').click(function() {
+           var rating = $(this).index();
+           var category = $(this).parent().data('category');
+           console.log('rating is'+ rating + " "+ 'categroy is '+ category);
+           updateRating(category, rating);
+       });
+       
+       function updateRating(category, rating) {
+           var stars = $('.star-rating[data-category="' + category + '"] .fa-star');
+           stars.removeClass('checked');
+
+           if (rating > 0) {
+               for (var i = 0; i < rating; i++) {
+                   stars.eq(i).addClass('checked');
+               }
+           }else{
+               stars.eq(i).removeClass()
+           }
+           
+           $('input[name="' + category + 'Rating"]').val(rating);
+
+       }
+   });
+</script>
+
+<body>
+
+
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a href="#" class="profile">
+            <center>
+                <img src="/image/DAT.jpeg" alt="" class="image--cover" />
+
+                <br><span class="text" style="font-size: 24px;font-weight: 700;">[[${session.operatorname}]]</span>
+            </center>
+        </a>
+        <ul class="side-menu top">
+            <li>
+                <a th:href="@{/}">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li th:if="${session.staffid ne 'default_admin'}">
+                <a th:href="@{/admin/cateringStart}">
+                    <i class="bx bx-calendar"></i>
+                    <span class="text">Lunch Register</span>
+                </a>
+            </li>
+            <li>
+                <a data-bs-toggle="modal" data-bs-target="#employeefileImportModal">
+                    <i class="bx bx-user"></i>
+                    <span class="text">Employee Import</span>
+                </a>
+            </li>
+            <li>
+                <a data-bs-toggle="modal" data-bs-target="#menuImportModal">
+                    <i class="bx bx-food-menu"></i>
+
+                    <span class="text">Menu Import</span>
+                </a>
+            </li>
+            <li>
+                <a data-bs-toggle="modal" data-bs-target="#holidayImportModal">
+
+                    <i class="bx bx-calendar"></i>
+                    <span class="text">Holiday Import</span>
+                </a>
+            </li>
+<li>
+      <a data-bs-toggle="modal" data-bs-target="#resImportModal">
+    
+        
+        <i class="bx bx-calendar"></i>
+          <span class="text">Restaurant Form</span>
+      </a>
+  </li>
+  
+  <div class="modal fade" id="resImportModal" tabindex="-1" aria-labelledby="resImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" id="import-header">
+          <h4 class="modal-title" id="doorlogImportModalLabel">Restaurant Form</h4>
+          <span data-confirm=0
+                  class="modal-action" id="import-close" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></span>
+        </div>
+        <div class="modal-body">
+          <form id="resImportForm" >
+          <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label">Id</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="id" id="id" th:value="${session.resId}" readonly="readonly">
+                
+                </div>
+              </div>
+            <div class="row mb-3">
+                <label for="name" class="col-md-3 col-form-label"> Name</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="name" id="nameid">
+                <span id="nameMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dln" class="col-md-3 col-form-label">  Address </label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="address" id="addressid">
+                <span id="addMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Phone</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="phone" id="phone">
+                <span id="phoneMsg"></span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="dept" class="col-md-3 col-form-label"> Email</label>
+                <div class="col-md-8">
+                  <input type="text" class="form-control" name="email" id="email">
+                <span id="emailMsg"></span>
+                </div>
+              </div>
+            <button type="button" class="btn btn-primary" onclick="importres()" id="import-button-yes" data-bs-dismiss="modal">Import</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+   
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#holidayImportModal1">
+  
+        <i class="bx bx-edit-alt"></i>
+        <span class="text">Holiday Add Manually</span>
+    </a>
+</li>
+  <li>
+    <a data-bs-toggle="modal" data-bs-target="#doorlogImportModal">
+      <i class="bx bx-door-open"></i>
+
+        <span class="text">Doorlog Import</span>
+    </a>
+</li>
+<li>
+  <a  data-bs-toggle="modal" data-bs-target="#avoidmeatImportModal">
+    <i class="bx bx-block"></i>
+
+
+      <span class="text">Avoid Meat Import</span>
+  </a>
+</li>
+        <li>
+            <a th:href="@{/admin/list}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">List View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/importlist}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Import View</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/admin/resView}">
+                <i class="bx bx-list-ul"></i>
+
+                <span class="text">Restaurant View</span>
+            </a>
+        </li>
+            <li>
+                <a th:href="@{/admin/setupOrder}">
+                    <i class='bx bxs-shopping-bag-alt'></i>
+
+                    <span class="text">Order</span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/orderList}">
+                    <i class="bx bx-history"></i>
+
+
+                    <span class="text">Order History</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/orderReport}">
+                    <i class="bx bx-history"></i>
+
+
+                    <span class="text">Order Report</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/setupInvoice}">
+                    <i class="bx bx-receipt"></i>
+                    <span class="text">Create Invoice</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/paidList}">
+                    <i class="bx bx-credit-card"></i>
+
+                    <span class="text">Paid Invoice History</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/unpaidList}">
+                    <i class="bx bx-dollar-circle"></i>
+                    <span class="text">Unpaid Invoice History</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/monthlyInvoiceList}">
+                    <i class="bx bx-history"></i>
+                    <span class="text">Monthly Invoice Report</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu">
+            <li>
+                <a th:href="@{/admin/adminSetting}">
+                    <i class='bx bxs-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/logout}" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            
+            <input type="checkbox" id="switch-mode" hidden>
+          
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- NAVBAR -->
+        <div class="d-flex flex-column ">
+            <ul class="nav nav-tabs flex-row " id="myTab" role="tablist">
+            	<li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#operator-list" role="tab" aria-controls="#operator-list"
+                        aria-selected="true">Operator List</a>
+                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#doorlog-list" role="tab"
+                        aria-controls="#doorlog-list" aria-selected="true">DoorLog List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#holidays-list" role="tab"
+                        aria-controls="#holidays-list" aria-selected="true">Holidays List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#avoidmeat-list" role="tab"
+                        aria-controls="#avoidmeat-list" aria-selected="true">Avoid Meat List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#feedback-list" role="tab" aria-controls="feedback-list"
+                        aria-selected="false">Feedback&Suggestion</a>
+                </li>
+            </ul>
+
+	        <div class="tab-content ">
+	                 <div class="tab-pane fade show active" id="operator-list" role="tabpanel" aria-labelledby="register-list-tab">
+                    <!-- second table goes here -->
+                    <div class="con data_table">
+                   
+<table id="optable" th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'" style="width:100%" class="table table-hover">
+   
+    <thead id="import-header">
+        <tr>
+            <th>StaffId</th>
+            <th>Name</th>
+            <th>DoorLogNo</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="view : ${employeelist}">
+            <td th:text="${view.staffId}"></td>
+            <td th:text="${view.employeeName}"></td>
+            <td th:text="${view.doorLogNo}"></td>
+            <td th:text="${view.employeeEmail}"></td>
+            <td th:text="${view.dept}"></td>
+            <td>
+  <span th:if="${view.role == 'ADMIN'}" class="circle circle-admin" data-status="ADMIN">ADMIN</span>
+  <span th:unless="${view.role == 'ADMIN'}" class="circle circle-operator" data-status="OPERATOR">OPERATOR</span>
+</td>
+            
+           
+            <td class="status-cell text-center">
+                <span class="status-indicator"></span>
+                <input type="hidden" th:value="${view.status}" />
+            </td>
+         <td>
+          <input type="hidden" th:value="${session.staffid}" id="staffId">
+                    <div class="button-group">
+                      <a href="#" class="edit-btn" data-toggle="modal" data-target="#editModal"
+                        th:if="${view.status != 'INACTIVE' && (session.staffid == 'default_admin' || view.role != 'ADMIN')}">
+                      
+                        <i class="bx bx-edit"></i>
+                      </a>
+                      <a href="#" class="delete-btn"
+                        th:if="${view.status != 'INACTIVE' && (session.staffid == 'default_admin' || view.role != 'ADMIN')}">
+                       
+                        <i class="bx bx-trash text-danger"></i></a>
+                    </div>
+                  </td>
+        </tr>
+    </tbody>
+</table>
+                    
+                           <!-- Operator edit -->
+                       <!-- Operator edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog admin-modal modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body mr-2">
+        <div class="row mb-3">
+          <label for="id" class="col-sm-3 col-form-label">Staff-ID</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="staffid" value="" readonly>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="name" class="col-sm-3 col-form-label">Name</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="name" value="" readonly>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="dln" class="col-sm-3 col-form-label"> DoorLogNo </label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="dln" value="" readonly>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="dept" class="col-sm-3 col-form-label">Dept</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="dept" value="" readonly>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="role" class="col-sm-3 col-form-label">Role</label>
+          <div class="col-sm-8">
+            <select class="form-select form-control roleselect">
+              <option value="OPERATOR" selected>Operator</option>
+              <option value="ADMIN">Admin</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeOperator">Close</button>
+        <button type="button" class="btn btn-primary" id="updateOperator">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+                  
+                    </div>
+                </div>
+	            <!-- doorlog list -->
+	            <div class="tab-pane" id="doorlog-list" role="tabpanel" aria-labelledby="doorlog-list-tab">
+	
+	                <div class="con data_table">
+	                    <table id="doortable"
+	                        th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+	                        style="width:100%" class="table table-hover">
+	                        <thead id="import-header">
+	                            <tr>
+	                                <th>No</th>
+	                                <th>DoorlogNo</th>
+	                                <th>Date</th>
+	                                <th>Department</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr th:each="doorlog, counts : ${doorloglist}">
+	                                <td th:text="${counts.count}"></td>
+	                                <td th:text="${doorlog.id.doorlogno}"></td>
+	                                <td th:text="${doorlog.id.date}"></td>
+	                                <td th:text="${doorlog.department}"></td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+	            <!-- Holidays list -->
+	            <div class="tab-pane fade active" id="holidays-list" role="tabpanel" aria-labelledby="holidays-list-tab">
+	                <div class="con data_table">
+	                    <table id="holidaytable"
+	                        th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+	                        style="width:100%" class="table table-hover">
+	                        <thead id="import-header">
+	                            <tr>
+	                                <th>No</th>
+	                                <th>Name</th>
+	                                <th>Date</th>
+	                                <th>Edit</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr th:each="holiday, counts : ${holidaylist}">
+	                                <td th:text="${counts.count}"></td>
+	                                <td th:text="${holiday.holidayName}"></td>
+	                                <td th:text="${holiday.holidayDate}"></td>
+	                                <td>
+	                                    <div class="button-group">
+	                                        <a href="#" class="edit-btn" data-toggle="modal" data-target="#holidayModals"
+	                                            th:if="${holiday.holidayDate != null}"
+	                                            th:attr="onclick='holidayEdit(\'' + ${holiday.holidayDate} + '\', \'' + ${holiday.holidayName} + '\')'">
+	                                            <i class="bx bx-edit"></i>
+	                                        </a>
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	
+	                    <!-- Holiday edit -->
+	                    <div class="modal fade" id="holidayModals" tabindex="-1" role="dialog" data-backdrop="false">
+	                        <div class="modal-dialog admin-modal modal-dialog-centered">
+	                            <div class="modal-content">
+	                                <div class="modal-body mr-2">
+	                                    <div class="row mb-3">
+	                                        <label for="id" class="col-sm-3 col-form-label">Date</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" class="form-control" id="holiDate" value="" readonly>
+	                                        </div>
+	                                    </div>
+	                                    <div class="row mb-3">
+	                                        <label for="name" class="col-sm-3 col-form-label">Name</label>
+	                                        <div class="col-sm-8">
+	                                            <input type="text" class="form-control" id="holiName" value="">
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <div class="modal-footer">
+	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	                                    <button type="button" class="btn btn-primary" id="updateHoliday"
+	                                        onclick="updateHolidayData()">Update</button>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+	                </div>
+	            </div>
+	
+	            <!-- Avoidmeat list -->
+	            <div class="tab-pane fade active" id="avoidmeat-list" role="tabpanel" aria-labelledby="avoidmeat-list-tab">
+	                <div class="con data_table">
+	                    <table id="avoidmeattable"
+	                        th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+	                        style="width:100%" class="table table-hover">
+	                        <thead id="import-header">
+	                            <tr>
+	                                <th>No</th>
+	                                <th>Name</th>
+	                                <th>Action</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr th:each="avoidmeat, counts : ${avoidmeatlist}" th:id="'avoidRow-' + ${avoidmeat.id}">
+	                                <td th:text="${counts.count}" class="count-number"></td>
+	                                <td th:text="${avoidmeat.meatName}"></td>
+	                                <td>
+	                                    <div class="button-group">
+	                                        <a href="#" class="" data-toggle="modal" data-target="#avoidModals"
+	                                            th:if="${avoidmeat.meatName != null}"
+	                                            th:attr="onclick='avoidMeatEdit(\'' + ${counts.count} + '\', \'' + ${avoidmeat.id} + '\', \'' + ${avoidmeat.meatName} + '\')'">
+	                                            <i class="bx bx-edit"></i>
+	                                        </a>
+	                                     <!-- 	                                        <a href="#" data-toggle="modal" data-target="#avoidModalDelete"
+	                                            th:if="${avoidmeat.meatName != null}"
+	                                            th:attr="onclick='avoidMeatDelete(\'' + ${avoidmeat.id} + '\', \'' + ${avoidmeat.meatName} + '\')'">
+	
+	                                            <i class="bx bx-trash text-danger"></i></a>
+	                                             -->
+	                                            
+	                                    </div>
+	                                </td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	
+	                    <!-- avoid meat edit -->
+	                    <div class="modal fade" id="avoidModals" tabindex="-1" role="dialog" data-backdrop="false">
+	                        <div class="modal-dialog admin-modal modal-dialog-centered">
+	                            <div class="modal-content" id="avoidEdits">
+	                                <div class="modal-body">
+	                                    <div class="form-inline">
+	                                        <input type="hidden" id="avoidId" />
+	                                        <span id="avoidNo" class="mr-2"></span>
+	                                        <input type="text" class="form-control" id="avoidName" value="">
+	                                    </div>
+	                                </div>
+	                                <div class="modal-footer">
+	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	                                    <button type="button" class="btn btn-primary"
+	                                        onclick="updateAvoidDatas()">Update</button>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	
+	                    <!-- avoid meat delete -->
+	
+	                    <div class="modal fade" id="avoidModalDelete" tabindex="-1" role="dialog" data-backdrop="false">
+	                        <div class="modal-dialog admin-modal modal-dialog-centered">
+	                            <div class="modal-content" id="avoidDeletes">
+	                                <div class="modal-header bg-danger">
+	                                    <h5 class="modal-title text-center text-white" id="">
+	                                        <i class="bx bxs-error-circle" aria-hidden="true"></i> Confirmation
+	                                    </h5>
+	                                    <input type="hidden" id="avoidIdDelete" />
+	
+	                                    <input type="hidden" class="form-control" id="avoidNameDelete" value="">
+	
+	                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                        <span aria-hidden="true">&times;</span>
+	                                    </button>
+	                                </div>
+	                                <div class="modal-body">
+	                                    <p>Are you sure you want to delete?</p>
+	                                </div>
+	                                <div class="modal-footer">
+	                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+	                                    <button type="button" class="btn btn-danger"
+	                                        onclick="deleteAvoidDatas()">Delete</button>
+	
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	                         <div class="tab-pane fade show " id="feedback-list" role="tabpanel" aria-labelledby="feedback-list-tab">
+                    <div class="con mt-4">
+                        <div class="row justify-content-between">
+                            <div class="col-md-3 mr-3">
+                                <div class="input-group">
+                                  <!--  <input type="text" class="form-control" placeholder="Search here" id="searchInput"> --> 
+                                </div>
+                            </div>
+                           
+                          <div class="col-md-3 mt-1">
+           <div class="input-group">
+          
+            </div>
+        </div>
+                        
+                        </div>
+                    </div>
+                    
+                    <!-- Confirmation delete Modal 
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>-->
+    <!-- Admin view table of operator suggestion -->
+                    <div class="con data_table">
+               <table style="width:100%" th:attr="data-length-menu='[[5, 10, 25, 50, -1], [5, 10, 25, 50, &quot;All&quot;]]'"
+    class="table table-hover" id="feedbackTable">
+
+    <thead  id="import-header">
+        <tr>
+            <th>No.</th>
+            <th>Operator Name</th>
+            <th>Quality</th>
+            <th>Cost</th>
+            <th>Cleanese</th>
+            <th>Suggestion</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+     <tr th:each="feedback, counts : ${feedbackList}">
+                        <td><p><span th:text="${counts.count}"></span></p></td>
+                      <td><p><span th:text="${feedback.operator.employeeName}"></span></p></td>
+                      <td>
+                          <div class="star-rating" data-category="quality">
+                        <p>
+                          <span class="fa fa-star checked" th:each="i : ${#numbers.sequence(1, feedback.quality)}"></span>
+                          <span class="fa fa-star empty" th:each="i : ${#numbers.sequence(feedback.quality + 1, 5)}" th:unless="${feedback.quality == 0}"></span>
+                      </p>
+                          </div>
+                      </td>
+                      <td>
+                        <div class="star-rating" data-category="cost">
+                       <p>
+                         <span class="fa fa-star checked" th:each="i : ${#numbers.sequence(1, feedback.cost)}"></span>
+                             <span class="fa fa-star empty" th:each="i : ${#numbers.sequence(feedback.cost + 1, 5)}"></span>
+                       </p>
+                          </div>
+                      </td>
+                      <td>
+                        <div class="star-rating" data-category="cleanese">
+                    <p>
+                         <span class="fa fa-star checked" th:each="i : ${#numbers.sequence(1, feedback.cleanese)}"></span>
+                             <span class="fa fa-star empty" th:each="i : ${#numbers.sequence(feedback.cleanese + 1, 5)}"></span>
+                       </p>                          
+                     </div>
+                      </td>
+                      <td>
+                             <p><span th:text="${feedback.suggest}"></span></p>                
+                      </td>
+                         
+                    </tr>
+                  </tbody>
+    </tbody>
+</table>
+    
+    </div>
+                </div>
+            </div>
+        </div>
+ 
+
+ 
+
+          
+     </section>   
+    
+     <div class="modal fade" id="employeefileImportModal" tabindex="-1" aria-labelledby="employeefileImportModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="employeefileImportModalLabel">Employee Import</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+
+                </div>
+                <div class="modal-body">
+                    <form id="employeeImportForm" class="form-inline" enctype="multipart/form-data">
+                        <div class="form-group my-2">
+                            <label for="file" class="form-label mr-2">Select file to import:</label>
+                            <input type="file" id="employeeFile" name="employeeFile" class="form-control-file">
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes"
+                            onclick="importEmployee()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="doorlogImportModal" tabindex="-1" aria-labelledby="doorlogImportModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="doorlogImportModalLabel">DoorLog Import</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="modal-body">
+                    <form id="doorlogImportForm" class="form-inline" enctype="multipart/form-data">
+                        <div class="form-group my-2">
+                            <label for="file" class="form-label mr-2">Select file to import:</label>
+                            <input type="file" id="doorlogFile" name="doorlogFile" class="form-control-file">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="importdoorlog()" id="import-button-yes"
+                            data-bs-dismiss="modal">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="holidayImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="holidayImportModalLabel">Holiday Import</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="modal-body">
+                    <form id="holidayImportForm" class="form-inline" enctype="multipart/form-data">
+                        <div class="form-group my-2">
+                            <label for="file" class="form-label mr-2">Select file to import:</label>
+                            <input type="file" id="holidayFile" name="holidayFile" class="form-control-file">
+                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes"
+                            onclick="importHoliday()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="holidayImportModal1" tabindex="-1" aria-labelledby="holidayImportModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="holidayImportModalLabel">Edit Holidays</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="modal-body">
+                    <form id="holidayImportForm">
+                        <div class="form-group my-2">
+                            <label for="holidaydate" class="form-label mr-2">Choose date for holiday</label>
+                            <input type="date" id="holidaydate" name="holidaydate" class="form-control">
+                            <br>
+                            <label for="holidayname" class="form-label mr-2">Type holiday name</label>
+                            <input type="text" id="holidayname" name="holidayname" class="form-control">
+                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes"
+                            onclick="importHoliday1()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="menuImportModal" tabindex="-1" aria-labelledby="menuImportModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="menuImportModalLabel">Menu Import</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="modal-body">
+                    <form id="menuImportForm" enctype="multipart/form-data" class="form-inline">
+                        <div class="form-group my-2">
+                            <label for="menuFile" class="form-label mr-2">Select file to import:</label>
+                            <input type="file" id="menuFile" name="menuFile" class="form-control-file">
+                        </div>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="import-button-yes"
+                            onclick="importMenu()">Import</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="avoidmeatImportModal" tabindex="-1" aria-labelledby="holidayImportModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="import-header">
+                    <h4 class="modal-title" id="holidayImportModalLabel">Add Avoid Meat</h4>
+                    <span data-confirm=0 class="modal-action" id="import-close" data-bs-dismiss="modal"><i
+                            class="fa fa-times" aria-hidden="true"></i></span>
+                </div>
+                <div class="modal-body">
+                    <form class="form-inline" id="avoidmeat-form">
+                        <div class="form-group my-2">
+                            <input type="text" id="avoidmeat" name="meatName" class="form-control-file  mx-3"
+                                placeholder="Type any avoid meat:">
+                            <br> <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                id="import-button-yes" onclick="importAvoidMeat()">Import</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/importvalidation.js">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+          <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+          <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+          
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="/assets/js/datatables.min.js"></script>
+    <script src="/assets/js/pdfmake.min.js"></script>
+    <script src="/assets/js/vfs_fonts.js"></script>
+    <script src="/assets/js/custom_2.js"></script>
+       <script src="/assets/js/customlistview.js"></script>
+    
+   <script>
+           function updateStatusIndicators() {
+                  $('.status-cell').each(function() {
+                    var status = $(this).find('.status-indicator');
+                    var statusValue = $(this).find('input').val();
+                    var isActive = statusValue.trim() === 'ACTIVE';
+      
+                    if (isActive) {
+                      status.addClass('active');
+                      status.removeClass('inactive');
+                    } else {
+                      status.addClass('inactive');
+                      status.removeClass('active');
+                    }
+                  });
+                }
+      
+      
+          </script>
+          
+  <script>
+        updateStatusIndicators();
+        $('.edit-btn').click(function() {
+            
+            var row = $(this).closest('tr');
+         
+            var staffid = row.find('td:eq(0)').text();
+            console.log(id);
+            var name = row.find('td:eq(1)').text();
+            var dln = row.find('td:eq(2)').text();
+            var dept = row.find('td:eq(4)').text();
+          
+            var role = row.find('td:eq(5) span').attr('data-status');
+            $('#staffid').val(staffid);
+            $('#name').val(name);
+            $('#dln').val(dln);
+            $('#dept').val(dept);
+            $('.roleselect').val(role);
+            
+            $('#editModal').modal('show');
+            $('#editModal').off('hidden.bs.modal');
+          });
+      
+        $('#updateOperator').click(function(e) {
+        	  e.preventDefault();
+        	  var staffid = $('#staffid').val();
+        	  var updatedName = $('#name').val();
+        	  var updatedDln = $('#dln').val();
+        	  var updatedDept = $('#dept').val();
+        	  var updatedRole = $('.roleselect').val();
+			
+        	  var userResult = function(result) {
+        	    if (result === 1) {
+        	      $.ajax({
+        	        type: 'POST',
+        	        url: '/admin/updateEmployee',
+        	        data: {
+        	          staffid: staffid,
+        	          role: updatedRole
+        	        },
+        	        success: function(response) {
+        	          iziToast.success({
+        	            title: 'Success',
+        	            message: response,
+        	            position: 'topCenter',
+        	            timeout: 3000,
+        	            progressBarColor: 'green',
+        	            transitionIn: 'fadeInLeft',
+        	            transitionOut: 'fadeOutRight', onClosed: function() {
+        	                $('#editModal').modal('hide');
+        	               /*  $('body').removeClass('modal-open');
+        	                $('.modal-backdrop').remove(); */
+        	            }
+        	          });
+        	      
+        	         
+                          var row = $('tr:contains(' + staffid + ')');
+                          var roleSpan = row.find('td:eq(5) span');
+
+                          roleSpan.text(updatedRole);
+
+                          if (updatedRole === 'ADMIN') {
+                            roleSpan.removeClass('circle-operator').addClass('circle-admin');
+                          } else {
+                            roleSpan.removeClass('circle-admin').addClass('circle-operator');
+                          }
+
+                     
+        	        },
+        	        error: function(xhr, status, error) {
+        	          // Handle error if needed
+        	        }
+        	      });
+        	    } else {
+        	      // Handle the case if the user cancels the action
+        	    }
+        	  }
+
+        	  toggleModals('Are you sure you want to update this employee? ', userResult);
+        	});
+
+        	// Reset the modal on close
+        	$('#editModal').on('hidden.bs.modal', function() {
+        	  $(this).find('form')[0].reset();
+        	});
+
+        	// Event handler for the close button in the modal dialog
+        	$('#closeOperator').click(function() {
+        	  $('#editModal').modal('hide');
+        	});
+
+
+       
+        function toggleModals(text, callback) {
+             
+            $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+            
+            $modal = $('<div id="modal-confirmation"><div id="modal-headers"><h5> Confirm Update</h5><span data-confirm=0 class="modal-action" id="modal-close"><i class="fa fa-times" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm=0 id="modal-button-no">No</button><button class="modal-action" data-confirm=1 id="modal-button-yess">Yes</button></div></div>').appendTo($wrapper);
+            
+            setTimeout(function() {
+                $wrapper.addClass('active');
+            }, 100);
+            
+            $wrapper.find('.modal-action').click(function() {
+                var result = $(this).data('confirm');
+                $wrapper.removeClass('active').delay(500).queue(function() {
+                   $wrapper.remove();
+                   callback(result);
+                });
+            });
+
+        }
+      
+       
+      
+          </script>
+          <script>
+  $(document).ready(function() {
+    $(document).on('click', '.delete-btn', function(e) {
+      
+
+      var row = $(this).closest('tr');
+      var staffid = row.find('td:eq(0)').text();
+
+      var userResult = function(result) {
+        if (result === 1) {
+        	
+          $.ajax({
+        	  
+            type: 'POST',
+            url: '/admin/deleteEmployee',
+            data: { staffid: staffid },
+            success: function(response) {
+            
+
+              var statusCell = row.find('td:eq(6)');
+              statusCell.html('<span class="status-indicator inactive"></span>');
+              row.find('.edit-btn').remove();
+              row.find('.delete-btn').remove();
+              iziToast.warning({
+                message: response,
+                icon: 'fa fa-exclamation-triangle',
+                position: 'topCenter',
+                timeout: 5000,
+                progressBarColor: 'red',
+                backgroundColor: '#f5d1d3',
+                padding: '20px',
+                transitionIn: 'fadeInLeft',
+                transitionOut: 'fadeOutRight'
+              });
+              // row.remove();
+              
+            },
+            error: function(xhr, status, error) {
+            	
+            }
+          });
+        } else {
+          // Handle cancellation
+        }
+      }
+
+      toggleModal('Are you sure you want to delete this employee?', userResult);
+    });
+
+   
+  });
+
+  function toggleModal(text, callback) {
+    $wrapper = $('<div id="modal-wrapper"></div>').appendTo('body');
+
+    $modal = $('<div id="modal-confirmation"><div id="modal-header"><h5><i class="bx bxs-error-circle" aria-hidden="true"></i> Confirm Delete</h5><span data-confirm="0" class="modal-action" id="modal-close"><i class="bx bx-x" aria-hidden="true"></i></span></div><div id="modal-content"><p>' + text + '</p></div><div id="modal-buttons"><button class="modal-action" data-confirm="0" id="modal-button-no">No</button><button class="modal-action" data-confirm="1" id="modal-button-yes">Yes</button></div></div>').appendTo($wrapper);
+
+    setTimeout(function() {
+      $wrapper.addClass('active');
+    }, 100);
+
+    $wrapper.find('.modal-action').click(function() {
+      var result = $(this).data('confirm');
+      $wrapper.removeClass('active').delay(500).queue(function() {
+        $wrapper.remove();
+        callback(result);
+      });
+    });
+  }
+</script>
+            <script>
+             $(document).ready(function () {
+              // Get the input field and table
+              var input = $("#searchInput");
+              var dateInput = $("#dateFilter");
+              var table = $("#feedbackTable");
+
+              // Save the table header row
+              var headerRow = table.find("thead tr");
+
+              // Add an event listener to the input field that triggers on each keyup
+              input.on("keyup", function () {
+                  // Get the value of the input field
+                  var value = $(this).val().toLowerCase();
+
+                  // Filter the table rows that do not contain the search value
+                  table.find("tbody tr").filter(function () {
+                      $(this).toggle($(this).text().toLowerCase().includes(value));
+                  });
+              });
+
+              // Add an event listener to the date input field that triggers on change
+              dateInput.on("change", function () {
+                  // Get the selected date from the input field
+                  var selectedDate = new Date($(this).val());
+
+  // Check if the date input field has a value or not
+                  if ($(this).val() === "") {
+                      // Show all rows in the table
+                      table.find("tbody tr").show();
+                  } else {
+                      // Filter the table rows that do not match the selected date
+                      table.find("tbody tr").filter(function () {
+                          var rowDateStr = $(this).find("td:eq(2)").text();
+                          var rowDate = new Date(rowDateStr);
+                          var match = rowDate.toDateString() == selectedDate.toDateString();
+                          $(this).toggle(match);
+                      });
+                  }
+              });
+
+              // Show the table header
+              table.find("thead").show();
+          });
+        </script>
+        
+        <script src="path/to/jquery.js"></script>
+
+<!-- Include Bootstrap JavaScript -->
+<script src="path/to/bootstrap.js"></script>
+
+<!-- Include iziToast library -->
+<script src="path/to/iziToast.js"></script>
+   
+    <script>
+        //take holiday date and holiday name
+        function holidayEdit(date, name) {
+            document.getElementById('holiDate').value = date;
+            document.getElementById('holiName').value = name;
+        }
+    </script>
+
+    <script>
+        // update holiday to ajax
+        function updateHolidayData() {
+            var date = document.getElementById('holiDate').value;
+            var name = document.getElementById('holiName').value;
+            // Make an AJAX request to update the holiday data
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/updateHoliday',
+                data: {
+                    date: date,
+                    name: name
+                },
+                success: function (response) {
+                    iziToast.success({
+                        title: 'Success',
+                        message: response,
+                        position: 'topCenter',
+                        timeout: 3000,
+                        progressBarColor: 'green',
+                        transitionIn: 'fadeInLeft',
+                        transitionOut: 'fadeOutRight',
+                        onClosed: function () {
+                            // Hide the edit modal after iziToast is closed
+                            $('#holidayModals').modal('hide');
+                            $('body').removeClass('modal-open'); // Remove the 'modal-open' class from the body
+                            $('.modal-backdrop').remove();
+                        }
+                    });
+
+                    // Update the holiday name in the view
+                    var holidayRow = $('#holidaytable tbody tr').filter(function () {
+                        return $(this).find('td:eq(2)').text() === date;
+                    });
+                    holidayRow.find('td:eq(1)').text(name);
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+
+            });
+        }
+    </script>
+
+    <script>
+        // edit avoid to ajax
+        function avoidMeatEdit(no, id, name) {
+            document.getElementById('avoidId').value = id;
+            document.getElementById('avoidNo').innerText = no + '. ';
+            document.getElementById('avoidName').value = name;
+        }
+    </script>
+
+    <script>
+        function updateAvoidDatas() {
+            var no = document.getElementById('avoidNo').innerText.replace('.', '');
+            var id = document.getElementById('avoidId').value;
+            var name = document.getElementById('avoidName').value.trim();
+
+            console.log(no + ' ' + id + ' ' + name + " update");
+            // Make an AJAX request to check if the avoid meat name already exists
+            $.ajax({
+                type: 'Post',
+                url: '/admin/checkAvoidMeatExist',
+                data: {
+                    name: name
+                },
+                success: function (response) {
+                    if (response === 'EXIST') {
+                        // Display an error message using iziToast
+                        iziToast.error({
+                            title: 'Error',
+                            message: 'Avoid meat already exists',
+                            position: 'topCenter',
+                            timeout: 3000,
+                            progressBarColor: 'red',
+                            transitionIn: 'fadeInLeft',
+                            transitionOut: 'fadeOutRight',
+                            onClosed: function () {
+                                // Hide the edit modal after iziToast is closed
+                            }
+                        });
+                    } else {
+                        // Update the avoid meat data if it doesn't conflict with existing names
+
+                        // Make an AJAX request to update the avoid meat data
+                        $.ajax({
+                            type: 'POST',
+                            url: '/admin/updateAvoidMeat',
+                            data: {
+                                id: id,
+                                name: name
+                            },
+                            success: function (response) {
+                                iziToast.success({
+                                    title: 'Success',
+                                    message: response,
+                                    position: 'topCenter',
+                                    timeout: 3000,
+                                    progressBarColor: 'green',
+                                    transitionIn: 'fadeInLeft',
+                                    transitionOut: 'fadeOutRight',
+                                    onClosed: function () {
+                                        // Hide the edit modal after iziToast is closed
+                                        $('#avoidModals').hide();
+                                    },
+                                });
+
+                                // Update the avoid meat name in the view
+                                var avoidRow = $('#avoidmeattable tbody tr').filter(function () {
+                                    return $(this).find('td:eq(0)').text() === no;
+                                });
+                                avoidRow.find('td:eq(1)').text(name);
+
+                                // Hide the edit modal immediately
+                                $('#avoidModals').hide();
+
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error);
+                            }
+
+                        });
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script>
+  // Modal initialization code
+  $(document).ready(function () {
+    $('#holidayModals').modal({
+      backdrop: 'static', // Prevent clicking outside the modal from closing it
+      keyboard: false // Prevent closing the modal with the escape key
+    });
+  });
+</script>
+
+    <!-- delete avoid meat -->
+    <script>
+        // data take for delete avoid to ajax
+        function avoidMeatDelete(id, name) {
+            var id = document.getElementById('avoidIdDelete').value = id;
+            var name = document.getElementById('avoidNameDelete').value = name;
+        }
+    </script>
+    <script>
+        // delete avoid meat 
+        function deleteAvoidDatas() {
+            var avoidId = document.getElementById('avoidIdDelete').value;
+            var avoidName = document.getElementById('avoidNameDelete').value;
+
+            console.log('Avoidmeat ID:', avoidId);
+            console.log('Avoidmeat Name:', avoidName);
+
+            // Make an AJAX request to delete the avoid meat data
+            $.ajax({
+                type: 'POST',
+                url: '/admin/deleteAvoidMeat',
+                data: {
+                    id: avoidId,
+                    name: avoidName
+                },
+                success: function (response) {
+
+                    iziToast.success({
+                        title: 'Success',
+                        message: response,
+                        position: 'topCenter',
+                        timeout: 3000,
+                        progressBarColor: 'green',
+                        transitionIn: 'fadeInLeft',
+                        transitionOut: 'fadeOutRight',
+                        onClosed: function () {
+                            // Hide the edit modal after iziToast is closed
+                            $('#avoidModalDelete').hide();
+                        }
+                    });
+
+                    $('#avoidRow-' + avoidId).remove();
+                    // Update the count numbers in the remaining rows
+                    var countElements = $('.count-number');
+                    countElements.each(function (index) {
+                        $(this).text(index + 1);
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response from the server
+                    console.error('Delete Error:', error);
+                }
+            });
+        }
+
+    </script>
+
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>
